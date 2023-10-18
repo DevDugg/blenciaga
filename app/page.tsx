@@ -1,3 +1,4 @@
+import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import Hero from "@/components/hero/Hero";
 import profile from "@/settings/data/profile.data";
@@ -8,6 +9,7 @@ export default function Home() {
       <h1 className="hidden">{profile.name}</h1>
       <Header />
       <Hero />
+      <Footer />
     </main>
   );
 }
