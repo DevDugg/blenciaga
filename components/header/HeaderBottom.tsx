@@ -2,7 +2,7 @@ import Container from "../Container";
 
 const HeaderBottom = () => {
   return (
-    <section className="header-bottom">
+    <section className="header-bottom border-b-2 border-solid border-BLACK">
       <Container className="py-[72px] flex items-center justify-center" withPadding>
         <h2 className="text-BLACK text-xl w-fit">Invierno 23 para hombre</h2>
       </Container>
