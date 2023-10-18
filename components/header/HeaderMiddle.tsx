@@ -8,7 +8,6 @@ const HeaderMiddle = () => {
         <div className="px-3">
           <Tab isActive link="/" title="Invierno 23 Hombre" />
           <Tab isActive={false} link="/" title="Invierno 23 Mujer" />
-          <Tab isActive={false} link="/" title="Invierno 23 Mujer" />
           <Tab isActive={false} link="/" title="Otoño 23 Mujer" />
           <Tab isActive={false} link="/" title="Otoño 23 Hombre" />
           <Tab isActive={false} link="/" title="3XL" />
