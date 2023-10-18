@@ -19,6 +19,9 @@ const config: Config = {
         TITLE: "20px",
         SUBTITLE: "14px",
       },
+      gridTemplateColumns: {
+        HEADER: "1fr auto 1fr",
+      },
     },
   },
   plugins: [],
