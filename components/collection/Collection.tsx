@@ -25,6 +25,11 @@ const Collection = () => {
             <Product key={i} img={product.img} name={product.name} price={product.price} />
           ))}
         </div>
+        <div className="flex justify-center py-20">
+          <button type="button" className="border border-solid border-BLACK uppercase rounded-[4px] py-3 px-4">
+            Cargar más
+          </button>
+        </div>
       </Container>
     </section>
   );
