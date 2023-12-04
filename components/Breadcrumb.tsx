@@ -15,12 +15,10 @@ const Breadcrumb = ({ links }: IProps) => {
       <div className="flex items-center gap-4">
         {links.map((link, i) =>
           !(links.length === i + 1) ? (
-            <>
+            <Link key={i} href={link.link} className="uppercase text-xs flex items-center gap-4">
               {!(i === 0) ? <span className="uppercase text-xs">/</span> : null}
-              <Link key={i} href={link.link} className="uppercase text-xs">
-                {link.title}
-              </Link>
-            </>
+              {link.title}
+            </Link>
           ) : null,
         )}
       </div>
