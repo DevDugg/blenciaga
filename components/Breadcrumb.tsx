@@ -11,7 +11,7 @@ interface IProps {
 
 const Breadcrumb = ({ links }: IProps) => {
   return (
-    <div className="breadcrumb p-2 flex flex-col border-b border-t border-BLACK border-solid">
+    <div className="breadcrumb p-2 flex flex-col border-b-[0.5px] border-t-[0.5px] border-BLACK border-solid">
       <div className="flex items-center gap-4">
         {links.map((link, i) =>
           !(links.length === i + 1) ? (
