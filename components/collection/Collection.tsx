@@ -10,7 +10,9 @@ const Collection = () => {
         <div className="flex items-center justify-between gap-10 px-3 py-4">
           <span className="text-sm text-BLACK">82 resultados</span>
           <div className="flex items-center gap-2">
-            <span className="uppercase text-sm text-BLACK">Visualizaciones</span>
+            <button type="button" className="uppercase text-sm text-BLACK">
+              Visualizaciones
+            </button>
             <Image
               src={"/view.svg"}
               alt="View Icon"
