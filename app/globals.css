@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  letter-spacing: 0.36px;
+}
+
+.swiper-custom-bullet {
+  width: 4px;
+  height: 4px;
+  background: #9b9b9b;
+  display: inline-block;
+  border-radius: 4px;
+  transition: 0.5s all ease-out;
+  z-index: 10;
+}
+
+.swiper-custom-bullet-active {
+  background: #000000;
+  transition: 0.5s all ease-out;
+}

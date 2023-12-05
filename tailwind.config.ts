@@ -21,7 +21,7 @@ const config: Config = {
       },
       gridTemplateColumns: {
         HEADER: "1fr auto 1fr",
-        FOUR: "repeat(4, 1fr)",
+        FOUR: "repeat(4, 25%)",
         TWO: "repeat(2, 1fr)",
       },
     },

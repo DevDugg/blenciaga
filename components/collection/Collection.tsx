@@ -22,7 +22,7 @@ const Collection = () => {
         </div>
         <div className="grid grid-cols-FOUR">
           {collection.products.map((product, i) => (
-            <Product key={i} img={product.img} name={product.name} price={product.price} />
+            <Product key={i} images={product.images} name={product.name} price={product.price} />
           ))}
         </div>
         <div className="flex justify-center py-20">
