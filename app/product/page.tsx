@@ -1,6 +1,5 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 
-import Container from "@/components/Container";
 import Image from "next/image";
 import ProductGrid from "@/components/products/ProductGrid";
 
@@ -22,11 +21,11 @@ const breadcrumbLinks: IBreadcrumbLink[] = [
 const Product = () => {
   return (
     <main className="product-main">
-      <Container>
+      <div className="max-w-[1920px] mx-auto w-full">
         <Breadcrumb links={breadcrumbLinks} />
-        <div className="grid grid-cols-TWO items-start relative">
+        <div className="grid grid-cols-TWO items-end relative">
           <ProductGrid />
-          <div className="sticky left-0 top-0">
+          <div className="sticky bottom-0 h-fit">
             <div className="flex flex-col gap-10 items-center py-[60px] text-sm uppercase border-[0.5px] border-r-0 border-b-0 border-BLACK">
               <div className="flex flex-col gap-20 max-w-[70%]">
                 <div className="flex flex-col gap-4">
@@ -125,7 +124,7 @@ const Product = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </div>
     </main>
   );
 };
