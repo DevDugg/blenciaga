@@ -8,7 +8,7 @@ const Links = () => {
     <div className="flex items-center gap-1 justify-end">
       <div className="flex items-center gap-1">
         {header.links.map((link, i) => (
-          <Tab key={i} link={link.link} title={link.title} isActive={false} />
+          <Tab key={i} link={link.link} title={link.title} />
         ))}
       </div>
       <div className="flex items-center gap-3">

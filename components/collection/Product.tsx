@@ -16,14 +16,16 @@ type Props = {
   name: string;
   price: string;
   images: string[];
+  view: "big" | "small";
 };
 
-const Product = ({ images, name, price }: Props) => {
+const Product = ({ images, name, price, view }: Props) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   return (
     <Link
       href={"/collection"}
       className="product border border-solid border-BLACK pb-10 flex flex-col gap-2 max-h-[700px] relative"
+      style={view === "big" ? { maxHeight: 1200 } : {}}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
