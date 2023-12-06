@@ -1,4 +1,5 @@
 import Container from "../Container";
+import FooterLink from "./FooterLink";
 
 const FooterTop = () => {
   return (
@@ -7,67 +8,67 @@ const FooterTop = () => {
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
         <div className="category-col flex flex-col gap-4 py-4 px-3 border-[0.5px] border-solid border-BLACK min-h-[400px]">
           <h6 className="text-xs text-BLACK uppercase">BOLETÍN DE NOTICIAS</h6>
           <div className="flex flex-col gap-3">
-            <a href="#">FAQ</a>
-            <a href="#">Track Order</a>
-            <a href="#">Returns</a>
-            <a href="#">Shipping</a>
-            <a href="#">Payment</a>
-            <a href="#">Re-sell Program</a>
+            <FooterLink href="#" title="FAQ" />
+            <FooterLink href="#" title="Track Order" />
+            <FooterLink href="#" title="Returns" />
+            <FooterLink href="#" title="Shipping" />
+            <FooterLink href="#" title="Payment" />
+            <FooterLink href="#" title="Re-sell Program" />
           </div>
         </div>
       </Container>
