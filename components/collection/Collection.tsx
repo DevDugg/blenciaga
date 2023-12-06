@@ -1,3 +1,4 @@
+import ButtonWhite from "../ButtonWhite";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
@@ -28,9 +29,7 @@ const Collection = () => {
           ))}
         </div>
         <div className="flex justify-center py-20">
-          <button type="button" className="border border-solid border-BLACK uppercase rounded-[4px] py-3 px-4">
-            Cargar más
-          </button>
+          <ButtonWhite title="Cargar más" />
         </div>
       </Container>
     </section>
