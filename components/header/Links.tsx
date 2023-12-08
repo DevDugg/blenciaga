@@ -1,13 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import Tab from "./Tab";
-import header from "@/settings/data/header.data";
+
+const links = [
+  {
+    title: "Servicio de Atención al Cliente",
+    link: "/",
+  },
+  {
+    title: "Iniciar sesión",
+    link: "/",
+  },
+];
 
 const Links = () => {
   return (
     <div className="flex items-center gap-1 justify-end">
       <div className="flex items-center gap-1">
-        {header.links.map((link, i) => (
+        {links.map((link, i) => (
           <Tab key={i} link={link.link} title={link.title} />
         ))}
       </div>

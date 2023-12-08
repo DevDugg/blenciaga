@@ -14,6 +14,9 @@ const config: Config = {
         BLUE: "#0066FF",
         GRAY: "#AAAAAC",
       },
+      boxShadow: {
+        DROPDOWN: "0px 200px 0px 0px rgba(0,0,0,0.5)",
+      },
       fontSize: {
         TEXT: "12px",
         TITLE: "20px",
@@ -22,6 +25,7 @@ const config: Config = {
       gridTemplateColumns: {
         HEADER: "1fr auto 1fr",
         FOUR: "repeat(4, 25%)",
+        SIX: "repeat(6, 1fr)",
         TWO: "repeat(2, 1fr)",
       },
     },
