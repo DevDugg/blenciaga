@@ -7,10 +7,12 @@ import Product from "./Product";
 import collection from "@/settings/data/collection.data";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
+import { useMediaQuery } from "usehooks-ts";
 import { useState } from "react";
 
 const Collection = () => {
   const [isBook, setIsBook] = useState<boolean>(false);
+  const gridBreakpoint = useMediaQuery("(max-width: 1440px)");
   return (
     <section className="collection">
       <Container className="flex flex-col">
@@ -38,7 +40,7 @@ const Collection = () => {
                 />
               </motion.div>
               <motion.div
-                className="absolute left-0 top-0"
+                className="absolute left-0 top-0 max-[1440px]:rotate-90"
                 initial={{ opacity: 0 }}
                 animate={isBook ? { opacity: 1 } : {}}
                 transition={transition}
@@ -54,7 +56,10 @@ const Collection = () => {
             </div>
           </button>
         </div>
-        <div className="grid grid-cols-FOUR" style={isBook ? { gridTemplateColumns: "repeat(2, 50%)" } : {}}>
+        <div
+          className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
+          style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
+        >
           {collection.products.map((product, i) => (
             <Product
               key={i}

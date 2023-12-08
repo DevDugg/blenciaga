@@ -16,13 +16,13 @@ const links = [
 const Links = () => {
   return (
     <div className="flex items-center gap-1 justify-end">
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 max-[1350px]:hidden">
         {links.map((link, i) => (
           <Tab key={i} link={link.link} title={link.title} />
         ))}
       </div>
       <div className="flex items-center gap-3">
-        <Link href={"/"}>
+        <Link href={"/"} className="max-[1350px]:hidden">
           <Image
             src={"/loop.svg"}
             alt="Loop icon"
@@ -31,7 +31,7 @@ const Links = () => {
             className="object-contain w-[18px] h-[18px]"
           />
         </Link>
-        <Link href={"/"}>
+        <Link href={"/"} className="max-[1350px]:hidden">
           <Image
             src={"/bookmark.svg"}
             alt="Bookmark icon"

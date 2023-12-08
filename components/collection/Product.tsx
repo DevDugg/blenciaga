@@ -10,6 +10,7 @@ import Link from "next/link";
 import Size from "./Size";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
+import { useMediaQuery } from "usehooks-ts";
 import { useState } from "react";
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
 
 const Product = ({ images, name, price, view }: Props) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const bulletsBreakpoint = useMediaQuery("(max-width: 1024px)");
   return (
     <Link
       href={"/collection"}
@@ -51,7 +53,7 @@ const Product = ({ images, name, price, view }: Props) => {
             </SwiperSlide>
           ))}
           <motion.div
-            initial={{ opacity: 0, pointerEvents: "none" }}
+            initial={bulletsBreakpoint ? { opacity: 1, pointerEvents: "all" } : { opacity: 0, pointerEvents: "none" }}
             animate={isHovered ? { opacity: 1, pointerEvents: "all" } : {}}
             transition={transition}
             className="pagination w-full h-2 absolute top-[95%] left-0 z-10 flex items-center justify-center gap-4"

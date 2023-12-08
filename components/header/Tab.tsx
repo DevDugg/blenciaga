@@ -57,7 +57,7 @@ const Tab = ({ link, title, rows }: IProps) => {
   return !rows ? (
     <Link href={link} className="tab py-4">
       <motion.span
-        className="text-TEXT rounded-[4px] py-[6px] px-[10px] uppercase"
+        className="text-TEXT rounded-[4px] py-[6px] px-[10px] uppercase whitespace-nowrap"
         variants={tabVariants}
         initial="initial"
         whileHover={"active"}
@@ -73,7 +73,7 @@ const Tab = ({ link, title, rows }: IProps) => {
       onMouseLeave={() => setHovered(false)}
     >
       <motion.span
-        className="text-TEXT block rounded-[4px] py-[6px] px-[10px] uppercase"
+        className="text-TEXT block rounded-[4px] py-[6px] px-[10px] uppercase whitespace-nowrap"
         variants={tabVariants}
         initial="initial"
         whileHover={"active"}
