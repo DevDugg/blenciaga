@@ -1,6 +1,7 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 
 import CustomSelect from "@/components/CustomSelect";
+import Dropdown from "@/components/Dropdown";
 import Image from "next/image";
 import ProductGrid from "@/components/products/ProductGrid";
 
@@ -79,37 +80,10 @@ const Product = () => {
                     <li>Dry cleaning</li>
                     <li>{`Model is 190 cm / 6'3" and is wearing a size 4`}</li>
                   </ul>
-                  <div className="flex flex-col pt-4">
-                    <button className="border-b border-BLACK border-solid flex items-start gap-6 justify-between py-3 uppercase">
-                      <span>Product sustainability</span>
-                      <Image
-                        src={"/arrow_big_down.svg"}
-                        alt="Arrow"
-                        width={20}
-                        height={20}
-                        className="w-4 h-4 object-contain"
-                      />
-                    </button>
-                    <button className="border-b border-BLACK border-solid flex items-start gap-6 justify-between py-3 uppercase">
-                      <span>FREE SHIPPING, FREE RETURNS</span>
-                      <Image
-                        src={"/arrow_big_down.svg"}
-                        alt="Arrow"
-                        width={20}
-                        height={20}
-                        className="w-4 h-4 object-contain"
-                      />
-                    </button>
-                    <button className="border-b border-BLACK border-solid flex items-start gap-6 justify-between py-3 uppercase">
-                      <span>Payment</span>
-                      <Image
-                        src={"/arrow_big_down.svg"}
-                        alt="Arrow"
-                        width={20}
-                        height={20}
-                        className="w-4 h-4 object-contain"
-                      />
-                    </button>
+                  <div className="flex flex-col border-t border-BLACK mt-10">
+                    <Dropdown />
+                    <Dropdown />
+                    <Dropdown />
                   </div>
                 </div>
               </div>
