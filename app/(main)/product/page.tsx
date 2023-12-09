@@ -1,5 +1,6 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 
+import CustomSelect from "@/components/CustomSelect";
 import Image from "next/image";
 import ProductGrid from "@/components/products/ProductGrid";
 
@@ -47,16 +48,7 @@ const Product = () => {
                       Size guide
                     </a>
                   </div>
-                  <div className="p-3 flex items-center gap-6 justify-between border border-BLACK rounded cursor-pointer">
-                    <span>Select Size</span>
-                    <Image
-                      src={"/arrow_small_down.svg"}
-                      alt="arrow"
-                      width={28}
-                      height={28}
-                      className="w-[28px] h-[28px] object-contain"
-                    />
-                  </div>
+                  <CustomSelect />
                   <div className="flex justify-center">
                     <p className="text-[#767676] normal-case text-center max-w-[70%]">
                       Designed to be worn as an oversized/very loose fit, we recommend sizing down for a regular fit.
