@@ -9,7 +9,7 @@ const products = ["/jacket_1.jpg", "/jacket_2.jpg", "/jacket_3.jpg", "/jacket_4.
 
 const ProductSlider = () => {
   return (
-    <div className="product-slider hidden max-lg:block">
+    <div className="product-slider hidden border-b-[0.5px] border-BLACK max-lg:block">
       <Swiper
         modules={[Navigation, Pagination]}
         speed={1000}
