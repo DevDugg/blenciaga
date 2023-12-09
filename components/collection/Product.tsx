@@ -26,7 +26,7 @@ const Product = ({ images, name, price, view }: Props) => {
   return (
     <Link
       href={"/collection"}
-      className="product border border-solid border-BLACK pb-10 flex flex-col gap-2 max-h-[700px] relative"
+      className="product border-[0.5px] border-solid border-BLACK pb-10 flex flex-col gap-2 max-h-[700px] relative"
       style={view === "big" ? { maxHeight: 1200 } : {}}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

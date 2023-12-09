@@ -15,7 +15,7 @@ const config: Config = {
         GRAY: "#AAAAAC",
       },
       boxShadow: {
-        DROPDOWN: "0px 200px 0px 0px rgba(0,0,0,0.5)",
+        DROPDOWN: "0px 300px 0px 0px rgba(0,0,0,0.5)",
       },
       fontSize: {
         TEXT: "12px",

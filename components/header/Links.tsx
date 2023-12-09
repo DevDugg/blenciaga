@@ -40,7 +40,7 @@ const Links = () => {
             className="object-contain w-[18px] h-[18px]"
           />
         </Link>
-        <Link href={"/"}>
+        <Link href={"/"} className="hidden max-[1350px]:block">
           <Image
             src={"/cart.svg"}
             alt="Cart icon"

@@ -1044,7 +1044,7 @@ const Tabs = () => {
           <Tab title={tab.title} link={tab.link} key={i} rows={tab.rows} />
         ))}
       </div>
-      <div className="max-[1350px]:flex items-center gap-4">
+      <div className="hidden max-[1350px]:flex items-center gap-4">
         <button type="button">
           <Image
             src={"/burger.svg"}

@@ -90,7 +90,7 @@ const Tab = ({ link, title, rows }: IProps) => {
         // animate={hovered ? "hover" : "initial"}
         // >
         <motion.div
-          className="bg-WHITE h-fit w-[98.9vw] grid grid-cols-SIX z-10 absolute top-[100%] left-0 shadow-DROPDOWN"
+          className="bg-WHITE h-fit w-[calc(100vw-19px)] grid grid-cols-SIX z-10 absolute top-[100%] left-0 shadow-DROPDOWN"
           variants={dropdownVariants}
           initial="initial"
           animate={hovered ? "hover" : "initial"}
