@@ -4,7 +4,7 @@ const products = ["/jacket_1.jpg", "/jacket_2.jpg", "/jacket_3.jpg", "/jacket_4.
 
 const ProductGrid = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full max-lg:hidden">
       {products.map((product, i) => (
         <Image
           key={i}

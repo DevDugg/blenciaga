@@ -12,7 +12,7 @@ const CustomSelect = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string | null>(null);
   return (
-    <div onClick={() => setIsOpen(!isOpen)} className="custom-select relative h-14">
+    <div onClick={() => setIsOpen(!isOpen)} className="custom-select relative h-14 z-20">
       <div className="border border-BLACK rounded cursor-pointer absolute top-0 left-0 w-full h-fit overflow-hidden bg-WHITE">
         <div className="flex items-center gap-6 justify-between p-3">
           <span>{value ? value : "Select Size"}</span>

@@ -1,9 +1,11 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 
+import Button from "@/components/Button";
 import CustomSelect from "@/components/CustomSelect";
 import Dropdown from "@/components/Dropdown";
-import Image from "next/image";
 import ProductGrid from "@/components/products/ProductGrid";
+import ProductSlider from "@/components/products/ProductSlider";
+import StickyOutOfView from "@/components/StickyOutOfView";
 
 const breadcrumbLinks: IBreadcrumbLink[] = [
   {
@@ -25,14 +27,15 @@ const Product = () => {
     <main className="product-main">
       <div className="max-w-[1920px] mx-auto w-full">
         <Breadcrumb links={breadcrumbLinks} />
-        <div className="grid grid-cols-TWO items-end relative">
+        <div className="grid grid-cols-TWO items-end relative max-lg:block">
           <ProductGrid />
-          <div className="sticky bottom-0 h-fit">
+          <ProductSlider />
+          <div className="sticky bottom-0 h-fit max-lg:relative">
             <div className="flex flex-col gap-10 items-center py-[60px] text-sm uppercase border-[0.5px] border-r-0 border-b-0 border-BLACK">
-              <div className="flex flex-col gap-20 max-w-[70%]">
+              <div className="flex flex-col gap-20 max-w-[70%] px-4 max-xl:max-w-none max-lg:max-w-[80%] max-md:max-w-none">
                 <div className="flex flex-col gap-4">
                   <div>
-                    <h1 className="text-center">Oversized Jacket in Black</h1>
+                    <h1 className="text-center font-bold">Oversized Jacket in Black</h1>
                     <h2 className="text-center pt-1">$ 3,650</h2>
                   </div>
                   <p className=" text-center">
@@ -56,8 +59,8 @@ const Product = () => {
                     </p>
                   </div>
                   <div className="flex flex-col gap-2 text-xs">
-                    <button className="w-full p-3 bg-BLACK rounded text-WHITE uppercase">Add to cart</button>
-                    <button className="w-full p-3 rounded border border-BLACK border-solid uppercase">SAVE ITEM</button>
+                    <Button title="Add to cart" black fixedOnMobile />
+                    <Button title="SAVE ITEM" />
                     <span className="block pt-1 w-full text-center normal-case">Store availability</span>
                   </div>
                   <div className="flex justify-center">

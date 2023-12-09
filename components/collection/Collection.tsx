@@ -1,6 +1,6 @@
 "use client";
 
-import ButtonWhite from "../ButtonWhite";
+import Button from "../Button";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
@@ -71,7 +71,7 @@ const Collection = () => {
           ))}
         </div>
         <div className="flex justify-center py-20">
-          <ButtonWhite title="Cargar más" />
+          <Button title="Cargar más" />
         </div>
       </Container>
     </section>
