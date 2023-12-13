@@ -15,7 +15,7 @@ interface IProps {
 const FooterMobileItem = ({ item, activeId, id }: IProps) => {
   const isActive = activeId === id;
   return (
-    <div className="flex flex-col overflow-hidden px-3 border-y-[0.5px] border-BLACK">
+    <div className="flex flex-col overflow-hidden px-3 border-y-[0.5px] border-BLACK cursor-pointer">
       <div className="flex items-center gap-10 justify-between py-5">
         <h6 className="text-xs uppercase">{item.title}</h6>
         <motion.div initial={{ rotate: "0deg" }} animate={isActive ? { rotate: "180deg" } : {}} transition={transition}>
