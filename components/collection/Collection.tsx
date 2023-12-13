@@ -70,8 +70,10 @@ const Collection = () => {
             />
           ))}
         </div>
-        <div className="flex justify-center py-20">
-          <Button title="Cargar más" />
+        <div className="flex justify-center w-full py-20">
+          <div className="max-w-fit w-full px-3 max-md:max-w-none">
+            <Button title="Cargar más" />
+          </div>
         </div>
       </Container>
     </section>
