@@ -11,9 +11,10 @@ interface IProps {
   onClick?: () => null;
   black?: boolean;
   fixedOnMobile?: boolean;
+  width?: number | string;
 }
 
-const Button = ({ title, onClick, black, fixedOnMobile }: IProps) => {
+const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
   const bgVariants = {
     initial: {
       height: "0%",
@@ -35,8 +36,8 @@ const Button = ({ title, onClick, black, fixedOnMobile }: IProps) => {
         <StickyOutOfView container={container}>
           <motion.button
             type="button"
-            className="border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
-            style={black ? { background: colors.BLACK } : {}}
+            className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
+            style={black ? { background: colors.BLACK, width } : { width }}
             transition={transition}
             onClick={onClick}
             initial={"initial"}
@@ -56,8 +57,8 @@ const Button = ({ title, onClick, black, fixedOnMobile }: IProps) => {
       ) : (
         <motion.button
           type="button"
-          className="border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
-          style={black ? { background: colors.BLACK } : {}}
+          className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
+          style={black ? { background: colors.BLACK, width } : { width }}
           transition={transition}
           onClick={onClick}
           initial={"initial"}
