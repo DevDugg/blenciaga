@@ -5,7 +5,6 @@ import CustomSelect from "@/components/CustomSelect";
 import Dropdown from "@/components/Dropdown";
 import ProductGrid from "@/components/products/ProductGrid";
 import ProductSlider from "@/components/products/ProductSlider";
-import StickyOutOfView from "@/components/StickyOutOfView";
 
 const breadcrumbLinks: IBreadcrumbLink[] = [
   {

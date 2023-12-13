@@ -1,12 +1,10 @@
-import "swiper/css";
-
-import HeaderTop from "@/components/header/HeaderTop";
+import Footer from "@/components/footer/Footer";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <HeaderTop />
       {children}
+      <Footer />
     </>
   );
 }
