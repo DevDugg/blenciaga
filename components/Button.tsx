@@ -4,6 +4,7 @@ import StickyOutOfView from "./StickyOutOfView";
 import colors from "@/settings/ui/colors";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
+import { useMediaQuery } from "usehooks-ts";
 import { useRef } from "react";
 
 interface IProps {
@@ -15,6 +16,7 @@ interface IProps {
 }
 
 const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
+  const breakpoint = useMediaQuery("(max-width:768px)");
   const bgVariants = {
     initial: {
       height: "0%",
@@ -31,8 +33,8 @@ const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
   const container = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="w-full" ref={container}>
-      {fixedOnMobile ? (
+    <div className="w-full justify-center" style={width ? { display: "flex" } : {}} ref={container}>
+      {fixedOnMobile && breakpoint ? (
         <StickyOutOfView container={container}>
           <motion.button
             type="button"

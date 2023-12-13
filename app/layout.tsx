@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={os.className}>{children}</body>
+      <body className={`${os.className} overflow-x-hidden`}>{children}</body>
     </html>
   );
 }
