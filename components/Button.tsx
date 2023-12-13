@@ -4,7 +4,7 @@ import StickyOutOfView from "./StickyOutOfView";
 import colors from "@/settings/ui/colors";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
-import { useMediaQuery } from "usehooks-ts";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { useRef } from "react";
 
 interface IProps {

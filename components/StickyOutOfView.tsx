@@ -17,7 +17,7 @@ const StickyOutOfView = ({ children, container }: IProps) => {
       className="bottom-0 left-0 w-full z-50 bg-WHITE border-t flex justify-center"
       transition={transition}
       initial={{ position: "fixed", padding: 12, borderColor: colors.BLACK }}
-      animate={inView ? { position: "static", padding: 0, borderColor: "transparent" } : {}}
+      animate={inView ? { position: "static", padding: 0, borderColor: "#00000000" } : {}}
     >
       {children}
     </motion.div>

@@ -1,9 +1,9 @@
 import Product, { IProduct } from "@/components/cart/Product";
 
 import Button from "@/components/Button";
+import CheckoutBtn from "@/components/cart/CheckoutBtn";
 import Container from "@/components/Container";
 import Link from "next/link";
-import StickyOutOfView from "@/components/StickyOutOfView";
 
 const product: IProduct = {
   name: "paris tropical round hoodie oversized",
@@ -18,7 +18,7 @@ const Cart = () => {
   return (
     <main className="cart">
       <Container className="flex justify-center">
-        <div className="max-w-[700px] w-full border-x border-BLACK">
+        <div className="max-w-[700px] w-full border-x border-BLACK max-lg:max-w-[800px] max-[850px]:max-w-none">
           <div className="cart-head flex flex-col gap-2 justify-center text-center py-16">
             <h1 className="text-[22px] uppercase font-bold">Cart</h1>
             <p className="text-sm">Free shipping & returns.</p>
@@ -50,9 +50,7 @@ const Cart = () => {
           <p className="text-[#767676] w-full normal-case text-center pt-4">
             Pay securely with Apple Pay, Klarna, Paypal or BitPay for eligible products
           </p>
-          <div className="flex items-center justify-center py-[60px]">
-            <Button title="Proceed to checkout (2)" width={400} black fixedOnMobile />
-          </div>
+          <CheckoutBtn />
         </div>
       </Container>
     </main>

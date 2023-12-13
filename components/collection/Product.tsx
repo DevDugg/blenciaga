@@ -8,7 +8,7 @@ import Link from "next/link";
 import Size from "./Size";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
-import { useMediaQuery } from "usehooks-ts";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
 type Props = {

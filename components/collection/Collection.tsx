@@ -7,7 +7,7 @@ import Product from "./Product";
 import collection from "@/settings/data/collection.data";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
-import { useMediaQuery } from "usehooks-ts";
+import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
 const Collection = () => {
