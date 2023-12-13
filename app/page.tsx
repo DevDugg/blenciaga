@@ -32,11 +32,11 @@ const page = () => {
             </span>
           </div>
           <div className="flex flex-col gap-4 text-xs text-WHITE w-fit">
-            <Link href={"/"}>news</Link>
-            <Link href={"/"}>fall/winter 2023 preview</Link>
-            <Link href={"/"}>fall/winter 2023 lookbook</Link>
-            <Link href={"/"}>shop</Link>
-            <Link href={"/"}>about</Link>
+            <Link href={"#"}>news</Link>
+            <Link href={"#"}>fall/winter 2023 preview</Link>
+            <Link href={"#"}>fall/winter 2023 lookbook</Link>
+            <Link href={"#"}>shop</Link>
+            <Link href={"#"}>about</Link>
           </div>
         </div>
       </Container>

@@ -18,201 +18,201 @@ export interface IHeaderTab extends IHeaderTabLink {
 const tabs: IHeaderTab[] = [
   {
     title: "NOVEDADES",
-    link: "/",
+    link: "#",
     rows: [
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "shoes",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "bags",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "accessories",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
@@ -220,201 +220,201 @@ const tabs: IHeaderTab[] = [
   },
   {
     title: "MUJER",
-    link: "/",
+    link: "#",
     rows: [
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "shoes",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "bags",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "accessories",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
@@ -422,201 +422,201 @@ const tabs: IHeaderTab[] = [
   },
   {
     title: "HOMBRE",
-    link: "/",
+    link: "#",
     rows: [
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "shoes",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "bags",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "accessories",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
@@ -624,201 +624,201 @@ const tabs: IHeaderTab[] = [
   },
   {
     title: "3XL",
-    link: "/",
+    link: "#",
     rows: [
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "shoes",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "bags",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "accessories",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
@@ -826,201 +826,201 @@ const tabs: IHeaderTab[] = [
   },
   {
     title: "REGALOS",
-    link: "/",
+    link: "#",
     rows: [
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "shoes",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "bags",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "accessories",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
       {
         heading: {
           title: "ready-to-wear",
-          link: "/",
+          link: "#",
         },
         items: [
           {
             title: "New arrivals",
-            link: "/",
+            link: "#",
           },
           {
             title: "Gard-Robe",
-            link: "/",
+            link: "#",
           },
           {
             title: "Spring 24",
-            link: "/",
+            link: "#",
           },
           {
             title: "Ski",
-            link: "/",
+            link: "#",
           },
           {
             title: "Monaco",
-            link: "/",
+            link: "#",
           },
         ],
       },
@@ -1028,11 +1028,11 @@ const tabs: IHeaderTab[] = [
   },
   {
     title: "COUTURE",
-    link: "/",
+    link: "#",
   },
   {
     title: "EXPLORE",
-    link: "/",
+    link: "#",
   },
 ];
 
