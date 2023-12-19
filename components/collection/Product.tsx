@@ -20,21 +20,23 @@ interface IProps {
 const Product = ({ view, product }: IProps) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const bulletsBreakpoint = useMediaQuery("(max-width: 1024px)");
+  const bookBreakpoint = useMediaQuery("(min-width: 1200px)");
 
   const productHasManyImages = product.images.nodes.length > 1;
 
   return (
     <Link
       href={"/collection"}
-      className="product border-[0.5px] border-solid border-BLACK pb-10 flex flex-col gap-2 max-h-[700px] relative"
-      style={view === "big" ? { maxHeight: 1200 } : {}}
+      className="product border-[0.5px] border-solid border-BLACK pb-10 flex flex-col justify-between gap-2 max-h-[700px] relative"
+      style={view === "big" ? { maxHeight: bookBreakpoint ? 1600 : 1200 } : {}}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="h-full">
+      <div className="h-fit">
         <Swiper
           modules={[Navigation, Pagination]}
           speed={1000}
+          className="h-fit"
           navigation={
             productHasManyImages
               ? {
@@ -60,7 +62,7 @@ const Product = ({ view, product }: IProps) => {
                 alt="Product Image"
                 width={480}
                 height={600}
-                className="w-full h-[600px] object-cover"
+                className="w-full h-full object-cover"
               />
             </SwiperSlide>
           ))}
