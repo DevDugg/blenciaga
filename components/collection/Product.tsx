@@ -5,22 +5,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { ProductsNode } from "@/typings/products.type";
 import Size from "./Size";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
-type Props = {
-  name: string;
-  price: string;
-  images: string[];
+interface IProps {
+  product: ProductsNode;
   view: "big" | "small";
-};
+}
 
-const Product = ({ images, name, price, view }: Props) => {
+const Product = ({ view, product }: IProps) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const bulletsBreakpoint = useMediaQuery("(max-width: 1024px)");
+
+  const productHasManyImages = product.images.nodes.length > 1;
+
   return (
     <Link
       href={"/collection"}
@@ -33,11 +35,15 @@ const Product = ({ images, name, price, view }: Props) => {
         <Swiper
           modules={[Navigation, Pagination]}
           speed={1000}
-          navigation={{
-            nextEl: ".swiper-nav-next",
-            prevEl: ".swiper-nav-prev",
-          }}
-          loop
+          navigation={
+            productHasManyImages
+              ? {
+                  nextEl: ".swiper-nav-next",
+                  prevEl: ".swiper-nav-prev",
+                }
+              : {}
+          }
+          loop={productHasManyImages}
           pagination={{
             clickable: true,
             el: ".pagination",
@@ -45,9 +51,17 @@ const Product = ({ images, name, price, view }: Props) => {
             bulletActiveClass: "swiper-custom-bullet-active",
           }}
         >
-          {images.map((img, i) => (
-            <SwiperSlide key={i}>
-              <Image src={img} alt="Product Image" width={480} height={600} className="w-full h-full object-cover" />
+          {product.images.nodes.map((img) => (
+            <SwiperSlide key={img.id}>
+              <Image
+                src={img.url}
+                unoptimized
+                loading="lazy"
+                alt="Product Image"
+                width={480}
+                height={600}
+                className="w-full h-[600px] object-cover"
+              />
             </SwiperSlide>
           ))}
           <motion.div
@@ -102,8 +116,8 @@ const Product = ({ images, name, price, view }: Props) => {
           transition={transition}
           className="price flex flex-col items-center text-[10.5px]"
         >
-          <span className="uppercase font-bold">{name}</span>
-          <span>{price}</span>
+          <span className="uppercase font-bold">{product.title}</span>
+          <span>{product.priceRangeV2.minVariantPrice.amount}</span>
         </motion.div>
       </div>
     </Link>

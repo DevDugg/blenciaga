@@ -2,17 +2,24 @@
 
 import Button from "../Button";
 import Container from "../Container";
+import { IProducts } from "@/typings/products.type";
 import Image from "next/image";
 import Product from "./Product";
+import Queries from "@/utils/queries";
 import collection from "@/settings/data/collection.data";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
-const Collection = () => {
+interface IProps {
+  products: IProducts["data"];
+}
+
+const Collection = ({ products }: IProps) => {
   const [isBook, setIsBook] = useState<boolean>(false);
   const gridBreakpoint = useMediaQuery("(max-width: 1440px)");
+
   return (
     <section className="collection">
       <Container className="flex flex-col">
@@ -60,14 +67,8 @@ const Collection = () => {
           className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
           style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
         >
-          {collection.products.map((product, i) => (
-            <Product
-              key={i}
-              images={product.images}
-              name={product.name}
-              price={product.price}
-              view={isBook ? "big" : "small"}
-            />
+          {products.products.nodes.map((product, i) => (
+            <Product key={i} product={product} view={isBook ? "big" : "small"} />
           ))}
         </div>
         <div className="flex justify-center w-full py-20">
