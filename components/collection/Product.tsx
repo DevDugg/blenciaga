@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { ProductsNode } from "@/typings/products.type";
+import { ProductsQuery } from "@/types/storefront.generated";
 import Size from "./Size";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
@@ -13,7 +13,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
 interface IProps {
-  product: ProductsNode;
+  product: ProductsQuery["products"]["nodes"][any];
   view: "big" | "small";
 }
 
@@ -26,7 +26,7 @@ const Product = ({ view, product }: IProps) => {
 
   return (
     <Link
-      href={"/collection"}
+      href={`/product/${product.handle}`}
       className="product border-[0.5px] border-solid border-BLACK pb-10 flex flex-col justify-between gap-2 max-h-[700px] relative"
       style={view === "big" ? { maxHeight: bookBreakpoint ? 1600 : 1200 } : {}}
       onMouseOver={() => setIsHovered(true)}
@@ -57,12 +57,11 @@ const Product = ({ view, product }: IProps) => {
             <SwiperSlide key={img.id}>
               <Image
                 src={img.url}
-                unoptimized
                 loading="lazy"
                 alt="Product Image"
                 width={480}
                 height={600}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover aspect-square"
               />
             </SwiperSlide>
           ))}
@@ -119,7 +118,7 @@ const Product = ({ view, product }: IProps) => {
           className="price flex flex-col items-center text-[10.5px]"
         >
           <span className="uppercase font-bold">{product.title}</span>
-          <span>{product.priceRangeV2.minVariantPrice.amount}</span>
+          <span>{product.priceRange.minVariantPrice.amount}</span>
         </motion.div>
       </div>
     </Link>

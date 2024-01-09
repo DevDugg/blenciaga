@@ -2,23 +2,59 @@ import Collection from "@/components/collection/Collection";
 import HeaderBottom from "@/components/header/HeaderBottom";
 import HeaderMiddle from "@/components/header/HeaderMiddle";
 import Hero from "@/components/hero/Hero";
-import { IProducts } from "@/typings/products.type";
+import { ProductsQuery } from "@/types/storefront.generated";
+import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
 
-interface IResponse {
-  data: IProducts;
-}
-
 const getProducts = async () => {
-  return await fetch("http://localhost:3000/api/products?quantity=12", {
-    method: "GET",
-    cache: "no-cache",
-  });
+  const { data, errors } = await client.request(
+    `#graphql
+    query Products {
+      products(first: 20) {
+        nodes {
+          title
+          images(first: 5) {
+            nodes {
+              id
+              url
+            }
+          }
+          collections(first: 10) {
+            nodes {
+              id
+              handle
+              title
+            }
+          }
+          variants(first: 10) {
+            nodes {
+              id
+              selectedOptions {
+                name
+                value
+              }
+            }
+          }
+          id
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          handle
+        }
+      }
+    }`,
+  );
+
+  if (errors) throw new Error(errors.message);
+
+  return data as ProductsQuery;
 };
 
 export default async function Home() {
-  const productsString = await getProducts();
-  const products: IResponse = await productsString.json();
+  const products = await getProducts();
 
   return (
     <main className="main">
@@ -26,7 +62,7 @@ export default async function Home() {
       <HeaderMiddle />
       <HeaderBottom />
       <Hero />
-      <Collection products={products.data.data} />
+      <Collection products={products} />
     </main>
   );
 }

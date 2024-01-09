@@ -1,15 +1,22 @@
 import Image from "next/image";
+import { Image as ShopifyImage } from "@/types/storefront.types";
 
-const products = ["/jacket_1.jpg", "/jacket_2.jpg", "/jacket_3.jpg", "/jacket_4.jpg", "/jacket_5.jpg", "/jacket_6.jpg"];
+interface IProps {
+  images: {
+    nodes: Pick<ShopifyImage, "id" | "url">[];
+  };
+}
 
-const ProductGrid = () => {
+const ProductGrid = ({ images }: IProps) => {
+  console.log(images);
+
   return (
-    <div className="flex flex-col w-full max-lg:hidden">
-      {products.map((product, i) => (
+    <div className="flex flex-col w-full h-full max-lg:hidden">
+      {images.nodes.map((img, i) => (
         <Image
           key={i}
-          src={product}
-          alt="Product Image"
+          src={img.url}
+          alt={img.id || ""}
           width={700}
           height={850}
           className="max-h-[850px] w-full h-full object-cover border-[0.5px] border-b-0 border-BLACK border-solid"

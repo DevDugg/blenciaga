@@ -4,10 +4,15 @@ import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import Image from "next/image";
+import { Image as ShopifyImage } from "@/types/storefront.types";
 
-const products = ["/jacket_1.jpg", "/jacket_2.jpg", "/jacket_3.jpg", "/jacket_4.jpg", "/jacket_5.jpg", "/jacket_6.jpg"];
+interface IProps {
+  images: {
+    nodes: Pick<ShopifyImage, "id" | "url">[];
+  };
+}
 
-const ProductSlider = () => {
+const ProductSlider = ({ images }: IProps) => {
   return (
     <div className="product-slider hidden border-b-[0.5px] border-BLACK max-lg:block">
       <Swiper
@@ -25,9 +30,15 @@ const ProductSlider = () => {
           bulletActiveClass: "swiper-custom-bullet-active",
         }}
       >
-        {products.map((img, i) => (
+        {images.nodes.map((img, i) => (
           <SwiperSlide key={i}>
-            <Image src={img} alt="Product Image" width={1024} height={1024} className="w-full h-full object-cover" />
+            <Image
+              src={img.url}
+              alt="Product Image"
+              width={1024}
+              height={1024}
+              className="w-full h-full object-cover"
+            />
           </SwiperSlide>
         ))}
         <div className="pagination w-full h-2 absolute top-[95%] left-0 z-10 flex items-center justify-center gap-4"></div>

@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import { useState } from "react";
 
-const sizes = ["xs", "s", "m", "l", "xl", "2xl"];
+interface IProps {
+  items: string[];
+}
 
-const CustomSelect = () => {
+const CustomSelect = ({ items }: IProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string | null>(null);
   return (
@@ -30,9 +32,9 @@ const CustomSelect = () => {
           initial={{ height: 0 }}
           animate={isOpen ? { height: "fit-content" } : {}}
           transition={transition}
-          className="w-full"
+          className="w-full list-none"
         >
-          {sizes.map((size, i) => (
+          {items.map((size, i) => (
             <motion.li
               key={i}
               className="py-4 px-3"
