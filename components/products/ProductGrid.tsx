@@ -8,8 +8,6 @@ interface IProps {
 }
 
 const ProductGrid = ({ images }: IProps) => {
-  console.log(images);
-
   return (
     <div className="flex flex-col w-full h-full max-lg:hidden">
       {images.nodes.map((img, i) => (

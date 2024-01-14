@@ -6,6 +6,7 @@ import Dropdown from "@/components/Dropdown";
 import ProductGrid from "@/components/products/ProductGrid";
 import { ProductQuery } from "@/types/storefront.generated";
 import ProductSlider from "@/components/products/ProductSlider";
+import { ProductVariant } from "@/types/storefront.types";
 import client from "@/utils/api-client";
 
 const breadcrumbLinks: IBreadcrumbLink[] = [
@@ -23,13 +24,13 @@ const breadcrumbLinks: IBreadcrumbLink[] = [
   },
 ];
 
-interface IParams {
-  params: {
-    handle: string;
-  };
-}
-
-const getProduct = async (handle: string) => {
+const getProduct = async (
+  handle: string,
+  option?: {
+    name: string;
+    value: string;
+  },
+) => {
   const { data, errors } = await client.request(
     `#graphql
     query Product {
@@ -42,11 +43,6 @@ const getProduct = async (handle: string) => {
             url
           }
         }
-        options {
-          id
-          name
-          values
-        }
         priceRange {
           minVariantPrice {
             amount
@@ -54,6 +50,11 @@ const getProduct = async (handle: string) => {
           }
         }
         title
+        options {
+          id
+          name
+          values
+        }
       }
     }`,
   );
@@ -65,10 +66,17 @@ const getProduct = async (handle: string) => {
   return data as ProductQuery;
 };
 
-const Product = async ({ params }: IParams) => {
+interface IParams {
+  params: {
+    handle: string;
+  };
+  searchParams?: { [key: string]: string | undefined };
+}
+
+const Product = async ({ params, searchParams }: IParams) => {
   const product = await getProduct(params.handle);
   const sizes = product.product?.options.find((option) => option.name === "Size")?.values;
-  // const style = product.product.
+
   return (
     <main className="product-main">
       <div className="max-w-[1920px] mx-auto w-full">
@@ -84,8 +92,7 @@ const Product = async ({ params }: IParams) => {
                     <h1 className="text-center font-bold">{product.product?.title}</h1>
                     <h2 className="text-center pt-1">$ {product.product?.priceRange.minVariantPrice.amount}</h2>
                   </div>
-                  <p className="text-center">
-                  </p>
+                  {/* <p className="text-center"></p> */}
                 </div>
                 <div className="border-t border-BLACK border-solid flex flex-col gap-4 pt-[25px]">
                   <div className="flex items-center justify-between gap-10">
@@ -94,7 +101,7 @@ const Product = async ({ params }: IParams) => {
                       Size guide
                     </a>
                   </div>
-                  {sizes && <CustomSelect items={sizes} />}
+                  {sizes && <CustomSelect items={sizes} initial={searchParams ? searchParams["size"] : null} />}
                   <div className="flex justify-center">
                     <p className="text-[#767676] normal-case text-center max-w-[70%]">
                       Designed to be worn as an oversized/very loose fit, we recommend sizing down for a regular fit.
@@ -116,8 +123,6 @@ const Product = async ({ params }: IParams) => {
                   ></div>
                   <div className="flex flex-col border-t border-BLACK mt-10">
                     <Dropdown />
-                    {/* <Dropdown />
-                    <Dropdown /> */}
                   </div>
                 </div>
               </div>

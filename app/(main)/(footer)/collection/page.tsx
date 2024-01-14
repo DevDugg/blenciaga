@@ -10,7 +10,7 @@ const getProducts = async () => {
   const { data, errors } = await client.request(
     `#graphql
     query Products {
-      products(first: 20) {
+      products(first: 250) {
         nodes {
           title
           images(first: 5) {
@@ -26,15 +26,6 @@ const getProducts = async () => {
               title
             }
           }
-          variants(first: 10) {
-            nodes {
-              id
-              selectedOptions {
-                name
-                value
-              }
-            }
-          }
           id
           priceRange {
             minVariantPrice {
@@ -43,6 +34,10 @@ const getProducts = async () => {
             }
           }
           handle
+          options {
+            name
+            values
+          }
         }
       }
     }`,

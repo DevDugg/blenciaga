@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "graphql-codegen": "graphql-codegen"
+    "type": "graphql-codegen"
   },
   "dependencies": {
     "@shopify/storefront-api-client": "^0.1.1",
