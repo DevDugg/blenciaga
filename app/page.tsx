@@ -7,10 +7,12 @@ import NameWhite from "@/components/NameWhite";
 import profile from "@/settings/data/profile.data";
 
 const page = () => {
-  const region = "Europe";
-  const city = "Paris";
-  const parisTime = moment.tz(`${region}/${city}`);
-  const formattedTime = parisTime.format("DD/MM/YYYY HH:mm");
+  const timezone: string[] = Intl.DateTimeFormat().resolvedOptions().timeZone.split("/");
+
+  const region = timezone[0];
+  const city = timezone[1];
+  const time = moment.tz(`${region}/${city}`);
+  const formattedTime = time.format("DD/MM/YYYY HH:mm");
 
   return (
     <main className="main">
@@ -27,9 +29,9 @@ const page = () => {
           <div className="flex flex-col gap-2">
             <Image src={"/logo.png"} alt="Logo" width={60} height={34} className="object-contain w-[60px] h-[34px]" />
             <NameWhite />
-            <span className="text-xs text-WHITE">
-              {formattedTime} {city}
-            </span>
+            <p className="text-xs text-WHITE uppercase flex items-center gap-2">
+              <span>{formattedTime}</span> <span className="uppercase">{city}</span>
+            </p>
           </div>
           <div className="flex flex-col gap-4 text-xs text-WHITE w-fit">
             <Link href={"#"}>news</Link>
