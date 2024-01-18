@@ -1,42 +1,92 @@
 "use client";
 
 import { Image as IImage, Product as IProduct, MoneyV2, ProductOption } from "@/types/storefront.types";
+import { useEffect, useState } from "react";
 
 import Button from "../Button";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
+import { ProductsQuery } from "@/types/storefront.generated";
+import client from "@/utils/api-client";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
-import { useState } from "react";
 
-export type Products =
-  | {
-      node: Pick<IProduct, "id" | "title" | "handle"> & {
-        images: {
-          nodes: Pick<IImage, "id" | "url">[];
-        };
-        options: Pick<ProductOption, "name" | "values">[];
-        priceRange: {
-          minVariantPrice: Pick<MoneyV2, "currencyCode" | "amount">;
-        };
-      };
-    }[]
-  | undefined;
+const getProducts = async (cursor?: string) => {
+  const { data, errors } = await client.request(
+    `#graphql
+    query Products {
+      products(
+        first: 12,
+        ${cursor ? `after: "${cursor}"` : ""}
+      ) {
+        ...ProductConnectionFragment
+      }
+    }
+    fragment ProductConnectionFragment on ProductConnection {
+      edges {
+        node {
+          title
+          images(first: 10) {
+            nodes {
+              id
+              url
+            }
+          }
+          id
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          handle
+          options {
+            name
+            values
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+      }
+    }`,
+  );
+
+  if (errors) throw new Error(errors.message);
+
+  return data as ProductsQuery;
+};
 
 interface IProps {
-  products?: Products;
+  products?: ProductsQuery["products"];
 }
 
 const Collection = ({ products }: IProps) => {
   const [isBook, setIsBook] = useState<boolean>(false);
   const gridBreakpoint = useMediaQuery("(max-width: 1440px)");
 
+  const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
+  const fetchMore = async () => {
+    if (!data?.pageInfo.hasNextPage) return;
+    const newData = await getProducts(data?.edges[data.edges.length - 1].cursor);
+    setData({
+      edges: [...data.edges, ...newData.products.edges],
+      pageInfo: newData.products.pageInfo,
+    });
+  };
+
   return (
     <section className="collection">
       <Container className="flex flex-col">
-        {products ? (
+        {data ? (
           <>
             <div className="flex items-center justify-between gap-10 px-3 py-4">
               <span className="text-sm text-BLACK">Results</span>
@@ -82,15 +132,17 @@ const Collection = ({ products }: IProps) => {
               className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
               style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
             >
-              {products.length > 0 ? (
-                products.map((product, i) => <Product key={i} product={product.node} view={isBook ? "big" : "small"} />)
+              {data.edges.length > 0 ? (
+                data.edges.map((product, i) => (
+                  <Product key={i} product={product.node} view={isBook ? "big" : "small"} />
+                ))
               ) : (
                 <span>No results</span>
               )}
             </div>
             <div className="flex justify-center w-full py-20">
               <div className="max-w-fit w-full px-3 max-md:max-w-none">
-                <Button title="Cargar más" />
+                <Button title="Load more" onClick={fetchMore} />
               </div>
             </div>
           </>

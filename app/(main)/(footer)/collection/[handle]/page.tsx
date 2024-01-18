@@ -1,30 +1,39 @@
-import { CollectionQuery, ProductsQuery } from "@/types/storefront.generated";
-
 import Collection from "@/components/collection/Collection";
+import { CollectionQuery } from "@/types/storefront.generated";
 import HeaderBottom from "@/components/header/HeaderBottom";
 import HeaderMiddle from "@/components/header/HeaderMiddle";
 import Hero from "@/components/hero/Hero";
 import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
 
-const getProducts = async () => {
+const getCollection = async (handle: string) => {
   const { data, errors } = await client.request(
     `#graphql
-    query Products {
-      products(first: 250) {
-        nodes {
+    query Collection {
+      collection(handle: "new-collection") {
+        handle
+        descriptionHtml
+        image {
+          id
+          url
+        }
+        products(first: 12) {
+          ...ProductConnectionFragment
+          pageInfo {
+            hasNextPage
+          }
+        }
+      }
+    }
+    
+    fragment ProductConnectionFragment on ProductConnection {
+      edges {
+        node {
           title
-          images(first: 5) {
+          images(first: 10) {
             nodes {
               id
               url
-            }
-          }
-          collections(first: 10) {
-            nodes {
-              id
-              handle
-              title
             }
           }
           id
@@ -40,51 +49,10 @@ const getProducts = async () => {
             values
           }
         }
+        cursor
       }
-    }`,
-  );
-
-  if (errors) throw new Error(errors.message);
-
-  return data as ProductsQuery;
-};
-
-const getCollection = async (handle: string) => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query Collection {
-      collection(handle: "${handle}") {
-        handle
-        products(first: 12) {
-          edges {
-            node {
-              handle
-              id
-              images(first: 10) {
-                nodes {
-                  url
-                  id
-                }
-              }
-              options {
-                name
-                values
-              }
-              priceRange {
-                minVariantPrice {
-                  currencyCode
-                  amount
-                }
-              }
-              title
-            }
-          }
-        }
-        descriptionHtml
-        image {
-          id
-          url
-        }
+      pageInfo {
+        hasNextPage
       }
     }`,
   );
@@ -106,7 +74,7 @@ const Home = async ({ params }: IParams) => {
     image: data.collection?.image?.url,
     title: data.collection?.descriptionHtml,
   };
-  const products = data.collection?.products.edges;
+  const products = data.collection?.products;
 
   return (
     <main className="main">

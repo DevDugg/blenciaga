@@ -9,7 +9,7 @@ import { useRef } from "react";
 
 interface IProps {
   title: string;
-  onClick?: () => null;
+  onClick?: () => Promise<void>;
   black?: boolean;
   fixedOnMobile?: boolean;
   width?: number | string;
