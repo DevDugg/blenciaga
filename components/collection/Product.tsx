@@ -1,11 +1,12 @@
 "use client";
 
+import { Image as IImage, Product as IProduct, MoneyV2, ProductOption } from "@/types/storefront.types";
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import ColorBlock from "../ColorBlock";
 import Image from "next/image";
 import Link from "next/link";
-import { ProductsQuery } from "@/types/storefront.generated";
 import Size from "./Size";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
@@ -13,7 +14,15 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
 interface IProps {
-  product: ProductsQuery["products"]["nodes"][any];
+  product: Pick<IProduct, "id" | "title" | "handle"> & {
+    images: {
+      nodes: Pick<IImage, "id" | "url">[];
+    };
+    options: Pick<ProductOption, "name" | "values">[];
+    priceRange: {
+      minVariantPrice: Pick<MoneyV2, "currencyCode" | "amount">;
+    };
+  };
   view: "big" | "small";
 }
 
@@ -25,6 +34,9 @@ const Product = ({ view, product }: IProps) => {
   const productHasManyImages = product.images.nodes.length > 1;
 
   const sizes = product.options.find((option) => option.name === "Size")?.values;
+  const colors = product.options.find((option) => option.name === "Style")?.values;
+
+  const productHasManyColor = colors ? colors?.length > 1 : false;
 
   return (
     <div
@@ -55,7 +67,7 @@ const Product = ({ view, product }: IProps) => {
               bulletActiveClass: "swiper-custom-bullet-active",
             }}
           >
-            {product.images.nodes.map((img) => (
+            {product.images.nodes.map((img: any) => (
               <SwiperSlide key={img.id}>
                 <Image
                   src={img.url}
@@ -120,6 +132,27 @@ const Product = ({ view, product }: IProps) => {
                 key={i}
               >
                 <Size name={size} />
+              </Link>
+            ))}
+          </motion.div>
+        )}
+
+        {colors && productHasManyColor && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isHovered ? { opacity: 1 } : {}}
+            transition={transition}
+            className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
+          >
+            {colors.map((color, i) => (
+              <Link
+                href={{
+                  pathname: `/product/${product.handle}`,
+                  search: `?color=${color}`,
+                }}
+                key={i}
+              >
+                <ColorBlock color={color} />
               </Link>
             ))}
           </motion.div>

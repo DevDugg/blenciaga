@@ -1,17 +1,32 @@
 "use client";
 
+import { Image as IImage, Product as IProduct, MoneyV2, ProductOption } from "@/types/storefront.types";
+
 import Button from "../Button";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
-import { ProductsQuery } from "@/types/storefront.generated";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
+export type Products =
+  | {
+      node: Pick<IProduct, "id" | "title" | "handle"> & {
+        images: {
+          nodes: Pick<IImage, "id" | "url">[];
+        };
+        options: Pick<ProductOption, "name" | "values">[];
+        priceRange: {
+          minVariantPrice: Pick<MoneyV2, "currencyCode" | "amount">;
+        };
+      };
+    }[]
+  | undefined;
+
 interface IProps {
-  products?: ProductsQuery;
+  products?: Products;
 }
 
 const Collection = ({ products }: IProps) => {
@@ -24,7 +39,7 @@ const Collection = ({ products }: IProps) => {
         {products ? (
           <>
             <div className="flex items-center justify-between gap-10 px-3 py-4">
-              <span className="text-sm text-BLACK">{products.products.nodes.length} results</span>
+              <span className="text-sm text-BLACK">Results</span>
               <button
                 type="button"
                 className="uppercase text-sm text-BLACK flex items-center gap-2"
@@ -67,10 +82,8 @@ const Collection = ({ products }: IProps) => {
               className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
               style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
             >
-              {products ? (
-                products.products.nodes.map((product, i) => (
-                  <Product key={i} product={product} view={isBook ? "big" : "small"} />
-                ))
+              {products.length > 0 ? (
+                products.map((product, i) => <Product key={i} product={product.node} view={isBook ? "big" : "small"} />)
               ) : (
                 <span>No results</span>
               )}
@@ -82,7 +95,9 @@ const Collection = ({ products }: IProps) => {
             </div>
           </>
         ) : (
-          <p>Something went wrong</p>
+          <Container className="py-10 flex items-center justify-center text-xl">
+            <p>Something went wrong :/</p>
+          </Container>
         )}
       </Container>
     </section>
