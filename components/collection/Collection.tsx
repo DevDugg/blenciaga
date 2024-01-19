@@ -1,7 +1,7 @@
 "use client";
 
 import { Image as IImage, Product as IProduct, MoneyV2, ProductOption } from "@/types/storefront.types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import Button from "../Button";
 import Container from "../Container";
@@ -70,6 +70,10 @@ const Collection = ({ products }: IProps) => {
 
   const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
 
+  const curatedData = data
+    ? { ...data, edges: data?.edges.slice(0, data.edges.length - (data.edges.length % 4)) }
+    : null;
+
   const fetchMore = async () => {
     if (!data?.pageInfo.hasNextPage) return;
     const newData = await getProducts(data?.edges[data.edges.length - 1].cursor);
@@ -82,7 +86,7 @@ const Collection = ({ products }: IProps) => {
   return (
     <section className="collection">
       <Container className="flex flex-col">
-        {data ? (
+        {data && curatedData ? (
           <>
             <div className="flex items-center justify-between gap-10 px-3 py-4">
               <span className="text-sm text-BLACK">Results</span>
@@ -128,8 +132,8 @@ const Collection = ({ products }: IProps) => {
               className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
               style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
             >
-              {data.edges.length > 0 ? (
-                data.edges.map((product, i) => (
+              {curatedData.edges.length > 0 ? (
+                curatedData.edges.map((product, i) => (
                   <Product key={i} product={product.node} view={isBook ? "big" : "small"} />
                 ))
               ) : (
@@ -138,11 +142,7 @@ const Collection = ({ products }: IProps) => {
             </div>
             <div className="flex justify-center w-full py-20">
               <div className="max-w-fit w-full px-3 max-md:max-w-none">
-                <Button
-                  title="Load more"
-                  onClick={fetchMore}
-                  disabled={!data.pageInfo.hasNextPage}
-                />
+                <Button title="Load more" onClick={fetchMore} disabled={!data.pageInfo.hasNextPage} />
               </div>
             </div>
           </>

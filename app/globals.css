@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  letter-spacing: -0.36px;
-}
-
 .swiper-custom-bullet {
   width: 4px;
   height: 4px;
