@@ -171,7 +171,7 @@ const Product = async ({ params, searchParams }: IParams) => {
                   </div>
                   <div className="flex flex-col gap-2 text-xs">
                     <Button title="Add to cart" black fixedOnMobile />
-                    <Button title="SAVE ITEM" />
+                    {/* <Button title="SAVE ITEM" /> */}
                     <span className="block pt-1 w-full text-center normal-case">Store availability</span>
                   </div>
                   <div className="flex justify-center">
