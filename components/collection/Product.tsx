@@ -148,7 +148,7 @@ const Product = ({ view, product }: IProps) => {
                 <Link
                   href={{
                     pathname: `/product/${product.handle}`,
-                    search: `?color=${color}`,
+                    search: `?style=${color}`,
                   }}
                   key={i}
                 >

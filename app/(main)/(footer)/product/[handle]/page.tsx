@@ -123,6 +123,14 @@ const Product = async ({ params, searchParams }: IParams) => {
   };
 
   const neededStyles = findStyles();
+
+  const findStyle = (style: string) => {
+    if (!(variants && styles)) return;
+    const neededStyle = variants.nodes.find((variant) =>
+      variant.selectedOptions.find((variantOption) => variantOption.name === "Style" && variantOption.value === style),
+    );
+    return neededStyle;
+  };
   return (
     <main className="product-main">
       <div className="max-w-[1920px] mx-auto w-full">
@@ -140,7 +148,14 @@ const Product = async ({ params, searchParams }: IParams) => {
                   </div>
                   {/* <p className="text-center"></p> */}
                 </div>
-                {variants && neededStyles && <StyleSelect variants={neededStyles} />}
+                {variants && neededStyles && (
+                  <StyleSelect
+                    variants={neededStyles}
+                    initialVariant={
+                      searchParams && searchParams["style"] ? findStyle(searchParams["style"]) : undefined
+                    }
+                  />
+                )}
                 <div className="border-t border-BLACK border-solid flex flex-col gap-4 pt-[25px]">
                   <div className="flex items-center justify-between gap-10">
                     <span>Size: (FR)</span>
