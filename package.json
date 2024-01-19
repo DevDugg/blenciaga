@@ -10,6 +10,7 @@
     "type": "graphql-codegen"
   },
   "dependencies": {
+    "@shopify/api-codegen-preset": "^0.0.1",
     "@shopify/storefront-api-client": "^0.1.1",
     "@types/uuid": "^9.0.7",
     "axios": "^1.6.2",
@@ -23,7 +24,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@shopify/api-codegen-preset": "^0.0.1",
     "@types/node": "^20.10.5",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",

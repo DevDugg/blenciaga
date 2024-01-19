@@ -1,4 +1,5 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
+import StyleSelect, { VariantsType } from "@/components/products/StyleSelect";
 
 import Button from "@/components/Button";
 import CustomSelect from "@/components/CustomSelect";
@@ -55,6 +56,24 @@ const getProduct = async (
           name
           values
         }
+        variants(first: 10) {
+          nodes {
+            image {
+              id
+              url
+            }
+            price {
+              amount
+              currencyCode
+            }
+            title
+            selectedOptions {
+              name
+              value
+            }
+            id
+          }
+        }
       }
     }`,
   );
@@ -73,10 +92,37 @@ interface IParams {
   searchParams?: { [key: string]: string | undefined };
 }
 
+interface IOption {
+  name: string;
+  value: string | null | undefined;
+}
+
 const Product = async ({ params, searchParams }: IParams) => {
   const product = await getProduct(params.handle);
-  const sizes = product.product?.options.find((option) => option.name === "Size")?.values;
 
+  const options = product.product?.options;
+  const variants = product.product?.variants;
+
+  const sizes = options?.find((option) => option.name === "Size")?.values;
+  const styles = options?.find((option) => option.name === "Style")?.values;
+
+  const findStyles = () => {
+    if (!(variants && styles)) return;
+    const neededStyles: VariantsType = [];
+
+    styles.forEach((style) => {
+      const variant = variants.nodes.find((variant) =>
+        variant.selectedOptions.find(
+          (variantOption) => variantOption.name === "Style" && variantOption.value === style,
+        ),
+      );
+      if (variant) neededStyles.push(variant);
+    });
+
+    return neededStyles;
+  };
+
+  const neededStyles = findStyles();
   return (
     <main className="product-main">
       <div className="max-w-[1920px] mx-auto w-full">
@@ -94,6 +140,7 @@ const Product = async ({ params, searchParams }: IParams) => {
                   </div>
                   {/* <p className="text-center"></p> */}
                 </div>
+                {variants && neededStyles && <StyleSelect variants={neededStyles} />}
                 <div className="border-t border-BLACK border-solid flex flex-col gap-4 pt-[25px]">
                   <div className="flex items-center justify-between gap-10">
                     <span>Size: (FR)</span>
