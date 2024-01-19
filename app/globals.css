@@ -22,7 +22,8 @@
 }
 
 *:disabled {
-  opacity: 60%;
+  opacity: 40%;
+  pointer-events: none;
 }
 
 ul {

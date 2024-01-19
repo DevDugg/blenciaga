@@ -10,12 +10,14 @@ import { useRef } from "react";
 interface IProps {
   title: string;
   onClick?: () => Promise<void>;
+  onInView?: () => Promise<void>;
   black?: boolean;
   fixedOnMobile?: boolean;
   width?: number | string;
+  disabled?: boolean;
 }
 
-const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
+const Button = ({ title, onClick, black, fixedOnMobile, width, disabled, onInView }: IProps) => {
   const breakpoint = useMediaQuery("(max-width:768px)");
   const bgVariants = {
     initial: {
@@ -31,12 +33,12 @@ const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
   };
 
   const container = useRef<HTMLDivElement>(null);
-
   return (
     <div className="w-full justify-center" style={width ? { display: "flex" } : {}} ref={container}>
       {fixedOnMobile && breakpoint ? (
         <StickyOutOfView container={container}>
           <motion.button
+            disabled={disabled}
             type="button"
             className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
             style={black ? { background: colors.BLACK, width } : { width }}
@@ -52,12 +54,12 @@ const Button = ({ title, onClick, black, fixedOnMobile, width }: IProps) => {
               className="absolute left-0 top-[50%] -translate-y-[50%] bg-BLACK w-full"
               style={black ? { background: colors.WHITE } : {}}
               transition={transition}
-              variants={bgVariants}
             ></motion.div>
           </motion.button>
         </StickyOutOfView>
       ) : (
         <motion.button
+          disabled={disabled}
           type="button"
           className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
           style={black ? { background: colors.BLACK, width } : { width }}

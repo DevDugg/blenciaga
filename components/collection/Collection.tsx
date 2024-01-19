@@ -70,10 +70,6 @@ const Collection = ({ products }: IProps) => {
 
   const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const fetchMore = async () => {
     if (!data?.pageInfo.hasNextPage) return;
     const newData = await getProducts(data?.edges[data.edges.length - 1].cursor);
@@ -142,7 +138,11 @@ const Collection = ({ products }: IProps) => {
             </div>
             <div className="flex justify-center w-full py-20">
               <div className="max-w-fit w-full px-3 max-md:max-w-none">
-                <Button title="Load more" onClick={fetchMore} />
+                <Button
+                  title="Load more"
+                  onClick={fetchMore}
+                  disabled={!data.pageInfo.hasNextPage}
+                />
               </div>
             </div>
           </>

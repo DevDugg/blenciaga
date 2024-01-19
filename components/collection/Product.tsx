@@ -115,48 +115,49 @@ const Product = ({ view, product }: IProps) => {
             </motion.div>
           </Swiper>
         </Link>
+        <div className="flex flex-col gap-6">
+          {sizes && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isHovered ? { opacity: 1 } : {}}
+              transition={transition}
+              className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
+            >
+              {sizes.map((size, i) => (
+                <Link
+                  href={{
+                    pathname: `/product/${product.handle}`,
+                    search: `?size=${size}`,
+                  }}
+                  key={i}
+                >
+                  <Size name={size} />
+                </Link>
+              ))}
+            </motion.div>
+          )}
 
-        {sizes && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isHovered ? { opacity: 1 } : {}}
-            transition={transition}
-            className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
-          >
-            {sizes.map((size, i) => (
-              <Link
-                href={{
-                  pathname: `/product/${product.handle}`,
-                  search: `?size=${size}`,
-                }}
-                key={i}
-              >
-                <Size name={size} />
-              </Link>
-            ))}
-          </motion.div>
-        )}
-
-        {colors && productHasManyColor && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={isHovered ? { opacity: 1 } : {}}
-            transition={transition}
-            className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
-          >
-            {colors.map((color, i) => (
-              <Link
-                href={{
-                  pathname: `/product/${product.handle}`,
-                  search: `?color=${color}`,
-                }}
-                key={i}
-              >
-                <ColorBlock color={color} />
-              </Link>
-            ))}
-          </motion.div>
-        )}
+          {colors && productHasManyColor && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isHovered ? { opacity: 1 } : {}}
+              transition={transition}
+              className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
+            >
+              {colors.map((color, i) => (
+                <Link
+                  href={{
+                    pathname: `/product/${product.handle}`,
+                    search: `?color=${color}`,
+                  }}
+                  key={i}
+                >
+                  <ColorBlock color={color} />
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </div>
         <motion.div
           initial={{ opacity: 1, pointerEvents: "all" }}
           animate={isHovered ? { opacity: 0, pointerEvents: "none" } : {}}
