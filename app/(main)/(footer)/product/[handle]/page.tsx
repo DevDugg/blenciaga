@@ -127,7 +127,9 @@ const Product = async ({ params, searchParams }: IParams) => {
   const findStyle = (style: string) => {
     if (!(variants && styles)) return;
     const neededStyle = variants.nodes.find((variant) =>
-      variant.selectedOptions.find((variantOption) => variantOption.name === "Style" && variantOption.value === style),
+      variant.selectedOptions.find(
+        (variantOption) => variantOption.name === "Style" && variantOption.value.toLowerCase() === style.toLowerCase(),
+      ),
     );
     return neededStyle;
   };
