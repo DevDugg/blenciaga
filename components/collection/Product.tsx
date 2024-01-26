@@ -8,6 +8,7 @@ import ColorBlock from "../ColorBlock";
 import Image from "next/image";
 import Link from "next/link";
 import Size from "./Size";
+import getCurrencySymbol from "@/utils/getCurrencySymbol";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
@@ -115,58 +116,67 @@ const Product = ({ view, product }: IProps) => {
             </motion.div>
           </Swiper>
         </Link>
-        <div className="flex flex-col gap-6">
-          {sizes && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isHovered ? { opacity: 1 } : {}}
-              transition={transition}
-              className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
-            >
-              {sizes.map((size, i) => (
-                <Link
-                  href={{
-                    pathname: `/product/${product.handle}`,
-                    search: `?size=${size}`,
-                  }}
-                  key={i}
-                >
-                  <Size name={size} />
-                </Link>
-              ))}
-            </motion.div>
-          )}
+        <div className="price flex flex-col items-center text-[10.5px]">
+          <motion.span
+            initial={{ opacity: 1, pointerEvents: "all" }}
+            animate={isHovered && !bulletsBreakpoint ? { opacity: 0, pointerEvents: "none" } : {}}
+            transition={transition}
+            className="uppercase font-bold max-w-[80%] text-center"
+          >
+            {product.title}
+          </motion.span>
+          <div className="flex flex-col gap-6">
+            {sizes && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isHovered ? { opacity: 1 } : {}}
+                transition={transition}
+                className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase max-lg:hidden"
+              >
+                {sizes.map((size, i) => (
+                  <Link
+                    href={{
+                      pathname: `/product/${product.handle}`,
+                      search: `?size=${size}`,
+                    }}
+                    key={i}
+                  >
+                    <Size name={size} />
+                  </Link>
+                ))}
+              </motion.div>
+            )}
 
-          {colors && productHasManyColor && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={isHovered ? { opacity: 1 } : {}}
-              transition={transition}
-              className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase"
-            >
-              {colors.map((color, i) => (
-                <Link
-                  href={{
-                    pathname: `/product/${product.handle}`,
-                    search: `?style=${color}`,
-                  }}
-                  key={i}
-                >
-                  <ColorBlock color={color} />
-                </Link>
-              ))}
-            </motion.div>
-          )}
+            {colors && productHasManyColor && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={isHovered ? { opacity: 1 } : {}}
+                transition={transition}
+                className="sizes flex gap-4 items-center justify-center text-[10.5px] uppercase max-lg:hidden"
+              >
+                {colors.map((color, i) => (
+                  <Link
+                    href={{
+                      pathname: `/product/${product.handle}`,
+                      search: `?style=${color}`,
+                    }}
+                    key={i}
+                  >
+                    <ColorBlock color={color} />
+                  </Link>
+                ))}
+              </motion.div>
+            )}
+          </div>
+          <motion.span
+            initial={{ opacity: 1, pointerEvents: "all" }}
+            animate={isHovered && !bulletsBreakpoint ? { opacity: 0, pointerEvents: "none" } : {}}
+            transition={transition}
+          >
+            {getCurrencySymbol(product.priceRange.minVariantPrice.currencyCode)}
+            {product.priceRange.minVariantPrice.amount}
+          </motion.span>
         </div>
-        <motion.div
-          initial={{ opacity: 1, pointerEvents: "all" }}
-          animate={isHovered ? { opacity: 0, pointerEvents: "none" } : {}}
-          transition={transition}
-          className="price flex flex-col items-center text-[10.5px]"
-        >
-          <span className="uppercase font-bold">{product.title}</span>
-          <span>{product.priceRange.minVariantPrice.amount}</span>
-        </motion.div>
       </div>
     </div>
   );
