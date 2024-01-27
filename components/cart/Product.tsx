@@ -1,20 +1,13 @@
 "use client";
 
+import { CartQuery } from "@/types/storefront.generated";
 import Image from "next/image";
 import Link from "next/link";
+import getCurrencySymbol from "@/utils/getCurrencySymbol";
 import { useState } from "react";
 
-export interface IProduct {
-  name: string;
-  image: string;
-  price: string;
-  color: string;
-  size: string;
-  quantity: number;
-}
-
 interface IProps {
-  product: IProduct;
+  product: NonNullable<CartQuery["cart"]>["lines"]["edges"][any]["node"];
 }
 
 const Product = ({ product }: IProps) => {
@@ -23,16 +16,25 @@ const Product = ({ product }: IProps) => {
     <div className="product py-4 border-t border-BLACK">
       <div className="product-top flex items-start gap-3">
         <div className="max-w-[200px] max-h-[200px] h-full w-full max-sm:max-w-[120px] max-sm:max-h-[120px]">
-          <Image src={product.image} alt="Item image" width={200} height={200} className="h-full w-full object-cover" />
+          <Image
+            src={product.merchandise.image?.url}
+            id={product.merchandise.image?.url}
+            alt="Product image"
+            width={200}
+            height={200}
+            className="h-full w-full object-cover"
+          />
         </div>
         <div className="flex flex-col gap-2">
           <Link href={"/product"}>
-            <h2 className="uppercase font-bold text-sm underline">{product.name}</h2>
+            <h2 className="uppercase font-bold text-sm underline">{product.merchandise.title}</h2>
           </Link>
-          <p className="text-sm">{product.price}</p>
+          <p className="text-sm">{`${getCurrencySymbol(product.merchandise.price.currencyCode)} ${
+            product.merchandise.price.amount
+          }`}</p>
           <div className="flex flex-col">
-            <p className="text-sm">Color: {product.color}</p>
-            <p className="text-sm">Size: {product.size}</p>
+            {/* <p className="text-sm">Color: {product.color}</p>
+            <p className="text-sm">Size: {product.size}</p> */}
             <div className="text-sm flex items-center gap-4">
               <span>Quantity:</span>
               <button type="button" disabled={quantity <= 1} onClick={() => setQuantity(quantity - 1)}>
