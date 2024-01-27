@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";

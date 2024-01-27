@@ -1,8 +1,5 @@
 "use client";
 
-import { Image as IImage, Product as IProduct, MoneyV2, ProductOption } from "@/types/storefront.types";
-import { useCallback, useEffect, useState } from "react";
-
 import Button from "../Button";
 import Container from "../Container";
 import Image from "next/image";
@@ -12,6 +9,7 @@ import client from "@/utils/api-client";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useState } from "react";
 
 const getProducts = async (cursor?: string) => {
   const { data, errors } = await client.request(

@@ -1,5 +1,4 @@
 import Cart from "@/components/cart/Cart";
-import CheckoutBtn from "@/components/cart/CheckoutBtn";
 import Container from "@/components/Container";
 
 const CartPage = () => {
