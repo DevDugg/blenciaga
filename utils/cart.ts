@@ -14,8 +14,11 @@ interface ICartClassConstructor {
   cartId?: string;
 }
 
-interface ICartClass {
+export interface ICartClass {
   getCartId(): string | null;
+  createCart(options: ICreateCartMutationOptions): Promise<NonNullable<CreateCartMutation["cartCreate"]>["cart"]>;
+  getCart(): Promise<CartQuery["cart"]>;
+  addToCart(variantId: string): Promise<CartQuery["cart"]>;
 }
 
 /**
@@ -175,7 +178,85 @@ class Cart implements ICartClass {
     return (data as CartQuery).cart;
   };
 
-  public addToCart = async () => {};
+  public addToCart = async (variantId: string) => {
+    const id = this.getCartId();
+    if (!id) return;
+
+    const { data, errors } = await client.request(
+      `#graphql
+      mutation AddToCart {
+        cartLinesAdd(
+          cartId: "${id}"
+          lines: {merchandiseId: "${variantId}", quantity: 1}
+        ) {
+          cart {
+            cost {
+              ...CartCostFragment
+            }
+            id
+            lines(first: 10) {
+              ...BaseCartLineConnectionFragment
+            }
+            totalQuantity
+          }
+        }
+      }
+      
+      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+        edges {
+          node {
+            merchandise {
+              ... on ProductVariant {
+                id
+                image {
+                  id
+                  url
+                }
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+            id
+            quantity
+          }
+        }
+      }
+      
+      fragment CartCostFragment on CartCost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
+      }`,
+    );
+    if (errors || !data?.cart?.id) {
+      throw new Error(errors?.message);
+    }
+
+    this.setCartId(data.cart.id);
+
+    return (data as CartQuery).cart;
+  };
+
   public removeFromCart = async () => {};
   public updateProductInCart = async () => {};
   public updateBuyerInfo = async () => {};

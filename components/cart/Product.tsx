@@ -22,6 +22,7 @@ const Product = ({ product }: IProps) => {
             alt="Product image"
             width={200}
             height={200}
+            priority
             className="h-full w-full object-cover"
           />
         </div>

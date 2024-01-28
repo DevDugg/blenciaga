@@ -1,15 +1,14 @@
 "use client";
 
-import { useEffectOnce, useMediaQuery } from "usehooks-ts";
+import { useContext, useMemo } from "react";
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";
 import CheckoutBtn from "./CheckoutBtn";
-import { CreateCart } from "@/utils/cart";
 import Link from "next/link";
 import Product from "./Product";
 import getCurrencySymbol from "@/utils/getCurrencySymbol";
-import { useContext } from "react";
+import { useMediaQuery } from "usehooks-ts";
 import { useRouter } from "next/navigation";
 
 const Cart = () => {
@@ -20,29 +19,17 @@ const Cart = () => {
   const router = useRouter();
 
   // data
-  const { cart, setCart } = useContext(CartContext);
-  const productsQuantity = cart?.lines?.edges.length || 0;
-  const hasProducts = cart && productsQuantity > 0;
-
-  useEffectOnce(() => {
-    if (cart?.id) return;
-    const cartClass = new CreateCart({});
-
-    const getOrCreateCart = async () => {
-      const oldCart = await cartClass.getCart();
-      if (oldCart?.id) return setCart(oldCart);
-      const newCart = await cartClass.createCart({});
-      setCart(newCart);
-    };
-
-    getOrCreateCart();
-  });
-
+  const cartContext = useContext(CartContext);
+  const {
+    cartState,
+    // setCartState
+  } = cartContext.cartState;
+  const productsQuantity = useMemo(() => cartState?.lines?.edges.length || 0, [cartState]);
+  const hasProducts = cartState && productsQuantity > 0;
   return (
     <div className="max-w-[700px] w-full border-x border-BLACK max-lg:max-w-[800px] max-[850px]:max-w-none">
       <div className="cart-head flex flex-col gap-2 justify-center text-center py-16">
         <h1 className="text-[22px] uppercase font-bold">Cart</h1>
-        <p>{cart?.id}</p>
         <p className="text-sm">{hasProducts ? "Free shipping & returns." : "Your cart is empty."}</p>
       </div>
       {hasProducts ? (
@@ -57,8 +44,7 @@ const Cart = () => {
       {hasProducts ? (
         <>
           <div>
-            {/* @ts-expect-error because hasProducts already checking if cart.cart is present or not */}
-            {cart.cart.lines.edges.map((product) => (
+            {cartState.lines.edges.map((product) => (
               <Product key={product.node.id} product={product.node} />
             ))}
           </div>
@@ -73,8 +59,8 @@ const Cart = () => {
             </li> */}
             <li className="flex items-center gap-6 justify-between font-bold">
               <p className="text-sm">Estimated total:</p>
-              <p className="text-sm">{`${getCurrencySymbol(cart?.cost.subtotalAmount.currencyCode)} ${
-                cart?.cost.subtotalAmount.amount
+              <p className="text-sm">{`${getCurrencySymbol(cartState?.cost.subtotalAmount.currencyCode)} ${
+                cartState?.cost.subtotalAmount.amount
               }`}</p>
             </li>
           </ul>

@@ -6,6 +6,7 @@ const NameWhite = () => {
     <Link href={"/"} className="name">
       <Image
         src={"/name_white.svg"}
+        priority
         loading="eager"
         width={200}
         height={30}
