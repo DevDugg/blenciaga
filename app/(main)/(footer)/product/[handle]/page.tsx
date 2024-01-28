@@ -7,7 +7,6 @@ import Dropdown from "@/components/Dropdown";
 import ProductGrid from "@/components/products/ProductGrid";
 import { ProductQuery } from "@/types/storefront.generated";
 import ProductSlider from "@/components/products/ProductSlider";
-import { ProductVariant } from "@/types/storefront.types";
 import client from "@/utils/api-client";
 
 const breadcrumbLinks: IBreadcrumbLink[] = [
@@ -27,10 +26,10 @@ const breadcrumbLinks: IBreadcrumbLink[] = [
 
 const getProduct = async (
   handle: string,
-  option?: {
-    name: string;
-    value: string;
-  },
+  // option?: {
+  //   name: string;
+  //   value: string;
+  // },
 ) => {
   const { data, errors } = await client.request(
     `#graphql
@@ -92,10 +91,10 @@ interface IParams {
   searchParams?: { [key: string]: string | undefined };
 }
 
-interface IOption {
-  name: string;
-  value: string | null | undefined;
-}
+// interface IOption {
+//   name: string;
+//   value: string | null | undefined;
+// }
 
 const Product = async ({ params, searchParams }: IParams) => {
   const product = await getProduct(params.handle);

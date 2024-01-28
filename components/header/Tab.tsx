@@ -40,7 +40,7 @@ const Tab = ({ link, title, rows }: IProps) => {
   useEffect(() => {
     if (rows && rows.length > 6 && rows.length < 12) {
       const difference = Math.abs(12 - rows.length);
-      let newRows: typeof rows = [...rows];
+      const newRows: typeof rows = [...rows];
       for (let i = 0; i < difference; i++) {
         newRows.push({
           heading: {

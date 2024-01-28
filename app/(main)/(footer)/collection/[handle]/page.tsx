@@ -6,11 +6,11 @@ import Hero from "@/components/hero/Hero";
 import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
 
-const getCollection = async (handle: string) => {
+const getCollection = async (handle: string | null | undefined) => {
   const { data, errors } = await client.request(
     `#graphql
     query Collection {
-      collection(handle: "new-collection") {
+      collection(handle: "${handle || "new-collection"}") {
         handle
         descriptionHtml
         image {

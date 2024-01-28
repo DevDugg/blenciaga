@@ -10,11 +10,11 @@ import { useState } from "react";
 export type VariantsType = Pick<NonNullable<ProductQuery["product"]>, "variants">["variants"]["nodes"];
 interface IProps {
   variants: VariantsType;
-  initialVariant?: VariantsType[any];
+  initialVariant?: VariantsType[number];
 }
 
 const StyleSelect = ({ variants, initialVariant }: IProps) => {
-  const [selectedVariant, setSelectedVariant] = useState<VariantsType[any]>(initialVariant || variants[0]);
+  const [selectedVariant, setSelectedVariant] = useState<VariantsType[number]>(initialVariant || variants[0]);
 
   return (
     <div className="flex gap-2 flex-wrap justify-center">

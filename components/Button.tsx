@@ -10,14 +10,14 @@ import { useRef } from "react";
 interface IProps {
   title: string;
   onClick?: () => Promise<void> | void;
-  onInView?: () => Promise<void>;
+  // onInView?: () => Promise<void>;
   black?: boolean;
   fixedOnMobile?: boolean;
   width?: number | string;
   disabled?: boolean;
 }
 
-const Button = ({ title, onClick, black, fixedOnMobile, width, disabled, onInView }: IProps) => {
+const Button = ({ title, onClick, black, fixedOnMobile, width, disabled }: IProps) => {
   const breakpoint = useMediaQuery("(max-width:768px)");
   const bgVariants = {
     initial: {

@@ -68,7 +68,7 @@ const Product = ({ view, product }: IProps) => {
               bulletActiveClass: "swiper-custom-bullet-active",
             }}
           >
-            {product.images.nodes.map((img: any) => (
+            {product.images.nodes.map((img) => (
               <SwiperSlide key={img.id}>
                 <Image
                   src={img.url}

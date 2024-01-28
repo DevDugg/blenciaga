@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect } from "react";
+import { useEffectOnce, useMediaQuery } from "usehooks-ts";
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";
@@ -9,7 +9,7 @@ import { CreateCart } from "@/utils/cart";
 import Link from "next/link";
 import Product from "./Product";
 import getCurrencySymbol from "@/utils/getCurrencySymbol";
-import { useMediaQuery } from "usehooks-ts";
+import { useContext } from "react";
 import { useRouter } from "next/navigation";
 
 const Cart = () => {
@@ -24,20 +24,19 @@ const Cart = () => {
   const productsQuantity = cart?.lines?.edges.length || 0;
   const hasProducts = cart && productsQuantity > 0;
 
-  useEffect(() => {
+  useEffectOnce(() => {
     if (cart?.id) return;
     const cartClass = new CreateCart({});
 
     const getOrCreateCart = async () => {
       const oldCart = await cartClass.getCart();
-      console.log(oldCart);
       if (oldCart?.id) return setCart(oldCart);
       const newCart = await cartClass.createCart({});
       setCart(newCart);
     };
 
     getOrCreateCart();
-  }, []);
+  });
 
   return (
     <div className="max-w-[700px] w-full border-x border-BLACK max-lg:max-w-[800px] max-[850px]:max-w-none">
@@ -55,13 +54,10 @@ const Cart = () => {
           </li>
         </ul>
       ) : null}
-      {/* hasProducts already checking if cart.cart is present or not */}
       {hasProducts ? (
         <>
           <div>
-            {/* hasProducts already checking if cart.cart is present or not */}
-            {/* for that reason */}
-            {/* @ts-ignore */}
+            {/* @ts-expect-error because hasProducts already checking if cart.cart is present or not */}
             {cart.cart.lines.edges.map((product) => (
               <Product key={product.node.id} product={product.node} />
             ))}

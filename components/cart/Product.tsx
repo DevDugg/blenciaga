@@ -7,7 +7,7 @@ import getCurrencySymbol from "@/utils/getCurrencySymbol";
 import { useState } from "react";
 
 interface IProps {
-  product: NonNullable<CartQuery["cart"]>["lines"]["edges"][any]["node"];
+  product: NonNullable<CartQuery["cart"]>["lines"]["edges"][number]["node"];
 }
 
 const Product = ({ product }: IProps) => {
