@@ -1,6 +1,6 @@
 "use client";
 
-import { AddToCartMutation, CartQuery, CreateCartMutation } from "@/types/storefront.generated";
+import { AddToCartMutation, CartQuery, CreateCartMutation, RemoveFromCartMutation } from "@/types/storefront.generated";
 
 import client from "./api-client";
 
@@ -18,7 +18,8 @@ export interface ICartClass {
   getCartId(): string | null;
   createCart(options: ICreateCartMutationOptions): Promise<NonNullable<CreateCartMutation["cartCreate"]>["cart"]>;
   getCart(): Promise<CartQuery["cart"]>;
-  addToCart(variantId: string): Promise<CartQuery["cart"]>;
+  addToCart(variantId: string): Promise<NonNullable<AddToCartMutation["cartLinesAdd"]>["cart"]>;
+  removeFromCart(lineId: string): Promise<NonNullable<RemoveFromCartMutation["cartLinesRemove"]>["cart"]>;
 }
 
 /**
@@ -121,11 +122,11 @@ class Cart implements ICartClass {
       }`,
     );
 
-    if (errors || !data?.cart?.id) {
+    if (errors || !data?.cartCreate?.cart?.id) {
       throw new Error(errors?.message);
     }
 
-    this.setCartId(data.cart?.id);
+    this.setCartId(data.cartCreate.cart?.id);
 
     return (data as CreateCartMutation).cartCreate?.cart;
   };
@@ -293,7 +294,89 @@ class Cart implements ICartClass {
     return (data as AddToCartMutation).cartLinesAdd?.cart;
   };
 
-  public removeFromCart = async () => {};
+  public removeFromCart = async (lineId: string) => {
+    const id = this.getCartId();
+    if (!id) return;
+
+    const { data, errors } = await client.request(
+      `#graphql
+      mutation RemoveFromCart {
+        cartLinesRemove(
+          cartId: "${id}"
+          lineIds: "${lineId}"
+        ) {
+          cart {
+            cost {
+              ...CartCostFragment
+            }
+            id
+            lines(first: 10) {
+              ...BaseCartLineConnectionFragment
+            }
+            totalQuantity
+          }
+        }
+      }
+      
+      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+        edges {
+          node {
+            merchandise {
+              ... on ProductVariant {
+                id
+                image {
+                  id
+                  url
+                }
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+                product {
+                  handle
+                  title
+                }
+              }
+            }
+            id
+            quantity
+          }
+        }
+      }
+      
+      fragment CartCostFragment on CartCost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
+      }`,
+    );
+    if (errors || !data?.cartLinesRemove?.cart?.id) {
+      throw new Error(errors?.message);
+    }
+
+    this.setCartId(data.cartLinesRemove?.cart?.id);
+
+    return (data as RemoveFromCartMutation).cartLinesRemove?.cart;
+  };
+
   public updateProductInCart = async () => {};
   public updateBuyerInfo = async () => {};
   public updateProductQuantity = async () => {};

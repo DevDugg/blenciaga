@@ -1,10 +1,13 @@
 "use client";
 
+import { useContext, useState } from "react";
+
+import { CartContext } from "@/context/CartContext";
 import { CartQuery } from "@/types/storefront.generated";
 import Image from "next/image";
 import Link from "next/link";
 import getCurrencySymbol from "@/utils/getCurrencySymbol";
-import { useState } from "react";
+import { toast } from "react-toastify";
 
 interface IProps {
   product: NonNullable<CartQuery["cart"]>["lines"]["edges"][number]["node"];
@@ -12,6 +15,16 @@ interface IProps {
 
 const Product = ({ product }: IProps) => {
   const [quantity, setQuantity] = useState<number>(product.quantity);
+  const cartContext = useContext(CartContext);
+  const { cartState, setCartState } = cartContext.cartState;
+  const { cartClass, setCartClass } = cartContext.cartClass;
+
+  const removeFromCart = async () => {
+    const newCart = await cartClass.removeFromCart(product.id);
+    setCartState(newCart);
+    toast("Product removed from cart");
+  };
+
   return (
     <div className="product py-4 border-t border-BLACK">
       <div className="product-top flex items-start gap-3">
@@ -36,7 +49,7 @@ const Product = ({ product }: IProps) => {
           <div className="flex flex-col gap-2">
             <div className="flex flex-col">
               {product.merchandise.selectedOptions.map((option) => (
-                <p className="text-sm">{`${option.name}: ${option.value}`}</p>
+                <p key={option.name} className="text-sm">{`${option.name}: ${option.value}`}</p>
               ))}
             </div>
             <div className="text-sm flex items-center gap-4">
@@ -65,7 +78,7 @@ const Product = ({ product }: IProps) => {
         </div>
       </div>
       <div className="flex justify-end px-4">
-        <button type="button" className="text-sm underline font-bold">
+        <button type="button" className="text-sm underline font-bold" onClick={removeFromCart}>
           Delete
         </button>
       </div>

@@ -35,7 +35,7 @@ const SizeSelect = ({ items, initial }: IProps) => {
   }, [value]);
 
   useEffect(() => {
-    console.log(productOptions);
+    // console.log(productOptions);
   }, [productOptions]);
 
   return (
