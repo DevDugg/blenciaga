@@ -16,8 +16,8 @@ interface IProps {
 const Product = ({ product }: IProps) => {
   const [quantity, setQuantity] = useState<number>(product.quantity);
   const cartContext = useContext(CartContext);
-  const { cartState, setCartState } = cartContext.cartState;
-  const { cartClass, setCartClass } = cartContext.cartClass;
+  const { setCartState } = cartContext.cartState;
+  const { cartClass } = cartContext.cartClass;
 
   const removeFromCart = async () => {
     const newCart = await cartClass.removeFromCart(product.id);
@@ -41,7 +41,7 @@ const Product = ({ product }: IProps) => {
         </div>
         <div className="flex flex-col gap-2">
           <Link href={`/product/${product.merchandise.product.handle}`}>
-            <h2 className="uppercase font-bold text-sm underline">{product.merchandise.title}</h2>
+            <h2 className="uppercase font-bold text-sm underline">{product.merchandise.product.title}</h2>
           </Link>
           <p className="text-sm">{`${getCurrencySymbol(product.merchandise.price.currencyCode)} ${
             product.merchandise.price.amount

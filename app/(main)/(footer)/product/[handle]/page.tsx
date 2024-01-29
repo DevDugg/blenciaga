@@ -1,7 +1,6 @@
 import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 import StyleSelect, { VariantsType } from "@/components/products/StyleSelect";
 
-import Button from "@/components/Button";
 import Dropdown from "@/components/Dropdown";
 import ProductButtons from "@/components/products/ProductButtons";
 import ProductGrid from "@/components/products/ProductGrid";

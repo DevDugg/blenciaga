@@ -17,8 +17,8 @@ const ProductButtons = ({ productVariants }: IProps) => {
   const { productOptions } = useContext(ProductOptionContext);
   const [buttonTitle, setButtonTitle] = useState<string>("Add to cart");
   const cartContext = useContext(CartContext);
-  const { cartClass, setCartClass } = cartContext.cartClass;
-  const { cartState, setCartState } = cartContext.cartState;
+  const { cartClass } = cartContext.cartClass;
+  const { setCartState } = cartContext.cartState;
 
   const variant = useMemo(() => {
     if (!productVariants || !productOptions) return null;

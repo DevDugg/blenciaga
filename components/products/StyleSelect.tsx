@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Image from "next/image";
 import { ProductOptionContext } from "@/context/ProductOptionContext";
