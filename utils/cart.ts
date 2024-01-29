@@ -1,6 +1,12 @@
 "use client";
 
-import { AddToCartMutation, CartQuery, CreateCartMutation, RemoveFromCartMutation } from "@/types/storefront.generated";
+import {
+  AddToCartMutation,
+  CartQuery,
+  CreateCartMutation,
+  RemoveFromCartMutation,
+  UpdateProductQuantityMutation,
+} from "@/types/storefront.generated";
 
 import client from "./api-client";
 
@@ -20,6 +26,10 @@ export interface ICartClass {
   getCart(): Promise<CartQuery["cart"]>;
   addToCart(variantId: string): Promise<NonNullable<AddToCartMutation["cartLinesAdd"]>["cart"]>;
   removeFromCart(lineId: string): Promise<NonNullable<RemoveFromCartMutation["cartLinesRemove"]>["cart"]>;
+  updateProductQuantity(
+    quantity: number,
+    lineId: string,
+  ): Promise<NonNullable<UpdateProductQuantityMutation["cartLinesUpdate"]>["cart"]>;
 }
 
 /**
@@ -377,9 +387,92 @@ class Cart implements ICartClass {
     return (data as RemoveFromCartMutation).cartLinesRemove?.cart;
   };
 
+  public updateProductQuantity = async (quantity: number, lineId: string) => {
+    const id = this.getCartId();
+    if (!id) return;
+
+    const { data, errors } = await client.request(
+      `#graphql
+      mutation UpdateProductQuantity {
+        cartLinesUpdate(
+          cartId: "${id}"
+          lines: {id: "${lineId}", quantity: ${quantity}}
+        ) {
+          cart {
+            cost {
+              ...CartCostFragment
+            }
+            id
+            lines(first: 10) {
+              ...BaseCartLineConnectionFragment
+            }
+            totalQuantity
+          }
+        }
+      }
+      
+      
+      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+        edges {
+          node {
+            merchandise {
+              ... on ProductVariant {
+                id
+                image {
+                  id
+                  url
+                }
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+                product {
+                  handle
+                  title
+                }
+              }
+            }
+            id
+            quantity
+          }
+        }
+      }
+      
+      fragment CartCostFragment on CartCost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
+      }`,
+    );
+    if (errors || !data?.cartLinesUpdate?.cart?.id) {
+      throw new Error(errors?.message);
+    }
+
+    this.setCartId(data.cartLinesUpdate?.cart?.id);
+
+    return (data as UpdateProductQuantityMutation).cartLinesUpdate?.cart;
+  };
+
   public updateProductInCart = async () => {};
   public updateBuyerInfo = async () => {};
-  public updateProductQuantity = async () => {};
 }
 
 export { Cart as CreateCart };

@@ -20,9 +20,15 @@ const Product = ({ product }: IProps) => {
   const { cartClass } = cartContext.cartClass;
 
   const removeFromCart = async () => {
-    const newCart = await cartClass.removeFromCart(product.id);
-    setCartState(newCart);
+    const updatedCart = await cartClass.removeFromCart(product.id);
+    setCartState(updatedCart);
     toast("Product removed from cart");
+  };
+
+  const updateProductQuantity = async (newQuantity: number) => {
+    const updatedCart = await cartClass.updateProductQuantity(newQuantity, product.id);
+    setCartState(updatedCart);
+    toast("Product quantity updated");
   };
 
   return (
@@ -54,7 +60,15 @@ const Product = ({ product }: IProps) => {
             </div>
             <div className="text-sm flex items-center gap-4">
               <span>Quantity:</span>
-              <button type="button" disabled={quantity <= 1} onClick={() => setQuantity(quantity - 1)}>
+              <button
+                type="button"
+                disabled={quantity <= 1}
+                onClick={() => {
+                  if (!(quantity > 1)) return;
+                  updateProductQuantity(quantity - 1);
+                  setQuantity(quantity - 1);
+                }}
+              >
                 <Image
                   src={"/minus.svg"}
                   alt="Subtract Icon"
@@ -64,7 +78,13 @@ const Product = ({ product }: IProps) => {
                 />
               </button>
               <span>{quantity}</span>
-              <button type="button" onClick={() => setQuantity(quantity + 1)}>
+              <button
+                type="button"
+                onClick={() => {
+                  updateProductQuantity(quantity + 1);
+                  setQuantity(quantity + 1);
+                }}
+              >
                 <Image
                   src={"/plus.svg"}
                   alt="Add Icon"

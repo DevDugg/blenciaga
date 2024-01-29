@@ -1,4 +1,5 @@
-const getCurrencySymbol = (currencyCode: string | undefined): string => {
+const getCurrencySymbol = (currencyCode: string | undefined | null): string => {
+  if (!currencyCode) return "€";
   switch (currencyCode) {
     case "USD":
       return "$";

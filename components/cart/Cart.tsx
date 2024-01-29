@@ -52,15 +52,17 @@ const Cart = () => {
             {/* <li className="flex items-center gap-6 justify-between">
               <p className="text-sm">Shipping cost:</p>
               <p className="text-sm">$ 0.00</p>
-            </li>
+            </li> */}
             <li className="flex items-center gap-6 justify-between">
               <p className="text-sm">Sales Tax:</p>
-              <p className="text-sm">$ 0.00</p>
-            </li> */}
+              <p className="text-sm">{`${getCurrencySymbol(cartState?.cost.totalTaxAmount?.currencyCode)} ${
+                cartState?.cost.totalTaxAmount?.amount || "0.0"
+              }`}</p>
+            </li>
             <li className="flex items-center gap-6 justify-between font-bold">
               <p className="text-sm">Estimated total:</p>
-              <p className="text-sm">{`${getCurrencySymbol(cartState?.cost.subtotalAmount.currencyCode)} ${
-                cartState?.cost.subtotalAmount.amount
+              <p className="text-sm">{`${getCurrencySymbol(cartState?.cost.totalAmount.currencyCode)} ${
+                cartState?.cost.totalAmount.amount
               }`}</p>
             </li>
           </ul>
