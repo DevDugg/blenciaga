@@ -1,6 +1,6 @@
 "use client";
 
-import { CartQuery, CreateCartMutation } from "@/types/storefront.generated";
+import { AddToCartMutation, CartQuery, CreateCartMutation } from "@/types/storefront.generated";
 
 import client from "./api-client";
 
@@ -56,7 +56,7 @@ class Cart implements ICartClass {
     const { data, errors } = await client.request(
       `#graphql
       mutation CreateCart {
-        cartCreate(input: {${options.lines ? options.lines : ""}}) {
+        cartCreate(input: {}) {
           cart {
             id
             totalQuantity
@@ -85,6 +85,14 @@ class Cart implements ICartClass {
                   amount
                   currencyCode
                 }
+                selectedOptions {
+                  name
+                  value
+                }
+                product {
+                  handle
+                  title
+                }
               }
             }
             id
@@ -102,14 +110,22 @@ class Cart implements ICartClass {
           amount
           currencyCode
         }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
       }`,
     );
 
-    if (errors || !data?.cartCreate?.cart?.id) {
+    if (errors || !data?.cart?.id) {
       throw new Error(errors?.message);
     }
 
-    this.setCartId(data.cartCreate?.cart?.id);
+    this.setCartId(data.cart?.id);
 
     return (data as CreateCartMutation).cartCreate?.cart;
   };
@@ -119,54 +135,70 @@ class Cart implements ICartClass {
     if (!id) return;
     const { data, errors } = await client.request(
       `#graphql
-          query Cart {
-            cart(
-              id: "${id}"
-            ) {
-              cost {
-                ...CartCostFragment
-              }
-              id
-              lines(first: 10) {
-                ...BaseCartLineConnectionFragment
-              }
-              totalQuantity
-            }
+      query Cart {
+        cart(
+          id: "${id}"
+        ) {
+          cost {
+            ...CartCostFragment
           }
-          
-          fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-            edges {
-              node {
-                merchandise {
-                  ... on ProductVariant {
-                    id
-                    image {
-                      id
-                      url
-                    }
-                    title
-                    price {
-                      amount
-                      currencyCode
-                    }
-                  }
-                }
+          id
+          lines(first: 10) {
+            ...BaseCartLineConnectionFragment
+          }
+          totalQuantity
+        }
+      }
+      
+      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+        edges {
+          node {
+            merchandise {
+              ... on ProductVariant {
                 id
-                quantity
+                image {
+                  id
+                  url
+                }
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+                product {
+                  handle
+                  title
+                }
               }
             }
+            id
+            quantity
           }
-          
-          fragment CartCostFragment on CartCost {
-            subtotalAmount {
-              amount
-              currencyCode
-            }
-            totalAmount {
-              amount
-              currencyCode
-            }
-          }`,
+        }
+      }
+      
+      fragment CartCostFragment on CartCost {
+        subtotalAmount {
+          amount
+          currencyCode
+        }
+        totalAmount {
+          amount
+          currencyCode
+        }
+        totalTaxAmount {
+          amount
+          currencyCode
+        }
+        totalDutyAmount {
+          amount
+          currencyCode
+        }
+      }`,
     );
 
     if (errors || !data?.cart?.id) {
@@ -221,6 +253,10 @@ class Cart implements ICartClass {
                   name
                   value
                 }
+                product {
+                  handle
+                  title
+                }
               }
             }
             id
@@ -248,13 +284,13 @@ class Cart implements ICartClass {
         }
       }`,
     );
-    if (errors || !data?.cart?.id) {
+    if (errors || !data?.cartLinesAdd?.cart?.id) {
       throw new Error(errors?.message);
     }
 
-    this.setCartId(data.cart.id);
+    this.setCartId(data.cartLinesAdd?.cart?.id);
 
-    return (data as CartQuery).cart;
+    return (data as AddToCartMutation).cartLinesAdd?.cart;
   };
 
   public removeFromCart = async () => {};

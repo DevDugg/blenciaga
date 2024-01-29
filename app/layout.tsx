@@ -1,7 +1,9 @@
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import CartContextProvider from "@/context/CartContext";
 import type { Metadata } from "next";
+import { ToastContainer } from "react-toastify";
 import localFont from "next/font/local";
 
 const BB = localFont({
@@ -22,7 +24,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${BB.className} overflow-x-hidden`}>
-        <CartContextProvider>{children}</CartContextProvider>
+        <CartContextProvider>
+          <ToastContainer />
+          {children}
+        </CartContextProvider>
       </body>
     </html>
   );

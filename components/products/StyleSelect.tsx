@@ -1,11 +1,13 @@
 "use client";
 
+import { useContext, useEffect, useMemo, useState } from "react";
+
 import Image from "next/image";
+import { ProductOptionContext } from "@/context/ProductOptionContext";
 import { ProductQuery } from "@/types/storefront.generated";
 import colors from "@/settings/ui/colors";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
-import { useState } from "react";
 
 export type VariantsType = Pick<NonNullable<ProductQuery["product"]>, "variants">["variants"]["nodes"];
 interface IProps {
@@ -15,6 +17,22 @@ interface IProps {
 
 const StyleSelect = ({ variants, initialVariant }: IProps) => {
   const [selectedVariant, setSelectedVariant] = useState<VariantsType[number]>(initialVariant || variants[0]);
+
+  const { productOptions, setProductOptions } = useContext(ProductOptionContext);
+
+  const updateStyleValue = (newValue: string) => {
+    setProductOptions((currentOptions) =>
+      currentOptions.map((option) => (option.name === "Style" ? { ...option, value: newValue } : option)),
+    );
+  };
+
+  useEffect(() => {
+    const extractedStyle = selectedVariant.selectedOptions.find((option) => option.name === "Style");
+    if (!extractedStyle) return;
+    const selectedStyle = productOptions.find((option) => option.name === "Style");
+    if (!selectedStyle) setProductOptions([...productOptions, { name: "Style", value: extractedStyle.value }]);
+    else updateStyleValue(extractedStyle.value);
+  }, [selectedVariant]);
 
   return (
     <div className="flex gap-2 flex-wrap justify-center">

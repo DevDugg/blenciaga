@@ -12,6 +12,9 @@ interface IProps {
 
 const Product = ({ product }: IProps) => {
   const [quantity, setQuantity] = useState<number>(product.quantity);
+  // const { productOptions, setProductOptions } = useContext(ProductOptionContext);
+
+  // const optionsLength = useMemo(() => Object.keys(productOptions).length > 0, [productOptions]);
   return (
     <div className="product py-4 border-t border-BLACK">
       <div className="product-top flex items-start gap-3">
@@ -27,15 +30,17 @@ const Product = ({ product }: IProps) => {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <Link href={"/product"}>
+          <Link href={`/product/${product.merchandise.product.handle}`}>
             <h2 className="uppercase font-bold text-sm underline">{product.merchandise.title}</h2>
           </Link>
           <p className="text-sm">{`${getCurrencySymbol(product.merchandise.price.currencyCode)} ${
             product.merchandise.price.amount
           }`}</p>
           <div className="flex flex-col">
-            {/* <p className="text-sm">Color: {product.color}</p>
-            <p className="text-sm">Size: {product.size}</p> */}
+            {/* {optionsLength &&
+              Object.keys(productOptions).map((key) => (
+                <p className="text-sm" key={key}>{`${key}: ${productOptions[key]}`}</p>
+              ))} */}
             <div className="text-sm flex items-center gap-4">
               <span>Quantity:</span>
               <button type="button" disabled={quantity <= 1} onClick={() => setQuantity(quantity - 1)}>

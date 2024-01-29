@@ -2,11 +2,12 @@ import Breadcrumb, { IBreadcrumbLink } from "@/components/Breadcrumb";
 import StyleSelect, { VariantsType } from "@/components/products/StyleSelect";
 
 import Button from "@/components/Button";
-import CustomSelect from "@/components/CustomSelect";
 import Dropdown from "@/components/Dropdown";
+import ProductButtons from "@/components/products/ProductButtons";
 import ProductGrid from "@/components/products/ProductGrid";
 import { ProductQuery } from "@/types/storefront.generated";
 import ProductSlider from "@/components/products/ProductSlider";
+import SizeSelect from "@/components/products/SizeSelect";
 import client from "@/utils/api-client";
 
 const breadcrumbLinks: IBreadcrumbLink[] = [
@@ -164,17 +165,13 @@ const Product = async ({ params, searchParams }: IParams) => {
                       Size guide
                     </a>
                   </div>
-                  {sizes && <CustomSelect items={sizes} initial={searchParams ? searchParams["size"] : null} />}
+                  {sizes && <SizeSelect items={sizes} initial={searchParams ? searchParams["size"] : null} />}
                   <div className="flex justify-center">
                     <p className="text-[#767676] normal-case text-center max-w-[70%]">
                       Designed to be worn as an oversized/very loose fit, we recommend sizing down for a regular fit.
                     </p>
                   </div>
-                  <div className="flex flex-col gap-2 text-xs">
-                    <Button title="Add to cart" black fixedOnMobile />
-                    {/* <Button title="SAVE ITEM" /> */}
-                    <span className="block pt-1 w-full text-center normal-case">Store availability</span>
-                  </div>
+                  <ProductButtons productVariants={variants?.nodes} />
                   <div className="flex justify-center">
                     <p className="text-[#767676] normal-case text-center max-w-[70%] pt-4">
                       Pay securely with Apple Pay, Klarna, Paypal or BitPay for eligible products

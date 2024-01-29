@@ -13,6 +13,7 @@ const ProductGrid = ({ images }: IProps) => {
       {images.nodes.map((img, i) => (
         <Image
           key={i}
+          priority={i === 0}
           src={img.url}
           alt={img.id || ""}
           width={700}
