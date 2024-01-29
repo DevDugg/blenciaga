@@ -50,7 +50,7 @@ class Cart implements ICartClass {
   // PUBLIC METHODS AND PROPERTIES
 
   public getCartId = () => {
-    return this.cartId || localStorage.getItem("cartId");
+    return this.cartId || typeof localStorage ? localStorage.getItem("cartId") : null;
   };
 
   public createCart = async (options: ICreateCartMutationOptions) => {
