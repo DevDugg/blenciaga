@@ -69,7 +69,14 @@ const Collection = ({ products }: IProps) => {
   const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
 
   const curatedData = data
-    ? { ...data, edges: data?.edges.slice(0, data.edges.length - (data.edges.length % 4)) }
+    ? {
+        ...data,
+        edges: data?.edges.slice(
+          0,
+          data.edges.length -
+            (data.edges.length % (gridBreakpoint && !isBook ? 3 : gridBreakpoint && isBook ? 1 : isBook ? 2 : 4)),
+        ),
+      }
     : null;
 
   const fetchMore = async () => {
