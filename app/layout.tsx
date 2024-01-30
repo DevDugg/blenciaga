@@ -3,8 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import CartContextProvider from "@/context/CartContext";
 import type { Metadata } from "next";
-import { ToastContainer } from "react-toastify";
-import colors from "@/settings/ui/colors";
 import localFont from "next/font/local";
 
 const BB = localFont({
@@ -25,10 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${BB.className} overflow-x-hidden`}>
-        <CartContextProvider>
-          <ToastContainer progressStyle={{ background: colors.BLACK }} />
-          {children}
-        </CartContextProvider>
+        <CartContextProvider>{children}</CartContextProvider>
       </body>
     </html>
   );

@@ -3,8 +3,11 @@
 import { CartQuery, CreateCartMutation } from "@/types/storefront.generated";
 import { CreateCart, ICartClass } from "@/utils/cart";
 import { Dispatch, PropsWithChildren, SetStateAction, createContext, useMemo, useState } from "react";
+import { ToastContainer, cssTransition } from "react-toastify";
 
 import CartProvider from "@/providers/CartProvider";
+import colors from "@/settings/ui/colors";
+import { transition } from "@/motion/default.motion";
 
 export type DualCartType = CartQuery["cart"] | NonNullable<CreateCartMutation["cartCreate"]>["cart"];
 
@@ -27,6 +30,12 @@ const CartContextProvider = ({ children }: PropsWithChildren) => {
   const cartStateMemo = useMemo(() => ({ cartState, setCartState }), [cartState, setCartState]);
   const cartClassMemo = useMemo(() => ({ cartClass, setCartClass }), [cartClass, setCartClass]);
 
+  const Zoom = cssTransition({
+    enter: "scale-in-hor-right",
+    exit: "scale-out-hor-right",
+    collapseDuration: transition.duration,
+  });
+
   return (
     <CartContext.Provider
       value={{
@@ -34,7 +43,10 @@ const CartContextProvider = ({ children }: PropsWithChildren) => {
         cartClass: cartClassMemo,
       }}
     >
-      <CartProvider>{children}</CartProvider>
+      <CartProvider>
+        <ToastContainer progressStyle={{ background: colors.BLACK }} transition={Zoom} />
+        {children}
+      </CartProvider>
     </CartContext.Provider>
   );
 };
