@@ -13,6 +13,7 @@ const config: Config = {
         WHITE: "#FFFFFF",
         BLUE: "#0066FF",
         GRAY: "#AAAAAC",
+        GREEN: "#21E053",
       },
       boxShadow: {
         DROPDOWN: "0px 300px 0px 0px rgba(0,0,0,0.5)",
