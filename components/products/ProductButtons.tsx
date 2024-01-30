@@ -32,7 +32,7 @@ const ProductButtons = ({ productVariants }: IProps) => {
     const updatedCart = await cartClass.addToCart(variant!.id);
     if (!updatedCart) return console.log("error updating cart");
     setCartState(updatedCart);
-    toast("Item added to cart!");
+    toast.success("Item added to cart!");
   };
 
   useEffect(() => {

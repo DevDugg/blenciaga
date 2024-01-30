@@ -45,7 +45,7 @@ const CartContextProvider = ({ children }: PropsWithChildren) => {
     >
       <CartProvider>
         <ToastContainer
-          progressStyle={{ background: colors.BLACK }}
+          progressStyle={{ background: colors.GREEN }}
           bodyStyle={{ color: colors.BLACK }}
           transition={Zoom}
           position="bottom-right"

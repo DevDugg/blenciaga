@@ -22,13 +22,17 @@ const Product = ({ product }: IProps) => {
   const removeFromCart = async () => {
     const updatedCart = await cartClass.removeFromCart(product.id);
     setCartState(updatedCart);
-    toast("Product removed from cart");
+    toast.success("Product removed from cart", {
+      icon: (
+        <Image src={"/tick.svg"} alt="Tick icon" width={18} height={18} className="object-contain w-[18px] h-[18px]" />
+      ),
+    });
   };
 
   const updateProductQuantity = async (newQuantity: number) => {
     const updatedCart = await cartClass.updateProductQuantity(newQuantity, product.id);
     setCartState(updatedCart);
-    toast("Product quantity updated");
+    toast.success("Product quantity updated");
   };
 
   return (
