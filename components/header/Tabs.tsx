@@ -1,7 +1,6 @@
 import { IMainMenu } from "./HeaderTop";
 import Image from "next/image";
 import Tab from "./Tab";
-import client from "@/utils/api-client";
 
 interface IProps {
   data: IMainMenu["data"];

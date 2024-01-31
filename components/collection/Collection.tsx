@@ -41,9 +41,9 @@ const Collection = ({ products, categoryHandle }: IProps) => {
     if (!data?.pageInfo.hasNextPage) return;
 
     const newData = await getCollection(categoryHandle, data?.edges[data.edges.length - 1].cursor);
-    if (!newData.collection?.products.edges) return;
+    if (!newData.collection || !newData.collection?.products.edges) return;
     setData({
-      edges: [...data.edges, ...newData.collection?.products.edges],
+      edges: [...data.edges, ...newData.collection.products.edges],
       pageInfo: newData.collection.products.pageInfo,
     });
   };
@@ -98,7 +98,7 @@ const Collection = ({ products, categoryHandle }: IProps) => {
               style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
             >
               {curatedData.edges.length > 0 ? (
-                curatedData.edges.map((product, i) => (
+                curatedData.edges.map((product) => (
                   <Product key={product.node.id} product={product.node} view={isBook ? "big" : "small"} />
                 ))
               ) : (
