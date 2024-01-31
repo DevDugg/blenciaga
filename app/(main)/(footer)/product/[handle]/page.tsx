@@ -9,21 +9,6 @@ import ProductSlider from "@/components/products/ProductSlider";
 import SizeSelect from "@/components/products/SizeSelect";
 import client from "@/utils/api-client";
 
-const breadcrumbLinks: IBreadcrumbLink[] = [
-  {
-    link: "/product",
-    title: "WOMEN",
-  },
-  {
-    link: "/product",
-    title: "READY-TO-WEAR",
-  },
-  {
-    link: "/product",
-    title: "Coats & Jackets",
-  },
-];
-
 const getProduct = async (
   handle: string,
   // option?: {
@@ -34,7 +19,7 @@ const getProduct = async (
   const { data, errors } = await client.request(
     `#graphql
     query Product {
-      product(handle: "${handle}") {
+      product(handle: "copy-of-paris-moon-upside-down-long-sleeve-t-shirt") {
         descriptionHtml
         id
         images(first: 10) {
@@ -50,11 +35,6 @@ const getProduct = async (
           }
         }
         title
-        options {
-          id
-          name
-          values
-        }
         variants(first: 10) {
           nodes {
             image {
@@ -73,6 +53,19 @@ const getProduct = async (
             id
           }
         }
+        options {
+          id
+          name
+          values
+        }
+        collections(first: 10) {
+          nodes {
+            handle
+            title
+            id
+          }
+        }
+        handle
       }
     }`,
   );
@@ -105,6 +98,21 @@ const Product = async ({ params, searchParams }: IParams) => {
   const sizes = options?.find((option) => option.name === "Size")?.values;
   const styles = options?.find((option) => option.name === "Style")?.values;
 
+  const breadcrumbLinks: IBreadcrumbLink[] | undefined = [
+    {
+      link: "/",
+      title: "Home",
+    },
+    {
+      link: `/collections/${product.product?.collections.nodes[0].handle}`,
+      title: `${product.product?.collections.nodes[0].title}`,
+    },
+    {
+      link: `/products/${product.product?.handle}`,
+      title: `${product.product?.title}`,
+    },
+  ];
+
   const findStyles = () => {
     if (!(variants && styles)) return;
     const neededStyles: VariantsType = [];
@@ -135,7 +143,7 @@ const Product = async ({ params, searchParams }: IParams) => {
   return (
     <main className="product-main">
       <div className="max-w-[1920px] mx-auto w-full">
-        <Breadcrumb links={breadcrumbLinks} />
+        {breadcrumbLinks ? <Breadcrumb links={breadcrumbLinks} /> : null}
         <div className="grid grid-cols-TWO items-end relative max-lg:block">
           {product.product?.images && <ProductGrid images={product.product.images} />}
           {product.product?.images && <ProductSlider images={product.product.images} />}

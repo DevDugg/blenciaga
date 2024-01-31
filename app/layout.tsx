@@ -483,6 +483,74 @@ export const metadata: Metadata = {
 //   return data as CollectionQuery;
 // };
 
+// const getProduct = async (
+//   handle: string,
+//   // option?: {
+//   //   name: string;
+//   //   value: string;
+//   // },
+// ) => {
+//   const { data, errors } = await client.request(
+//     `#graphql
+//     query Product {
+//       product(handle: "copy-of-paris-moon-upside-down-long-sleeve-t-shirt") {
+//         descriptionHtml
+//         id
+//         images(first: 10) {
+//           nodes {
+//             id
+//             url
+//           }
+//         }
+//         priceRange {
+//           minVariantPrice {
+//             amount
+//             currencyCode
+//           }
+//         }
+//         title
+//         variants(first: 10) {
+//           nodes {
+//             image {
+//               id
+//               url
+//             }
+//             price {
+//               amount
+//               currencyCode
+//             }
+//             title
+//             selectedOptions {
+//               name
+//               value
+//             }
+//             id
+//           }
+//         }
+//         options {
+//           id
+//           name
+//           values
+//         }
+//         collections(first: 10) {
+//           nodes {
+//             handle
+//             title
+//             id
+//           }
+//         }
+//         handle
+//       }
+//     }`,
+//   );
+
+//   if (errors) {
+//     throw new Error(errors.message);
+//   }
+
+//   return data as ProductQuery;
+// };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
