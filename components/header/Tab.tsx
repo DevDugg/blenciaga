@@ -42,11 +42,6 @@ const Tab = ({ link, title, rows }: IProps) => {
   useEffect(() => {
     if (!rows || !(rows.length > 0)) return;
 
-    // if (rows.length < 6) {
-    //   const emptyRows = Array(6 - rows.length).fill({ id: "empty", title: "", resource: { handle: "" } });
-    //   return setCuratedRows([...rows, ...emptyRows]);
-    // }
-
     if (rows.length < 12) {
       const emptyRows = Array(12 - rows.length).fill({ id: "empty", title: "", resource: { handle: "" } });
       return setCuratedRows([...rows, ...emptyRows]);
