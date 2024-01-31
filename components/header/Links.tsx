@@ -3,32 +3,19 @@
 import { CartContext } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import Tab from "./Tab";
-import colors from "@/settings/ui/colors";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import { useContext } from "react";
-
-const links = [
-  {
-    title: "Servicio de Atención al Cliente",
-    link: "#",
-  },
-  {
-    title: "Iniciar sesión",
-    link: "#",
-  },
-];
 
 const Links = () => {
   const { cartState } = useContext(CartContext).cartState;
   return (
     <div className="flex items-center gap-1 justify-end">
-      <div className="flex items-center gap-1 max-[1350px]:hidden">
+      {/* <div className="flex items-center gap-1 max-[1350px]:hidden">
         {links.map((link, i) => (
           <Tab key={i} link={link.link} title={link.title} />
         ))}
-      </div>
+      </div> */}
       <div className="flex items-center gap-3">
         {/* <button type="button" className="max-[1350px]:hidden">
           <Image
