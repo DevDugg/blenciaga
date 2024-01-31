@@ -19,7 +19,7 @@ const getProduct = async (
   const { data, errors } = await client.request(
     `#graphql
     query Product {
-      product(handle: "copy-of-paris-moon-upside-down-long-sleeve-t-shirt") {
+      product(handle: "${handle || "new-collection"}") {
         descriptionHtml
         id
         images(first: 10) {
