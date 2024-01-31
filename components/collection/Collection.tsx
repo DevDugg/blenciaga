@@ -1,8 +1,7 @@
 "use client";
 
-import { CollectionQuery, ProductsQuery } from "@/types/storefront.generated";
-
 import Button from "../Button";
+import { CollectionQuery } from "@/types/storefront.generated";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
@@ -13,7 +12,7 @@ import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
 interface IProps {
-  products?: ProductsQuery["products"];
+  products?: NonNullable<CollectionQuery["collection"]>["products"];
   categoryHandle: string;
 }
 
@@ -79,7 +78,7 @@ const Collection = ({ products, categoryHandle }: IProps) => {
   const [isBook, setIsBook] = useState<boolean>(false);
   const gridBreakpoint = useMediaQuery("(max-width: 1440px)");
 
-  const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
+  const [data, setData] = useState<NonNullable<CollectionQuery["collection"]>["products"] | undefined>(products);
 
   data?.edges[data.edges.length - 1].cursor;
 
