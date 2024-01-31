@@ -83,7 +83,7 @@ const Home = async ({ params }: IParams) => {
   return (
     <main className="main">
       <h1 className="hidden">{profile.name}</h1>
-      <HeaderMiddle />
+      {/* <HeaderMiddle /> */}
       <HeaderBottom title={hero.title} />
       <Hero image={hero.image} />
       <Collection products={products} categoryHandle={params.handle} />
