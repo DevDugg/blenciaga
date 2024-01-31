@@ -4,6 +4,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";
+import Image from "next/image";
 import { ProductOptionContext } from "@/context/ProductOptionContext";
 import { ProductQuery } from "@/types/storefront.generated";
 import arraysContainSameObjects from "@/utils/arrayContainsSameObject";
@@ -32,7 +33,11 @@ const ProductButtons = ({ productVariants }: IProps) => {
     const updatedCart = await cartClass.addToCart(variant!.id);
     if (!updatedCart) return console.log("error updating cart");
     setCartState(updatedCart);
-    toast.success("Item added to cart!");
+    toast.success("Item added to cart!", {
+      icon: (
+        <Image src={"/tick.svg"} alt="Tick icon" width={18} height={18} className="object-contain w-[18px] h-[18px]" />
+      ),
+    });
   };
 
   useEffect(() => {

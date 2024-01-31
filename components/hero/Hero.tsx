@@ -6,12 +6,12 @@ interface IProps {
 }
 
 const Hero = ({ image }: IProps) => {
-  return (
+  return image ? (
     <section className="hero">
       <Container className="w-full max-h-[530px]">
         <Image src={image} alt="Hero Image" width={1920} height={533} className="object-cover w-full h-full" />
       </Container>
     </section>
-  );
+  ) : null;
 };
 export default Hero;
