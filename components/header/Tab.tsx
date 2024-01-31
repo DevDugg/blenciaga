@@ -1,10 +1,10 @@
 "use client";
 
-import React, { Fragment, useEffect, useState } from "react";
 import { Variants, motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 import FooterLink from "../footer/FooterLink";
-import { IMainMenu } from "./Tabs";
+import { IMainMenu } from "./HeaderTop";
 import Link from "next/link";
 import colors from "@/settings/ui/colors";
 import { transition } from "@/motion/default.motion";
