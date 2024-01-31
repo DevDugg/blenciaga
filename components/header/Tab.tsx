@@ -50,7 +50,7 @@ const Tab = ({ link, title, rows }: IProps) => {
 
   return (
     <div
-      className="tab py-4 overflow-hidden"
+      className="tab py-4 w-fit overflow-hidden"
       onMouseOver={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

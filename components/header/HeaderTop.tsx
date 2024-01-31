@@ -46,7 +46,7 @@ export interface Resource {
   handle: string;
 }
 
-const getMainMenu = async () => {
+export const getMainMenu = async () => {
   const { data, errors } = await client.request(
     `#graphql
     query MainMenu {

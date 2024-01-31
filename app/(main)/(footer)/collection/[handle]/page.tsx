@@ -1,6 +1,7 @@
 import Collection from "@/components/collection/Collection";
 import { CollectionQuery } from "@/types/storefront.generated";
 import HeaderBottom from "@/components/header/HeaderBottom";
+import HeaderMiddle from "@/components/header/HeaderMiddle";
 import Hero from "@/components/hero/Hero";
 import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
@@ -82,7 +83,7 @@ const Home = async ({ params }: IParams) => {
   return (
     <main className="main">
       <h1 className="hidden">{profile.name}</h1>
-      {/* <HeaderMiddle /> */}
+      <HeaderMiddle />
       <HeaderBottom title={hero.title} />
       <Hero image={hero.image} />
       <Collection products={products} categoryHandle={params.handle} />

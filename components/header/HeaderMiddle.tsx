@@ -1,19 +1,19 @@
 import Container from "../Container";
-import Tab from "./Tab";
+import HeaderMiddleSwiper from "./HeaderMiddleSwiper";
+import { getMainMenu } from "./HeaderTop";
 
-const HeaderMiddle = () => {
+const HeaderMiddle = async () => {
+  const data = await getMainMenu();
+  const thirdLevelLinks = data.menu.items
+    .map((item) => item.items)
+    .flat()
+    .map((item) => item.items)
+    .flat()
+    .map((item) => item);
   return (
-    <section className="header-middle">
+    <section className="header-middle lg:hidden">
       <Container className="border-b border-solid border-BLACK pb-2 pt-14 max-lg:p-0">
-        <div className="flex flex-nowrap overflow-x-auto gap-3 items-center px-3">
-          <Tab link="#" title="Invierno 23 Hombre" />
-          <Tab link="#" title="Invierno 23 Mujer" />
-          <Tab link="#" title="Otoño 23 Mujer" />
-          <Tab link="#" title="Otoño 23 Hombre" />
-          <Tab link="#" title="3XL" />
-          <Tab link="#" title="Monaco" />
-          <Tab link="#" title="Kids" />
-        </div>
+        <HeaderMiddleSwiper thirdLevelLinks={thirdLevelLinks} />
       </Container>
     </section>
   );
