@@ -16,7 +16,8 @@ interface IProps {
   products?: ProductsQuery["products"];
   categoryHandle: string;
 }
-export const getCollection = async (handle: string | null | undefined, after?: string) => {
+
+const getCollection = async (handle: string | null | undefined, after?: string) => {
   const { data, errors } = await client.request(
     `#graphql
     query Collection {
