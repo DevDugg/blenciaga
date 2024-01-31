@@ -1,101 +1,13 @@
+import { IMainMenu } from "./HeaderTop";
 import Image from "next/image";
 import Tab from "./Tab";
 import client from "@/utils/api-client";
 
-export interface IMainMenu {
-  data: Data;
+interface IProps {
+  data: IMainMenu["data"];
 }
 
-export interface Data {
-  menu: Menu;
-}
-
-export interface Menu {
-  id: string;
-  title: string;
-  items: MenuItem[];
-  handle: string;
-}
-
-export interface MenuItem {
-  id: string;
-  title: string;
-  type: string;
-  resource: Resource;
-  items: PurpleItem[];
-}
-
-export interface PurpleItem {
-  id: string;
-  type: string;
-  title: string;
-  resource: Resource;
-  items: FluffyItem[];
-}
-
-export interface FluffyItem {
-  id: string;
-  resource: Resource;
-  title: string;
-}
-
-export interface Resource {
-  id: string;
-  handle: string;
-}
-
-const getMainMenu = async () => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query MainMenu {
-      menu(handle: "main-menu") {
-        id
-        title
-        items {
-          id
-          title
-          type
-          resource {
-            ... on Collection {
-              id
-              handle
-            }
-          }
-          items {
-            id
-            type
-            title
-            resource {
-              ... on Collection {
-                id
-                handle
-              }
-            }
-            items {
-              id
-              resource {
-                ... on Collection {
-                  id
-                  handle
-                }
-              }
-              title
-            }
-          }
-        }
-        handle
-      }
-    }`,
-  );
-
-  if (errors) throw new Error(errors.message);
-
-  return data as IMainMenu["data"];
-};
-
-const Tabs = async () => {
-  const data = await getMainMenu();
-
+const Tabs = ({ data }: IProps) => {
   return (
     <>
       <div className="tabs flex items-center gap-1 justify-start max-[1350px]:hidden">
