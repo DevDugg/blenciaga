@@ -104,11 +104,11 @@ const Product = async ({ params, searchParams }: IParams) => {
       title: "Home",
     },
     {
-      link: `/collections/${product.product?.collections.nodes[0].handle}`,
+      link: `/collection/${product.product?.collections.nodes[0].handle}`,
       title: `${product.product?.collections.nodes[0].title}`,
     },
     {
-      link: `/products/${product.product?.handle}`,
+      link: `/product/${product.product?.handle}`,
       title: `${product.product?.title}`,
     },
   ];
