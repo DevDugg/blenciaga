@@ -72,18 +72,14 @@ const Tab = ({ link, title, rows }: IProps) => {
         className="bg-WHITE h-fit w-[calc(100vw-17px)] z-20 grid grid-cols-SIX absolute top-full left-0 shadow-DROPDOWN"
       >
         {curatedRows
-          ? curatedRows.map((item) => (
-              <div key={item.id} className="flex flex-col gap-4 p-4 border-[0.5px] border-BLACK min-h-[30vh]">
+          ? curatedRows.map((item, i) => (
+              <div key={i} className="flex flex-col gap-4 p-4 border-[0.5px] border-BLACK min-h-[30vh]">
                 <h6 className="text-xs text-BLACK uppercase">
                   <FooterLink title={item.title} href={`/collection/${item.resource.handle}`} />
                 </h6>
                 <div className="flex flex-col gap-3">
-                  {item?.items?.map((subItem) => (
-                    <FooterLink
-                      key={subItem.id}
-                      href={`/collection/${subItem.resource.handle}`}
-                      title={subItem.title}
-                    />
+                  {item?.items?.map((subItem, i) => (
+                    <FooterLink key={i} href={`/collection/${subItem.resource.handle}`} title={subItem.title} />
                   ))}
                 </div>
               </div>

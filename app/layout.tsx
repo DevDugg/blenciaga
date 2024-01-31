@@ -483,34 +483,6 @@ export const metadata: Metadata = {
 //   return data as CollectionQuery;
 // };
 
-// const getMainMenu = async () => {
-//   const { data, errors } = await client.request(
-//     `#graphql
-//       query MainMenu {
-//         menu(handle: "main-menu") {
-//           id
-//           title
-//           items {
-//             id
-//             title
-//             type
-//             resource {
-//               ... on Collection {
-//                 id
-//                 handle
-//               }
-//             }
-//           }
-//           handle
-//         }
-//       }`,
-//   );
-
-//   if (errors) throw new Error(errors.message);
-
-//   return data;
-// };
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

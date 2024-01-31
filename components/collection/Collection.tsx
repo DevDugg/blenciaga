@@ -5,68 +5,24 @@ import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
 import { ProductsQuery } from "@/types/storefront.generated";
-import client from "@/utils/api-client";
+import { getCollection } from "@/app/(main)/(footer)/collection/[handle]/page";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import { useState } from "react";
 
-const getProducts = async (cursor?: string) => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query Products {
-      products(
-        first: 12,
-        ${cursor ? `after: "${cursor}"` : ""}
-      ) {
-        ...ProductConnectionFragment
-      }
-    }
-    fragment ProductConnectionFragment on ProductConnection {
-      edges {
-        node {
-          title
-          images(first: 10) {
-            nodes {
-              id
-              url
-            }
-          }
-          id
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-          handle
-          options {
-            name
-            values
-          }
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-      }
-    }`,
-  );
-
-  if (errors) throw new Error(errors.message);
-
-  return data as ProductsQuery;
-};
-
 interface IProps {
   products?: ProductsQuery["products"];
+  categoryHandle: string;
 }
 
-const Collection = ({ products }: IProps) => {
+const Collection = ({ products, categoryHandle }: IProps) => {
   const [isBook, setIsBook] = useState<boolean>(false);
   const gridBreakpoint = useMediaQuery("(max-width: 1440px)");
 
   const [data, setData] = useState<ProductsQuery["products"] | undefined>(products);
+
+  data?.edges[data.edges.length - 1].cursor;
 
   const curatedData = data
     ? {
@@ -80,11 +36,15 @@ const Collection = ({ products }: IProps) => {
     : null;
 
   const fetchMore = async () => {
+    console.log(categoryHandle, data?.edges[data.edges.length - 1].cursor);
+
     if (!data?.pageInfo.hasNextPage) return;
-    const newData = await getProducts(data?.edges[data.edges.length - 1].cursor);
+
+    const newData = await getCollection(categoryHandle, data?.edges[data.edges.length - 1].cursor);
+    if (!newData.collection?.products.edges) return;
     setData({
-      edges: [...data.edges, ...newData.products.edges],
-      pageInfo: newData.products.pageInfo,
+      edges: [...data.edges, ...newData.collection?.products.edges],
+      pageInfo: newData.collection.products.pageInfo,
     });
   };
 
@@ -139,7 +99,7 @@ const Collection = ({ products }: IProps) => {
             >
               {curatedData.edges.length > 0 ? (
                 curatedData.edges.map((product, i) => (
-                  <Product key={i} product={product.node} view={isBook ? "big" : "small"} />
+                  <Product key={product.node.id} product={product.node} view={isBook ? "big" : "small"} />
                 ))
               ) : (
                 <span>No results</span>

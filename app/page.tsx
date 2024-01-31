@@ -4,11 +4,62 @@ import Container from "@/components/Container";
 import Image from "next/image";
 import Link from "next/link";
 import NameWhite from "@/components/NameWhite";
+import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
 
-const page = () => {
-  const timezone: string[] = Intl.DateTimeFormat().resolvedOptions().timeZone.split("/");
+export interface IWelcomeMenu {
+  data: Data;
+}
 
+export interface Data {
+  menu: Menu;
+}
+
+export interface Menu {
+  id: string;
+  items: Item[];
+}
+
+export interface Item {
+  id: string;
+  title: string;
+  resource: Resource | null;
+}
+
+export interface Resource {
+  id: string;
+  handle: string;
+}
+
+const getWelcomeMenu = async () => {
+  const { data, errors } = await client.request(
+    `#graphql
+    query WelcomeMenu {
+      menu(handle: "welcome-menu") {
+        id
+        items {
+          id
+          title
+          resource {
+            ... on Collection {
+              id
+              handle
+            }
+          }
+        }
+      }
+    }`,
+  );
+
+  if (errors) throw new Error(errors.message);
+
+  return data as IWelcomeMenu["data"];
+};
+
+const page = async () => {
+  const menu = await getWelcomeMenu();
+
+  const timezone: string[] = Intl.DateTimeFormat().resolvedOptions().timeZone.split("/");
   const region = timezone[0];
   const city = timezone[1];
   const time = moment.tz(`${region}/${city}`);
@@ -33,12 +84,14 @@ const page = () => {
               <span>{formattedTime}</span> <span className="uppercase">{city}</span>
             </p>
           </div>
-          <div className="flex flex-col gap-4 text-xs text-WHITE w-fit">
-            <Link href={"#"}>news</Link>
-            <Link href={"#"}>fall/winter 2023 preview</Link>
-            <Link href={"#"}>fall/winter 2023 lookbook</Link>
-            <Link href={"#"}>shop</Link>
-            <Link href={"#"}>about</Link>
+          <div className="flex flex-col gap-4 text-xs text-WHITE w-fit lowercase">
+            {menu && menu.menu.id
+              ? menu.menu.items.map((item) => (
+                  <Link key={item.id} href={item.resource ? `/collection/${item.resource.handle}` : "/collection/all"}>
+                    {item.title}
+                  </Link>
+                ))
+              : null}
           </div>
         </div>
       </Container>

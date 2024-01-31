@@ -6,7 +6,9 @@ import Hero from "@/components/hero/Hero";
 import client from "@/utils/api-client";
 import profile from "@/settings/data/profile.data";
 
-const getCollection = async (handle: string | null | undefined) => {
+export const getCollection = async (handle: string | null | undefined, after?: string) => {
+  const cursor = after ? `after: "${after}"` : "";
+
   const { data, errors } = await client.request(
     `#graphql
     query Collection {
@@ -17,7 +19,7 @@ const getCollection = async (handle: string | null | undefined) => {
           id
           url
         }
-        products(first: 12) {
+        products(first: 12, ${cursor}) {
           ...ProductConnectionFragment
           pageInfo {
             hasNextPage
@@ -57,6 +59,8 @@ const getCollection = async (handle: string | null | undefined) => {
     }`,
   );
 
+  if (errors?.graphQLErrors) console.log(errors.graphQLErrors);
+
   if (errors) throw new Error(errors.message);
 
   return data as CollectionQuery;
@@ -82,7 +86,7 @@ const Home = async ({ params }: IParams) => {
       <HeaderMiddle />
       <HeaderBottom title={hero.title} />
       <Hero image={hero.image} />
-      <Collection products={products} />
+      <Collection products={products} categoryHandle={params.handle} />
     </main>
   );
 };

@@ -100,9 +100,9 @@ const Tabs = async () => {
     <>
       <div className="tabs flex items-center gap-1 justify-start max-[1350px]:hidden">
         {data
-          ? data.menu.items.map((item) => (
+          ? data.menu.items.map((item, i) => (
               <Tab
-                key={item.id}
+                key={i}
                 title={item.title}
                 link={item.resource ? `/collection/${item.resource.handle}` : "#"}
                 rows={item.items}
