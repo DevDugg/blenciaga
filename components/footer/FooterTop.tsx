@@ -1,6 +1,10 @@
 import FooterLink from "./FooterLink";
 import FooterMobileItems from "./FooterMobileItems";
-import { IHeaderTab } from "../header/Tabs";
+
+interface IHeaderTab {
+  title: string;
+  link: string;
+}
 
 export interface IFooterItem {
   title: string;
