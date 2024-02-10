@@ -212,8 +212,12 @@ class Cart implements ICartClass {
       }`,
     );
 
-    if (errors || !data?.cart?.id) {
+    if (errors) {
       throw new Error(errors?.message);
+    }
+
+    if (!data?.cart?.id) {
+      return null;
     }
 
     this.setCartId(data.cart.id);
