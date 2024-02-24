@@ -13,7 +13,7 @@ export interface IFooterItem {
 
 const items: IFooterItem[] = [
   {
-    title: "BOLETÍN DE NOTICIAS",
+    title: "CLIENT SERVICES",
     links: [
       {
         title: "FAQ",
@@ -42,146 +42,96 @@ const items: IFooterItem[] = [
     ],
   },
   {
-    title: "BOLETÍN DE NOTICIAS",
+    title: "THE COMPANY",
     links: [
       {
-        title: "FAQ",
+        title: "Careers",
         link: "#",
       },
       {
-        title: "Track Order",
+        title: "Careers - Design",
         link: "#",
       },
       {
-        title: "Returns",
+        title: "Legal",
         link: "#",
       },
       {
-        title: "Shipping",
+        title: "Privacy Policy and Cookies",
         link: "#",
       },
       {
-        title: "Payment",
+        title: "Cookies Settings",
         link: "#",
       },
       {
-        title: "Re-sell Program",
+        title: "World Food Programme",
+        link: "#",
+      },
+    ],
+  },
+
+  {
+    title: "CONNECT",
+    links: [
+      {
+        title: "Facebook",
+        link: "#",
+      },
+      {
+        title: "Instagram",
+        link: "#",
+      },
+      {
+        title: "Tiktok",
+        link: "#",
+      },
+      {
+        title: "Spotify",
         link: "#",
       },
     ],
   },
   {
-    title: "BOLETÍN DE NOTICIAS",
+    title: "BOUTIQUES",
     links: [
       {
-        title: "FAQ",
+        title: "Store appointment",
         link: "#",
       },
       {
-        title: "Track Order",
+        title: "Find a store nearby",
         link: "#",
       },
       {
-        title: "Returns",
+        title: "Country / Region: United States",
         link: "#",
       },
       {
-        title: "Shipping",
-        link: "#",
-      },
-      {
-        title: "Payment",
-        link: "#",
-      },
-      {
-        title: "Re-sell Program",
+        title: "Language: English",
         link: "#",
       },
     ],
   },
   {
-    title: "BOLETÍN DE NOTICIAS",
+    title: "CONTACT US",
     links: [
       {
-        title: "FAQ",
+        title: "Our Client Advisors are available Mon-Fri 9am - 9pm ET & Sat-Sun 10am - 7pm ET",
         link: "#",
       },
       {
-        title: "Track Order",
+        title: `LIVECHAT
+        Our Client Advisors are currently unavailable`,
         link: "#",
       },
       {
-        title: "Returns",
+        title: `CALL US
+        +1 111 111 111`,
         link: "#",
       },
       {
-        title: "Shipping",
-        link: "#",
-      },
-      {
-        title: "Payment",
-        link: "#",
-      },
-      {
-        title: "Re-sell Program",
-        link: "#",
-      },
-    ],
-  },
-  {
-    title: "BOLETÍN DE NOTICIAS",
-    links: [
-      {
-        title: "FAQ",
-        link: "#",
-      },
-      {
-        title: "Track Order",
-        link: "#",
-      },
-      {
-        title: "Returns",
-        link: "#",
-      },
-      {
-        title: "Shipping",
-        link: "#",
-      },
-      {
-        title: "Payment",
-        link: "#",
-      },
-      {
-        title: "Re-sell Program",
-        link: "#",
-      },
-    ],
-  },
-  {
-    title: "BOLETÍN DE NOTICIAS",
-    links: [
-      {
-        title: "FAQ",
-        link: "#",
-      },
-      {
-        title: "Track Order",
-        link: "#",
-      },
-      {
-        title: "Returns",
-        link: "#",
-      },
-      {
-        title: "Shipping",
-        link: "#",
-      },
-      {
-        title: "Payment",
-        link: "#",
-      },
-      {
-        title: "Re-sell Program",
+        title: "EMAIL US",
         link: "#",
       },
     ],
@@ -191,7 +141,7 @@ const items: IFooterItem[] = [
 const FooterTop = () => {
   return (
     <div className="footer-top border-t border-BLACK border-solid">
-      <div className="grid grid-cols-6 max-lg:hidden">
+      <div className="grid grid-cols-6 max-lg:hidden" style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}>
         {items.map((item, i) => (
           <div
             key={i}

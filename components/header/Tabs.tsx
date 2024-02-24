@@ -1,3 +1,4 @@
+import BurgerMenu from "./BurgerMenu";
 import { IMainMenu } from "./HeaderTop";
 import Image from "next/image";
 import Tab from "./Tab";
@@ -22,15 +23,7 @@ const Tabs = ({ data }: IProps) => {
           : null}
       </div>
       <div className="hidden max-[1350px]:flex items-center gap-4">
-        <button type="button">
-          <Image
-            src={"/burger.svg"}
-            alt="Burger icon"
-            width={18}
-            height={18}
-            className="object-contain w-[18px] h-[18px]"
-          />
-        </button>
+        <BurgerMenu />
         <button type="button">
           <Image
             src={"/loop.svg"}
