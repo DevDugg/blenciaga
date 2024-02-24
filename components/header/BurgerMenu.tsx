@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 
-interface IProps {}
+// interface IProps {}
 
-const BurgerMenu = ({}: IProps) => {
+const BurgerMenu = () => {
   return (
     <button type="button">
       <Image
