@@ -12,57 +12,62 @@ import { IMainMenu } from "@/components/header/HeaderTop";
 import client from "./api-client";
 
 export const getCollection = async (handle: string | null | undefined, after?: string) => {
+  const afterString = after ? after : "";
+  console.log(handle, afterString);
+  console.log(handle);
+
   const { data, errors } = await client.request(
     `#graphql
-      query Collection {
-        collection(handle: "${handle || "new-collection"}") {
-          handle
-          descriptionHtml
-          image {
-            id
-            url
-          }
-          products(first: 12, ${after ? `after: "${after}"` : ""}) {
-            ...ProductConnectionFragment
-            pageInfo {
-              hasNextPage
-            }
-          }
+    query Collection($handle: String = "${handle}", $after: String = "${afterString}") {
+  collection(handle: $handle) {
+    handle
+    descriptionHtml
+    image {
+      id
+      url
+    }
+    products(first: 12, after: $after) {
+      ...ProductConnectionFragment
+      pageInfo {
+        hasNextPage
+      }
+    }
+  }
+}
+
+fragment ProductConnectionFragment on ProductConnection {
+  edges {
+    node {
+      title
+      images(first: 10) {
+        nodes {
+          id
+          url
         }
       }
-      
-      fragment ProductConnectionFragment on ProductConnection {
-        edges {
-          node {
-            title
-            images(first: 10) {
-              nodes {
-                id
-                url
-              }
-            }
-            id
-            priceRange {
-              minVariantPrice {
-                amount
-                currencyCode
-              }
-            }
-            handle
-            options {
-              name
-              values
-            }
-          }
-          cursor
+      id
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
         }
-        pageInfo {
-          hasNextPage
-        }
-      }`,
+      }
+      handle
+      options {
+        name
+        values
+      }
+    }
+    cursor
+  }
+  pageInfo {
+    hasNextPage
+  }
+}
+    `,
   );
 
-  if (errors?.graphQLErrors) console.log(errors.graphQLErrors);
+  if (errors?.graphQLErrors) throw new Error(String(errors.graphQLErrors.map((error) => [error.message])));
 
   if (errors) throw new Error(errors.message);
 
@@ -217,7 +222,7 @@ export const createCart = async () =>
   {
     const { data, errors } = await client.request(
       `#graphql
-  mutation CreateCart {
+mutation CreateCart {
     cartCreate(input: {}) {
       cart {
         id

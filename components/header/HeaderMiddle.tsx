@@ -1,6 +1,6 @@
 import Container from "../Container";
 import HeaderMiddleSwiper from "./HeaderMiddleSwiper";
-import { getMainMenu } from "./HeaderTop";
+import { getMainMenu } from "@/utils/queries";
 
 const HeaderMiddle = async () => {
   const data = await getMainMenu();
