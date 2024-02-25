@@ -2,7 +2,7 @@ import Container from "../Container";
 import Links from "./Links";
 import Name from "../Name";
 import Tabs from "./Tabs";
-import client from "@/utils/api-client";
+import { getMainMenu } from "@/utils/queries";
 
 export interface IMainMenu {
   data: Data;
@@ -45,55 +45,6 @@ export interface Resource {
   id: string;
   handle: string;
 }
-
-export const getMainMenu = async () => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query MainMenu {
-      menu(handle: "main-menu") {
-        id
-        title
-        items {
-          id
-          title
-          type
-          resource {
-            ... on Collection {
-              id
-              handle
-            }
-          }
-          items {
-            id
-            type
-            title
-            resource {
-              ... on Collection {
-                id
-                handle
-              }
-            }
-            items {
-              id
-              resource {
-                ... on Collection {
-                  id
-                  handle
-                }
-              }
-              title
-            }
-          }
-        }
-        handle
-      }
-    }`,
-  );
-
-  if (errors) throw new Error(errors.message);
-
-  return data as IMainMenu["data"];
-};
 
 const HeaderTop = async () => {
   const data = await getMainMenu();

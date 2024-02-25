@@ -3,57 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import NameWhite from "@/components/NameWhite";
 import Time from "@/components/Time";
-import client from "@/utils/api-client";
+import { getWelcomeMenu } from "@/utils/queries";
 import profile from "@/settings/data/profile.data";
-
-export interface IWelcomeMenu {
-  data: Data;
-}
-
-export interface Data {
-  menu: Menu;
-}
-
-export interface Menu {
-  id: string;
-  items: Item[];
-}
-
-export interface Item {
-  id: string;
-  title: string;
-  resource: Resource | null;
-}
-
-export interface Resource {
-  id: string;
-  handle: string;
-}
-
-const getWelcomeMenu = async () => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query WelcomeMenu {
-      menu(handle: "welcome-menu") {
-        id
-        items {
-          id
-          title
-          resource {
-            ... on Collection {
-              id
-              handle
-            }
-          }
-        }
-      }
-    }`,
-  );
-
-  if (errors) throw new Error(errors.message);
-
-  return data as IWelcomeMenu["data"];
-};
 
 const page = async () => {
   const menu = await getWelcomeMenu();

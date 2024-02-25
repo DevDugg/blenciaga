@@ -4,78 +4,9 @@ import StyleSelect, { VariantsType } from "@/components/products/StyleSelect";
 import Dropdown from "@/components/Dropdown";
 import ProductButtons from "@/components/products/ProductButtons";
 import ProductGrid from "@/components/products/ProductGrid";
-import { ProductQuery } from "@/types/storefront.generated";
 import ProductSlider from "@/components/products/ProductSlider";
 import SizeSelect from "@/components/products/SizeSelect";
-import client from "@/utils/api-client";
-
-const getProduct = async (
-  handle: string,
-  // option?: {
-  //   name: string;
-  //   value: string;
-  // },
-) => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query Product {
-      product(handle: "${handle || "new-collection"}") {
-        descriptionHtml
-        id
-        images(first: 10) {
-          nodes {
-            id
-            url
-          }
-        }
-        priceRange {
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-        title
-        variants(first: 10) {
-          nodes {
-            image {
-              id
-              url
-            }
-            price {
-              amount
-              currencyCode
-            }
-            title
-            selectedOptions {
-              name
-              value
-            }
-            id
-          }
-        }
-        options {
-          id
-          name
-          values
-        }
-        collections(first: 10) {
-          nodes {
-            handle
-            title
-            id
-          }
-        }
-        handle
-      }
-    }`,
-  );
-
-  if (errors) {
-    throw new Error(errors.message);
-  }
-
-  return data as ProductQuery;
-};
+import { getProduct } from "@/utils/queries";
 
 interface IParams {
   params: {
@@ -83,11 +14,6 @@ interface IParams {
   };
   searchParams?: { [key: string]: string | undefined };
 }
-
-// interface IOption {
-//   name: string;
-//   value: string | null | undefined;
-// }
 
 const Product = async ({ params, searchParams }: IParams) => {
   const product = await getProduct(params.handle);

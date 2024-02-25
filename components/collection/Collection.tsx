@@ -5,7 +5,7 @@ import { CollectionQuery } from "@/types/storefront.generated";
 import Container from "../Container";
 import Image from "next/image";
 import Product from "./Product";
-import client from "@/utils/api-client";
+import { getCollection } from "@/utils/queries";
 import { motion } from "framer-motion";
 import { transition } from "@/motion/default.motion";
 import useMediaQuery from "@/hooks/useMediaQuery";
@@ -15,64 +15,6 @@ interface IProps {
   products?: NonNullable<CollectionQuery["collection"]>["products"];
   categoryHandle: string;
 }
-
-const getCollection = async (handle: string | null | undefined, after?: string) => {
-  const { data, errors } = await client.request(
-    `#graphql
-    query Collection {
-      collection(handle: "${handle || "new-collection"}") {
-        handle
-        descriptionHtml
-        image {
-          id
-          url
-        }
-        products(first: 12, ${after ? `after: "${after}"` : ""}) {
-          ...ProductConnectionFragment
-          pageInfo {
-            hasNextPage
-          }
-        }
-      }
-    }
-    
-    fragment ProductConnectionFragment on ProductConnection {
-      edges {
-        node {
-          title
-          images(first: 10) {
-            nodes {
-              id
-              url
-            }
-          }
-          id
-          priceRange {
-            minVariantPrice {
-              amount
-              currencyCode
-            }
-          }
-          handle
-          options {
-            name
-            values
-          }
-        }
-        cursor
-      }
-      pageInfo {
-        hasNextPage
-      }
-    }`,
-  );
-
-  if (errors?.graphQLErrors) console.log(errors.graphQLErrors);
-
-  if (errors) throw new Error(errors.message);
-
-  return data as CollectionQuery;
-};
 
 const Collection = ({ products, categoryHandle }: IProps) => {
   const [isBook, setIsBook] = useState<boolean>(false);

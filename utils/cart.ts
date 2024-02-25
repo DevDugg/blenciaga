@@ -7,8 +7,7 @@ import {
   RemoveFromCartMutation,
   UpdateProductQuantityMutation,
 } from "@/types/storefront.generated";
-
-import client from "./api-client";
+import { addToCart, createCart, getCart, removeFromCart, updateProductQuantity } from "./queries";
 
 export type CartLines = NonNullable<CartQuery["cart"]>["lines"];
 
@@ -63,416 +62,62 @@ class Cart implements ICartClass {
     return this.cartId || typeof localStorage !== "undefined" ? localStorage.getItem("cartId") : null;
   };
 
-  public createCart = async (options: ICreateCartMutationOptions) => {
-    const { data, errors } = await client.request(
-      `#graphql
-      mutation CreateCart {
-        cartCreate(input: {}) {
-          cart {
-            id
-            totalQuantity
-            cost {
-              ...CartCostFragment
-            }
-            lines(first: 10) {
-              ...BaseCartLineConnectionFragment
-            }
-          }
-        }
-      }
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
-            id
-            quantity
-          }
-        }
-      }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
-    );
+  public createCart = async () => {
+    const { data, id } = await createCart();
 
-    if (errors || !data?.cartCreate?.cart?.id) {
-      throw new Error(errors?.message);
-    }
-
-    this.setCartId(data.cartCreate.cart?.id);
-
-    return (data as CreateCartMutation).cartCreate?.cart;
+    this.setCartId(id);
+    return data;
   };
 
   public getCart = async () => {
-    const id = this.getCartId();
-    if (!id) return;
-    const { data, errors } = await client.request(
-      `#graphql
-      query Cart {
-        cart(
-          id: "${id}"
-        ) {
-          cost {
-            ...CartCostFragment
-          }
-          id
-          lines(first: 10) {
-            ...BaseCartLineConnectionFragment
-          }
-          totalQuantity
-        }
-      }
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
-            id
-            quantity
-          }
-        }
-      }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
-    );
+    const savedId = this.getCartId();
+    if (!savedId) return;
 
-    if (errors) {
-      throw new Error(errors?.message);
-    }
+    const cart = await getCart(savedId);
+    if (!cart) return;
 
-    if (!data?.cart?.id) {
-      return null;
-    }
-
-    this.setCartId(data.cart.id);
-
-    return (data as CartQuery).cart;
+    const { data, id } = cart;
+    this.setCartId(id);
+    return data;
   };
 
   public addToCart = async (variantId: string) => {
-    const id = this.getCartId();
-    if (!id) return;
+    const savedId = this.getCartId();
+    if (!savedId) return;
 
-    const { data, errors } = await client.request(
-      `#graphql
-      mutation AddToCart {
-        cartLinesAdd(
-          cartId: "${id}"
-          lines: {merchandiseId: "${variantId}", quantity: 1}
-        ) {
-          cart {
-            cost {
-              ...CartCostFragment
-            }
-            id
-            lines(first: 10) {
-              ...BaseCartLineConnectionFragment
-            }
-            totalQuantity
-          }
-        }
-      }
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
-            id
-            quantity
-          }
-        }
-      }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
-    );
-    if (errors || !data?.cartLinesAdd?.cart?.id) {
-      throw new Error(errors?.message);
-    }
+    const updatedCart = await addToCart(variantId, savedId);
+    if (!updatedCart) return;
 
-    this.setCartId(data.cartLinesAdd?.cart?.id);
+    const { data, id } = updatedCart;
 
-    return (data as AddToCartMutation).cartLinesAdd?.cart;
+    this.setCartId(id);
+    return data;
   };
 
   public removeFromCart = async (lineId: string) => {
-    const id = this.getCartId();
-    if (!id) return;
+    const savedId = this.getCartId();
+    if (!savedId) return;
 
-    const { data, errors } = await client.request(
-      `#graphql
-      mutation RemoveFromCart {
-        cartLinesRemove(
-          cartId: "${id}"
-          lineIds: "${lineId}"
-        ) {
-          cart {
-            cost {
-              ...CartCostFragment
-            }
-            id
-            lines(first: 10) {
-              ...BaseCartLineConnectionFragment
-            }
-            totalQuantity
-          }
-        }
-      }
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
-            id
-            quantity
-          }
-        }
-      }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
-    );
-    if (errors || !data?.cartLinesRemove?.cart?.id) {
-      throw new Error(errors?.message);
-    }
+    const updatedCart = await removeFromCart(lineId, savedId);
+    if (!updatedCart) return;
 
-    this.setCartId(data.cartLinesRemove?.cart?.id);
+    const { data, id } = updatedCart;
 
-    return (data as RemoveFromCartMutation).cartLinesRemove?.cart;
+    this.setCartId(id);
+    return data;
   };
 
   public updateProductQuantity = async (quantity: number, lineId: string) => {
-    const id = this.getCartId();
-    if (!id) return;
+    const savedId = this.getCartId();
+    if (!savedId) return;
 
-    const { data, errors } = await client.request(
-      `#graphql
-      mutation UpdateProductQuantity {
-        cartLinesUpdate(
-          cartId: "${id}"
-          lines: {id: "${lineId}", quantity: ${quantity}}
-        ) {
-          cart {
-            cost {
-              ...CartCostFragment
-            }
-            id
-            lines(first: 10) {
-              ...BaseCartLineConnectionFragment
-            }
-            totalQuantity
-          }
-        }
-      }
-      
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
-            id
-            quantity
-          }
-        }
-      }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
-    );
-    if (errors || !data?.cartLinesUpdate?.cart?.id) {
-      throw new Error(errors?.message);
-    }
+    const updatedCart = await updateProductQuantity(quantity, lineId, savedId);
+    if (!updatedCart) return;
 
-    this.setCartId(data.cartLinesUpdate?.cart?.id);
+    const { data, id } = updatedCart;
 
-    return (data as UpdateProductQuantityMutation).cartLinesUpdate?.cart;
+    this.setCartId(id);
+    return data;
   };
 
   public updateProductInCart = async () => {};
