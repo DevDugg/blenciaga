@@ -12,6 +12,7 @@ import { CheckoutCreateInput, CheckoutLineItemInput, MailingAddressInput } from 
 import { IMainMenu } from "@/components/header/HeaderTop";
 import client from "./api-client";
 
+// data
 export const getCollection = async (handle: string, after?: string) => {
   const variables = {
     handle,
@@ -221,6 +222,7 @@ export const getMainMenu = async () => {
   return data as IMainMenu["data"];
 };
 
+// cart
 export const createCart = async () =>
   // options: ICreateCartMutationOptions
   {
@@ -639,6 +641,7 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
   };
 };
 
+// chechout
 export const createCheckout = async (input: CheckoutCreateInput) => {
   const { data, errors } = await client.request(
     `
