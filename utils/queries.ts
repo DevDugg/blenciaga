@@ -11,14 +11,14 @@ import {
 import { IMainMenu } from "@/components/header/HeaderTop";
 import client from "./api-client";
 
-export const getCollection = async (handle: string | null | undefined, after?: string) => {
-  const afterString = after ? after : "";
-  console.log(handle, afterString);
-  console.log(handle);
-
+export const getCollection = async (handle: string, after?: string) => {
+  const variables = {
+    handle,
+    after,
+  };
   const { data, errors } = await client.request(
     `#graphql
-    query Collection($handle: String = "${handle}", $after: String = "${afterString}") {
+    query Collection($handle:String, $after:String) {
   collection(handle: $handle) {
     handle
     descriptionHtml
@@ -65,6 +65,9 @@ fragment ProductConnectionFragment on ProductConnection {
   }
 }
     `,
+    {
+      variables,
+    },
   );
 
   if (errors?.graphQLErrors) throw new Error(String(errors.graphQLErrors.map((error) => [error.message])));
@@ -100,17 +103,14 @@ export const getWelcomeMenu = async () => {
   return data as unknown;
 };
 
-export const getProduct = async (
-  handle: string,
-  // option?: {
-  //   name: string;
-  //   value: string;
-  // },
-) => {
+export const getProduct = async (handle: string) => {
+  const variables = {
+    handle: handle ? handle : "new-collection",
+  };
   const { data, errors } = await client.request(
     `#graphql
-    query Product {
-      product(handle: "${handle || "new-collection"}") {
+    query Product($handle: String) {
+      product(handle: $handle) {
         descriptionHtml
         id
         images(first: 10) {
@@ -159,10 +159,13 @@ export const getProduct = async (
         handle
       }
     }`,
+    {
+      variables,
+    },
   );
 
   if (errors) {
-    throw new Error(errors.message);
+    throw new Error(errors.graphQLErrors?.map((error) => error.message).join(", "));
   }
 
   return data as ProductQuery;
@@ -296,11 +299,14 @@ mutation CreateCart {
   };
 
 export const getCart = async (id: string) => {
+  const variables = {
+    id,
+  };
   const { data, errors } = await client.request(
     `#graphql
-      query Cart {
+      query Cart($id:ID!) {
         cart(
-          id: "${id}"
+          id: $id
         ) {
           cost {
             ...CartCostFragment
@@ -362,6 +368,9 @@ export const getCart = async (id: string) => {
           currencyCode
         }
       }`,
+    {
+      variables,
+    },
   );
 
   if (errors) {
@@ -376,12 +385,16 @@ export const getCart = async (id: string) => {
 };
 
 export const addToCart = async (variantId: string, id: string) => {
+  const variables = {
+    variantId,
+    id,
+  };
   const { data, errors } = await client.request(
     `#graphql
-    mutation AddToCart {
+    mutation AddToCart($variantId: ID!, $id: ID!) {
       cartLinesAdd(
-        cartId: "${id}"
-        lines: {merchandiseId: "${variantId}", quantity: 1}
+        cartId: $id
+        lines: {merchandiseId: $variantId, quantity: 1}
       ) {
         cart {
           cost {
@@ -445,6 +458,7 @@ export const addToCart = async (variantId: string, id: string) => {
         currencyCode
       }
     }`,
+    { variables },
   );
   if (errors || !data?.cartLinesAdd?.cart?.id) {
     throw new Error(errors?.message);
@@ -454,12 +468,16 @@ export const addToCart = async (variantId: string, id: string) => {
 };
 
 export const removeFromCart = async (lineId: string, id: string) => {
+  const variables = {
+    lineId,
+    id,
+  };
   const { data, errors } = await client.request(
     `#graphql
-    mutation RemoveFromCart {
+    mutation RemoveFromCart($lineId: [ID!]!, $id: ID!) {
       cartLinesRemove(
-        cartId: "${id}"
-        lineIds: "${lineId}"
+        cartId: $id
+        lineIds: $lineId
       ) {
         cart {
           cost {
@@ -523,21 +541,27 @@ export const removeFromCart = async (lineId: string, id: string) => {
         currencyCode
       }
     }`,
+    { variables },
   );
   if (errors || !data?.cartLinesRemove?.cart?.id) {
-    throw new Error(errors?.message);
+    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
   }
 
   return { data: (data as RemoveFromCartMutation).cartLinesRemove?.cart, id: data.cartLinesRemove.cart?.id as string };
 };
 
 export const updateProductQuantity = async (quantity: number, lineId: string, id: string) => {
+  const variables = {
+    quantity,
+    lineId,
+    id,
+  };
   const { data, errors } = await client.request(
     `#graphql
-    mutation UpdateProductQuantity {
+    mutation UpdateProductQuantity($quantity: Int!, $lineId: ID!, $id: ID!) {
       cartLinesUpdate(
-        cartId: "${id}"
-        lines: {id: "${lineId}", quantity: ${quantity}}
+        cartId: $id
+        lines: {id: $lineId, quantity: $quantity}
       ) {
         cart {
           cost {
@@ -602,9 +626,10 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
         currencyCode
       }
     }`,
+    { variables },
   );
   if (errors || !data?.cartLinesUpdate?.cart?.id) {
-    throw new Error(errors?.message);
+    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
   }
 
   return {
