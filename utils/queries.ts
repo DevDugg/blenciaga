@@ -7,6 +7,7 @@ import {
   RemoveFromCartMutation,
   UpdateProductQuantityMutation,
 } from "@/types/storefront.generated";
+import { CheckoutCreateInput, CheckoutLineItemInput, MailingAddressInput } from "@/types/storefront.types";
 
 import { IMainMenu } from "@/components/header/HeaderTop";
 import client from "./api-client";
@@ -635,5 +636,105 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
   return {
     data: (data as UpdateProductQuantityMutation).cartLinesUpdate?.cart,
     id: data.cartLinesUpdate?.cart?.id as string,
+  };
+};
+
+export const createCheckout = async (input: CheckoutCreateInput) => {
+  const { data, errors } = await client.request(
+    `
+  #graphql
+  mutation CreateCheckout($input: CheckoutCreateInput!) {
+    checkoutCreate(input: $input) {
+      checkout {
+        id
+      }
+      checkoutUserErrors {
+        field
+        message
+      }
+    }
+  }
+  `,
+    { variables: { input } },
+  );
+  if (errors || !data?.checkoutCreate?.checkoutUserErrors) {
+    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+  }
+
+  return {
+    data: data.checkoutCreate.checkout,
+  };
+};
+
+export const addCheckoutLines = async (checkoutId: string, lineItems: CheckoutLineItemInput[]) => {
+  const { data, errors } = await client.request(
+    `
+    #graphql
+    mutation AddCheckoutLines($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+      checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+          checkout {
+              id
+              lineItems(first: 10) {
+                  edges {
+                      node {
+                          id
+                          title
+                          quantity
+                      }
+                  }
+              }
+          }
+          checkoutUserErrors {
+              field
+              message
+          }
+      }
+  }
+  `,
+    { variables: { checkoutId, lineItems } },
+  );
+  if (errors || !data?.checkoutLineItemsAdd?.checkoutUserErrors) {
+    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+  }
+
+  return {
+    data: data.checkoutLineItemsAdd.checkout,
+  };
+};
+
+export const updateShippingAddress = async (checkoutId: string, shippingAddress: MailingAddressInput) => {
+  const { data, errors } = await client.request(
+    `
+    #graphql
+    mutation UpdateShippingAddress($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
+      checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
+          checkout {
+              id
+              shippingAddress {
+                  firstName
+                  lastName
+                  address1
+                  address2
+                  city
+                  country
+                  province
+                  zip
+              }
+          }
+          checkoutUserErrors {
+              field
+              message
+          }
+      }
+  }
+  `,
+    { variables: { checkoutId, shippingAddress } },
+  );
+  if (errors || !data?.checkoutShippingAddressUpdateV2?.checkoutUserErrors) {
+    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+  }
+
+  return {
+    data: data.checkoutShippingAddressUpdateV2.checkout,
   };
 };
