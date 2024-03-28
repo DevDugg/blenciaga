@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import CartContextProvider from "@/context/CartContext";
 import type { Metadata } from "next";
+import SmoothScroll from "@/components/products/SmoothScroll";
 import StoreProvider from "@/lib/StoreProvider";
 import localFont from "next/font/local";
 
@@ -24,9 +25,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${BB.className} overflow-x-hidden`}>
-        <StoreProvider>
-          <CartContextProvider>{children}</CartContextProvider>
-        </StoreProvider>
+        <SmoothScroll>
+          <StoreProvider>
+            <CartContextProvider>{children}</CartContextProvider>
+          </StoreProvider>
+        </SmoothScroll>
       </body>
     </html>
   );

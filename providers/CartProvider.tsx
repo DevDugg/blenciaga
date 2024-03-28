@@ -1,16 +1,15 @@
 "use client";
 
-import { PropsWithChildren, useContext } from "react";
+import { PropsWithChildren, useContext, useEffect } from "react";
 
 import { CartContext } from "@/context/CartContext";
-import { useEffectOnce } from "usehooks-ts";
 
 const CartProvider = ({ children }: PropsWithChildren) => {
   const cartContext = useContext(CartContext);
   const { cartState, setCartState } = cartContext.cartState;
-  const { cartClass, setCartClass } = cartContext.cartClass;
+  const { cartClass } = cartContext.cartClass;
 
-  useEffectOnce(() => {
+  useEffect(() => {
     if (cartState?.id) return;
 
     const getOrCreateCart = async () => {
@@ -21,7 +20,7 @@ const CartProvider = ({ children }: PropsWithChildren) => {
     };
 
     getOrCreateCart();
-  });
+  }, []);
 
   return children;
 };
