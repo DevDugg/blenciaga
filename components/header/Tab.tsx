@@ -27,11 +27,9 @@ const tabVariants = {
 const dropdownVariants: Variants = {
   initial: {
     opacity: 0,
-    pointerEvents: "none",
   },
   hover: {
     opacity: 1,
-    pointerEvents: "all",
   },
 };
 
@@ -69,6 +67,7 @@ const Tab = ({ link, title, rows }: IProps) => {
         variants={dropdownVariants}
         initial={"initial"}
         animate={hovered ? "hover" : "initial"}
+        style={{ pointerEvents: hovered ? "all" : "none" }}
         className="bg-WHITE h-fit w-[calc(100vw-17px)] z-20 grid grid-cols-SIX absolute top-full left-0 shadow-DROPDOWN"
       >
         {curatedRows
