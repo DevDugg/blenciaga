@@ -8,10 +8,6 @@ import {
 import { CheckoutCreateInput, CheckoutLineItemInput, MailingAddressInput } from "@/types/storefront.types";
 import { addCheckoutLines, createCheckout, updateShippingAddress } from "./queries";
 
-interface ICheckoutClassConstructor {
-  checkOutId?: string;
-}
-
 export interface ICheckoutClass {
   getCheckoutId: () => string | null;
   createCheckout: (
@@ -46,8 +42,8 @@ class Checkout implements ICheckoutClass {
 
   // CONSTRUCTOR
 
-  constructor({ checkOutId }: ICheckoutClassConstructor) {
-    this.checkoutId = checkOutId || this.getCheckoutId();
+  constructor() {
+    this.checkoutId = this.getCheckoutId();
   }
 
   // PUBLIC METHODS AND PROPERTIES

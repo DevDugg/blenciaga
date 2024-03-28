@@ -2,6 +2,7 @@
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";
+import { CreateCheckout } from "@/utils/checkout";
 import { useContext } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
@@ -15,6 +16,24 @@ const CheckoutBtn = () => {
         width={sm ? "100%" : 400}
         black
         fixedOnMobile
+        onClick={() => {
+          if (!cartState?.lines) return;
+
+          const createCheckout = async () => {
+            const checkout = new CreateCheckout();
+            await checkout.createCheckout({
+              lineItems: cartState?.lines.edges.map((line) => ({
+                quantity: line.node.quantity,
+                variantId: line.node.merchandise.id,
+              })),
+            });
+            const checkoutId = checkout.getCheckoutId();
+            if (!checkoutId) throw new Error("No checkoutId found");
+            const encoded = encodeURIComponent(checkoutId);
+            window.location.href = `/checkout/${encoded}`;
+          };
+          createCheckout();
+        }}
       />
     </div>
   );
