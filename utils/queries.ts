@@ -641,7 +641,7 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
   };
 };
 
-// chechout
+// checkout
 export const createCheckout = async (input: CheckoutCreateInput) => {
   const { data, errors } = await client.request(
     `
@@ -650,6 +650,41 @@ export const createCheckout = async (input: CheckoutCreateInput) => {
     checkoutCreate(input: $input) {
       checkout {
         id
+        totalPrice {
+          amount
+          currencyCode
+        }
+        totalTax {
+          amount
+          currencyCode
+        }
+        lineItemsSubtotalPrice {
+          amount
+          currencyCode
+        }
+        lineItems(first: 20) {
+          edges {
+            node {
+              id
+              quantity
+              title
+              unitPrice {
+                amount
+                currencyCode
+              }
+              variant {
+                price {
+                  amount
+                  currencyCode
+                }
+                selectedOptions {
+                  name
+                  value
+                }
+              }
+            }
+          }
+        }
       }
       checkoutUserErrors {
         field
