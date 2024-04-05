@@ -7,10 +7,11 @@ import {
   RemoveFromCartMutation,
   UpdateProductQuantityMutation,
 } from "@/types/storefront.generated";
-import { CheckoutCreateInput, CheckoutLineItemInput, MailingAddressInput } from "@/types/storefront.types";
 
 import { IMainMenu } from "@/components/header/HeaderTop";
 import client from "./api-client";
+
+// import { CheckoutCreateInput, CheckoutLineItemInput, MailingAddressInput } from "@/types/storefront.types";
 
 // data
 export const getCollection = async (handle: string, after?: string) => {
@@ -228,70 +229,72 @@ export const createCart = async () =>
   {
     const { data, errors } = await client.request(
       `#graphql
-mutation CreateCart {
-    cartCreate(input: {}) {
-      cart {
-        id
-        totalQuantity
-        cost {
-          ...CartCostFragment
-        }
-        lines(first: 10) {
-          ...BaseCartLineConnectionFragment
-        }
+      mutation CreateCart {
+  cartCreate(input: {}) {
+    cart {
+      id
+      totalQuantity
+      cost {
+        ...CartCostFragment
       }
+      lines(first: 10) {
+        ...BaseCartLineConnectionFragment
+      }
+      checkoutUrl
     }
   }
-  
-  fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-    edges {
-      node {
-        merchandise {
-          ... on ProductVariant {
+}
+
+fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+  edges {
+    node {
+      merchandise {
+        ... on ProductVariant {
+          id
+          image {
             id
-            image {
-              id
-              url
-            }
+            url
+          }
+          title
+          price {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          product {
+            handle
             title
-            price {
-              amount
-              currencyCode
-            }
-            selectedOptions {
-              name
-              value
-            }
-            product {
-              handle
-              title
-            }
           }
         }
-        id
-        quantity
       }
+      id
+      quantity
     }
   }
-  
-  fragment CartCostFragment on CartCost {
-    subtotalAmount {
-      amount
-      currencyCode
-    }
-    totalAmount {
-      amount
-      currencyCode
-    }
-    totalTaxAmount {
-      amount
-      currencyCode
-    }
-    totalDutyAmount {
-      amount
-      currencyCode
-    }
-  }`,
+}
+
+fragment CartCostFragment on CartCost {
+  subtotalAmount {
+    amount
+    currencyCode
+  }
+  totalAmount {
+    amount
+    currencyCode
+  }
+  totalTaxAmount {
+    amount
+    currencyCode
+  }
+  totalDutyAmount {
+    amount
+    currencyCode
+  }
+}
+      `,
     );
 
     if (errors || !data?.cartCreate?.cart?.id) {
@@ -307,70 +310,70 @@ export const getCart = async (id: string) => {
   };
   const { data, errors } = await client.request(
     `#graphql
-      query Cart($id:ID!) {
-        cart(
-          id: $id
-        ) {
-          cost {
-            ...CartCostFragment
-          }
+    query Cart($id: ID!) {
+  cart(id: $id) {
+    cost {
+      ...CartCostFragment
+    }
+    id
+    lines(first: 10) {
+      ...BaseCartLineConnectionFragment
+    }
+    totalQuantity
+    checkoutUrl
+  }
+}
+
+fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+  edges {
+    node {
+      merchandise {
+        ... on ProductVariant {
           id
-          lines(first: 10) {
-            ...BaseCartLineConnectionFragment
-          }
-          totalQuantity
-        }
-      }
-      
-      fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-        edges {
-          node {
-            merchandise {
-              ... on ProductVariant {
-                id
-                image {
-                  id
-                  url
-                }
-                title
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-                product {
-                  handle
-                  title
-                }
-              }
-            }
+          image {
             id
-            quantity
+            url
+          }
+          title
+          price {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          product {
+            handle
+            title
           }
         }
       }
-      
-      fragment CartCostFragment on CartCost {
-        subtotalAmount {
-          amount
-          currencyCode
-        }
-        totalAmount {
-          amount
-          currencyCode
-        }
-        totalTaxAmount {
-          amount
-          currencyCode
-        }
-        totalDutyAmount {
-          amount
-          currencyCode
-        }
-      }`,
+      id
+      quantity
+    }
+  }
+}
+
+fragment CartCostFragment on CartCost {
+  subtotalAmount {
+    amount
+    currencyCode
+  }
+  totalAmount {
+    amount
+    currencyCode
+  }
+  totalTaxAmount {
+    amount
+    currencyCode
+  }
+  totalDutyAmount {
+    amount
+    currencyCode
+  }
+}
+`,
     {
       variables,
     },
@@ -394,73 +397,71 @@ export const addToCart = async (variantId: string, id: string) => {
   };
   const { data, errors } = await client.request(
     `#graphql
-    mutation AddToCart($variantId: ID!, $id: ID!) {
-      cartLinesAdd(
-        cartId: $id
-        lines: {merchandiseId: $variantId, quantity: 1}
-      ) {
-        cart {
-          cost {
-            ...CartCostFragment
-          }
+   mutation AddToCart($variantId: ID!, $id: ID!) {
+  cartLinesAdd(cartId: $id, lines: {merchandiseId: $variantId, quantity: 1}) {
+    cart {
+      cost {
+        ...CartCostFragment
+      }
+      id
+      lines(first: 10) {
+        ...BaseCartLineConnectionFragment
+      }
+      totalQuantity
+      checkoutUrl
+    }
+  }
+}
+
+fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+  edges {
+    node {
+      merchandise {
+        ... on ProductVariant {
           id
-          lines(first: 10) {
-            ...BaseCartLineConnectionFragment
+          image {
+            id
+            url
           }
-          totalQuantity
+          title
+          price {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          product {
+            handle
+            title
+          }
         }
       }
+      id
+      quantity
     }
-    
-    fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-      edges {
-        node {
-          merchandise {
-            ... on ProductVariant {
-              id
-              image {
-                id
-                url
-              }
-              title
-              price {
-                amount
-                currencyCode
-              }
-              selectedOptions {
-                name
-                value
-              }
-              product {
-                handle
-                title
-              }
-            }
-          }
-          id
-          quantity
-        }
-      }
-    }
-    
-    fragment CartCostFragment on CartCost {
-      subtotalAmount {
-        amount
-        currencyCode
-      }
-      totalAmount {
-        amount
-        currencyCode
-      }
-      totalTaxAmount {
-        amount
-        currencyCode
-      }
-      totalDutyAmount {
-        amount
-        currencyCode
-      }
-    }`,
+  }
+}
+
+fragment CartCostFragment on CartCost {
+  subtotalAmount {
+    amount
+    currencyCode
+  }
+  totalAmount {
+    amount
+    currencyCode
+  }
+  totalTaxAmount {
+    amount
+    currencyCode
+  }
+  totalDutyAmount {
+    amount
+    currencyCode
+  }
+}`,
     { variables },
   );
   if (errors || !data?.cartLinesAdd?.cart?.id) {
@@ -478,72 +479,70 @@ export const removeFromCart = async (lineId: string, id: string) => {
   const { data, errors } = await client.request(
     `#graphql
     mutation RemoveFromCart($lineId: [ID!]!, $id: ID!) {
-      cartLinesRemove(
-        cartId: $id
-        lineIds: $lineId
-      ) {
-        cart {
-          cost {
-            ...CartCostFragment
-          }
+  cartLinesRemove(cartId: $id, lineIds: $lineId) {
+    cart {
+      cost {
+        ...CartCostFragment
+      }
+      id
+      lines(first: 10) {
+        ...BaseCartLineConnectionFragment
+      }
+      totalQuantity
+      checkoutUrl
+    }
+  }
+}
+
+fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+  edges {
+    node {
+      merchandise {
+        ... on ProductVariant {
           id
-          lines(first: 10) {
-            ...BaseCartLineConnectionFragment
+          image {
+            id
+            url
           }
-          totalQuantity
+          title
+          price {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          product {
+            handle
+            title
+          }
         }
       }
+      id
+      quantity
     }
-    
-    fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-      edges {
-        node {
-          merchandise {
-            ... on ProductVariant {
-              id
-              image {
-                id
-                url
-              }
-              title
-              price {
-                amount
-                currencyCode
-              }
-              selectedOptions {
-                name
-                value
-              }
-              product {
-                handle
-                title
-              }
-            }
-          }
-          id
-          quantity
-        }
-      }
-    }
-    
-    fragment CartCostFragment on CartCost {
-      subtotalAmount {
-        amount
-        currencyCode
-      }
-      totalAmount {
-        amount
-        currencyCode
-      }
-      totalTaxAmount {
-        amount
-        currencyCode
-      }
-      totalDutyAmount {
-        amount
-        currencyCode
-      }
-    }`,
+  }
+}
+
+fragment CartCostFragment on CartCost {
+  subtotalAmount {
+    amount
+    currencyCode
+  }
+  totalAmount {
+    amount
+    currencyCode
+  }
+  totalTaxAmount {
+    amount
+    currencyCode
+  }
+  totalDutyAmount {
+    amount
+    currencyCode
+  }
+}`,
     { variables },
   );
   if (errors || !data?.cartLinesRemove?.cart?.id) {
@@ -562,73 +561,70 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
   const { data, errors } = await client.request(
     `#graphql
     mutation UpdateProductQuantity($quantity: Int!, $lineId: ID!, $id: ID!) {
-      cartLinesUpdate(
-        cartId: $id
-        lines: {id: $lineId, quantity: $quantity}
-      ) {
-        cart {
-          cost {
-            ...CartCostFragment
-          }
+  cartLinesUpdate(cartId: $id, lines: {id: $lineId, quantity: $quantity}) {
+    cart {
+      cost {
+        ...CartCostFragment
+      }
+      id
+      lines(first: 10) {
+        ...BaseCartLineConnectionFragment
+      }
+      totalQuantity
+      checkoutUrl
+    }
+  }
+}
+
+fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
+  edges {
+    node {
+      merchandise {
+        ... on ProductVariant {
           id
-          lines(first: 10) {
-            ...BaseCartLineConnectionFragment
+          image {
+            id
+            url
           }
-          totalQuantity
+          title
+          price {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          product {
+            handle
+            title
+          }
         }
       }
+      id
+      quantity
     }
-    
-    
-    fragment BaseCartLineConnectionFragment on BaseCartLineConnection {
-      edges {
-        node {
-          merchandise {
-            ... on ProductVariant {
-              id
-              image {
-                id
-                url
-              }
-              title
-              price {
-                amount
-                currencyCode
-              }
-              selectedOptions {
-                name
-                value
-              }
-              product {
-                handle
-                title
-              }
-            }
-          }
-          id
-          quantity
-        }
-      }
-    }
-    
-    fragment CartCostFragment on CartCost {
-      subtotalAmount {
-        amount
-        currencyCode
-      }
-      totalAmount {
-        amount
-        currencyCode
-      }
-      totalTaxAmount {
-        amount
-        currencyCode
-      }
-      totalDutyAmount {
-        amount
-        currencyCode
-      }
-    }`,
+  }
+}
+
+fragment CartCostFragment on CartCost {
+  subtotalAmount {
+    amount
+    currencyCode
+  }
+  totalAmount {
+    amount
+    currencyCode
+  }
+  totalTaxAmount {
+    amount
+    currencyCode
+  }
+  totalDutyAmount {
+    amount
+    currencyCode
+  }
+}`,
     { variables },
   );
   if (errors || !data?.cartLinesUpdate?.cart?.id) {
@@ -642,137 +638,137 @@ export const updateProductQuantity = async (quantity: number, lineId: string, id
 };
 
 // checkout
-export const createCheckout = async (input: CheckoutCreateInput) => {
-  const { data, errors } = await client.request(
-    `
-  #graphql
-  mutation CreateCheckout($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
-        id
-        totalPrice {
-          amount
-          currencyCode
-        }
-        totalTax {
-          amount
-          currencyCode
-        }
-        lineItemsSubtotalPrice {
-          amount
-          currencyCode
-        }
-        lineItems(first: 20) {
-          edges {
-            node {
-              id
-              quantity
-              title
-              unitPrice {
-                amount
-                currencyCode
-              }
-              variant {
-                price {
-                  amount
-                  currencyCode
-                }
-                selectedOptions {
-                  name
-                  value
-                }
-              }
-            }
-          }
-        }
-      }
-      checkoutUserErrors {
-        field
-        message
-      }
-    }
-  }
-  `,
-    { variables: { input } },
-  );
-  if (errors || !data?.checkoutCreate?.checkoutUserErrors) {
-    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
-  }
+// export const createCheckout = async (input: CheckoutCreateInput) => {
+//   const { data, errors } = await client.request(
+//     `
+//   #graphql
+//   mutation CreateCheckout($input: CheckoutCreateInput!) {
+//   checkoutCreate(input: $input) {
+//     checkout {
+//       id
+//       totalPrice {
+//         amount
+//         currencyCode
+//       }
+//       totalTax {
+//         amount
+//         currencyCode
+//       }
+//       lineItemsSubtotalPrice {
+//         amount
+//         currencyCode
+//       }
+//       lineItems(first: 20) {
+//         edges {
+//           node {
+//             id
+//             quantity
+//             title
+//             unitPrice {
+//               amount
+//               currencyCode
+//             }
+//             variant {
+//               price {
+//                 amount
+//                 currencyCode
+//               }
+//               selectedOptions {
+//                 name
+//                 value
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//     checkoutUserErrors {
+//       field
+//       message
+//     }
+//   }
+// }
+//   `,
+//     { variables: { input } },
+//   );
+//   if (errors || !data?.checkoutCreate?.checkoutUserErrors) {
+//     throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+//   }
 
-  return {
-    data: data.checkoutCreate.checkout,
-  };
-};
+//   return {
+//     data: data.checkoutCreate.checkout,
+//   };
+// };
 
-export const addCheckoutLines = async (checkoutId: string, lineItems: CheckoutLineItemInput[]) => {
-  const { data, errors } = await client.request(
-    `
-    #graphql
-    mutation AddCheckoutLines($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
-      checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
-          checkout {
-              id
-              lineItems(first: 10) {
-                  edges {
-                      node {
-                          id
-                          title
-                          quantity
-                      }
-                  }
-              }
-          }
-          checkoutUserErrors {
-              field
-              message
-          }
-      }
-  }
-  `,
-    { variables: { checkoutId, lineItems } },
-  );
-  if (errors || !data?.checkoutLineItemsAdd?.checkoutUserErrors) {
-    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
-  }
+// export const addCheckoutLines = async (checkoutId: string, lineItems: CheckoutLineItemInput[]) => {
+//   const { data, errors } = await client.request(
+//     `
+//     #graphql
+//     mutation AddCheckoutLines($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+//       checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
+//           checkout {
+//               id
+//               lineItems(first: 10) {
+//                   edges {
+//                       node {
+//                           id
+//                           title
+//                           quantity
+//                       }
+//                   }
+//               }
+//           }
+//           checkoutUserErrors {
+//               field
+//               message
+//           }
+//       }
+//   }
+//   `,
+//     { variables: { checkoutId, lineItems } },
+//   );
+//   if (errors || !data?.checkoutLineItemsAdd?.checkoutUserErrors) {
+//     throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+//   }
 
-  return {
-    data: data.checkoutLineItemsAdd.checkout,
-  };
-};
+//   return {
+//     data: data.checkoutLineItemsAdd.checkout,
+//   };
+// };
 
-export const updateShippingAddress = async (checkoutId: string, shippingAddress: MailingAddressInput) => {
-  const { data, errors } = await client.request(
-    `
-    #graphql
-    mutation UpdateShippingAddress($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
-      checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
-          checkout {
-              id
-              shippingAddress {
-                  firstName
-                  lastName
-                  address1
-                  address2
-                  city
-                  country
-                  province
-                  zip
-              }
-          }
-          checkoutUserErrors {
-              field
-              message
-          }
-      }
-  }
-  `,
-    { variables: { checkoutId, shippingAddress } },
-  );
-  if (errors || !data?.checkoutShippingAddressUpdateV2?.checkoutUserErrors) {
-    throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
-  }
+// export const updateShippingAddress = async (checkoutId: string, shippingAddress: MailingAddressInput) => {
+//   const { data, errors } = await client.request(
+//     `
+//     #graphql
+//     mutation UpdateShippingAddress($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
+//       checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
+//           checkout {
+//               id
+//               shippingAddress {
+//                   firstName
+//                   lastName
+//                   address1
+//                   address2
+//                   city
+//                   country
+//                   province
+//                   zip
+//               }
+//           }
+//           checkoutUserErrors {
+//               field
+//               message
+//           }
+//       }
+//   }
+//   `,
+//     { variables: { checkoutId, shippingAddress } },
+//   );
+//   if (errors || !data?.checkoutShippingAddressUpdateV2?.checkoutUserErrors) {
+//     throw new Error(errors?.graphQLErrors?.map((error) => error.message).join(", "));
+//   }
 
-  return {
-    data: data.checkoutShippingAddressUpdateV2.checkout,
-  };
-};
+//   return {
+//     data: data.checkoutShippingAddressUpdateV2.checkout,
+//   };
+// };

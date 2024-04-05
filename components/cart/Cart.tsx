@@ -24,7 +24,7 @@ const Cart = () => {
     cartState,
     // setCartState
   } = cartContext.cartState;
-  const productsQuantity = useMemo(() => cartState?.lines?.edges.length || 0, [cartState]);
+  const productsQuantity = useMemo(() => cartState?.totalQuantity || 0, [cartState]);
   const hasProducts = cartState && productsQuantity > 0;
   return (
     <div className="max-w-[700px] w-full border-x border-BLACK max-lg:max-w-[800px] max-[850px]:max-w-none">

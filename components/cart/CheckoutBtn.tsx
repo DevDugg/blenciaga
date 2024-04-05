@@ -2,14 +2,17 @@
 
 import Button from "../Button";
 import { CartContext } from "@/context/CartContext";
-import { CreateCheckout } from "@/utils/checkout";
 import { useContext } from "react";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { useRouter } from "next/navigation";
+
+// import { CreateCheckout } from "@/utils/checkout";
 
 const CheckoutBtn = () => {
   const { cartState } = useContext(CartContext).cartState;
+  const router = useRouter();
   const sm = useMediaQuery("(max-width:640px)");
-  return (
+  return cartState && cartState?.totalQuantity > 0 ? (
     <div className="flex items-center justify-center py-[60px] px-3">
       <Button
         title={`Proceed to checkout (${cartState?.totalQuantity || 0})`}
@@ -17,25 +20,12 @@ const CheckoutBtn = () => {
         black
         fixedOnMobile
         onClick={() => {
-          if (!cartState?.lines) return;
-
-          const createCheckout = async () => {
-            const checkout = new CreateCheckout();
-            await checkout.createCheckout({
-              lineItems: cartState?.lines.edges.map((line) => ({
-                quantity: line.node.quantity,
-                variantId: line.node.merchandise.id,
-              })),
-            });
-            const checkoutId = checkout.getCheckoutId();
-            if (!checkoutId) throw new Error("No checkoutId found");
-            const encoded = encodeURIComponent(checkoutId);
-            window.location.href = `/checkout/${encoded}`;
-          };
-          createCheckout();
+          if (!cartState) return;
+          const { checkoutUrl } = cartState;
+          router.push(checkoutUrl);
         }}
       />
     </div>
-  );
+  ) : null;
 };
 export default CheckoutBtn;
