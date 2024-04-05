@@ -27,7 +27,7 @@ const page = async () => {
             <Time />
           </div>
           <div className="flex flex-col gap-4 text-xs text-WHITE w-fit lowercase">
-            {menu && menu.menu.id
+            {menu && menu.menu
               ? menu.menu.items.map((item) => (
                   <Link key={item.id} href={item.resource ? `/collection/${item.resource.handle}` : "/collection/all"}>
                     {item.title}

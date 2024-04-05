@@ -6,6 +6,7 @@ import {
   ProductQuery,
   RemoveFromCartMutation,
   UpdateProductQuantityMutation,
+  WelcomeMenuQuery,
 } from "@/types/storefront.generated";
 
 import { IMainMenu } from "@/components/header/HeaderTop";
@@ -102,8 +103,7 @@ export const getWelcomeMenu = async () => {
 
   if (errors) throw new Error(errors.message);
 
-  //   return data as IWelcomeMenu["data"];
-  return data as unknown;
+  return data as WelcomeMenuQuery;
 };
 
 export const getProduct = async (handle: string) => {
