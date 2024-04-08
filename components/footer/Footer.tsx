@@ -7,9 +7,7 @@ const Footer = () => {
     <footer className="footer bg-GRAY max-md:mb-[66.4px]">
       <Container>
         <FooterTop />
-        <div className="border-BLACK border-t border-solid">
-          <FooterBottom />
-        </div>
+        <FooterBottom />
       </Container>
     </footer>
   );

@@ -18,7 +18,7 @@ const ProductGrid = ({ images }: IProps) => {
           alt={img.id || ""}
           width={700}
           height={850}
-          className="max-h-[850px] w-full h-full object-cover border-[0.5px] border-b-0 border-BLACK border-solid"
+          className="max-h-[850px] w-full h-full object-cover border border-b-0 border-BLACK"
         />
       ))}
     </div>

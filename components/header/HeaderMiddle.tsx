@@ -12,7 +12,7 @@ const HeaderMiddle = async () => {
     .map((item) => item);
   return (
     <section className="header-middle lg:hidden">
-      <Container className="border-b border-t-[0.5px] border-solid border-BLACK pb-2 pt-14 max-lg:p-0">
+      <Container className="border-b border-BLACK pb-2 pt-14 max-lg:p-0">
         <HeaderMiddleSwiper thirdLevelLinks={thirdLevelLinks} />
       </Container>
     </section>

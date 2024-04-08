@@ -72,7 +72,7 @@ const Tab = ({ link, title, rows }: IProps) => {
       >
         {curatedRows
           ? curatedRows.map((item, i) => (
-              <div key={i} className="flex flex-col gap-4 p-4 border-[0.5px] border-BLACK min-h-[30vh]">
+              <div key={i} className="flex flex-col gap-4 p-4 border-l border-b border-BLACK min-h-[30vh]">
                 <h6 className="text-xs text-BLACK uppercase">
                   <FooterLink title={item.title} href={`/collection/${item.resource.handle}`} />
                 </h6>

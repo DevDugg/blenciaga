@@ -39,7 +39,7 @@ const StyleSelect = ({ variants, initialVariant }: IProps) => {
       {variants.map((variant) => (
         <motion.div
           key={variant.id}
-          className="border border-solid p-1 rounded-sm cursor-pointer"
+          className="border p-1 rounded-sm cursor-pointer"
           initial={{ borderColor: `${colors.BLACK}00` }}
           animate={selectedVariant.id === variant.id ? { borderColor: colors.BLACK } : {}}
           onClick={() => setSelectedVariant(variant)}

@@ -41,7 +41,7 @@ const Product = ({ view, product }: IProps) => {
 
   return (
     <div
-      className="product border-[0.5px] border-solid border-BLACK pb-10 flex flex-col justify-between gap-2 max-h-[700px] relative"
+      className="product border border-t-0 border-l-0 border-BLACK pb-10 flex flex-col justify-between gap-2 max-h-[700px] relative"
       style={view === "big" ? { maxHeight: bookBreakpoint ? 1600 : 1200 } : {}}
       onMouseOver={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

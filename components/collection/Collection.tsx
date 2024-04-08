@@ -53,7 +53,7 @@ const Collection = ({ products, categoryHandle }: IProps) => {
       <Container className="flex flex-col">
         {data && curatedData ? (
           <>
-            <div className="flex items-center justify-between gap-10 px-3 py-4">
+            <div className="flex items-center justify-between gap-10 px-3 py-4 border-t border-BLACK">
               <span className="text-sm text-BLACK">Results</span>
               <button
                 type="button"
@@ -94,7 +94,7 @@ const Collection = ({ products, categoryHandle }: IProps) => {
               </button>
             </div>
             <div
-              className="grid grid-cols-FOUR_PERCENT max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
+              className="grid grid-cols-FOUR_PERCENT border-t border-BLACK max-[1440px]:grid-cols-THREE_PERCENT max-md:grid-cols-TWO_PERCENT"
               style={isBook ? { gridTemplateColumns: gridBreakpoint ? "100%" : "repeat(2, 50%)" } : {}}
             >
               {curatedData.edges.length > 0 ? (

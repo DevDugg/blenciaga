@@ -74,7 +74,7 @@ const Product = async ({ params, searchParams }: IParams) => {
           {product.product?.images && <ProductGrid images={product.product.images} />}
           {product.product?.images && <ProductSlider images={product.product.images} />}
           <div className="sticky bottom-0 h-fit max-lg:relative">
-            <div className="flex flex-col gap-10 items-center py-[60px] text-sm uppercase border-[0.5px] border-r-0 border-b-0 border-BLACK max-lg:py-12 max-md:py-10 max-sm:py-8">
+            <div className="flex flex-col gap-10 items-center py-[60px] text-sm uppercase border border-r-0 border-b-0 border-BLACK max-lg:py-12 max-md:py-10 max-sm:py-8">
               <div className="flex flex-col gap-20 max-w-[70%] px-4 max-xl:max-w-none max-lg:max-w-[80%] max-lg:gap-16 max-md:gap-14 max-md:max-w-none max-sm:gap-10">
                 <div className="flex flex-col gap-4">
                   <div>
@@ -91,7 +91,7 @@ const Product = async ({ params, searchParams }: IParams) => {
                     }
                   />
                 )}
-                <div className="border-t border-BLACK border-solid flex flex-col gap-4 pt-[25px]">
+                <div className="border-t border-BLACK flex flex-col gap-4 pt-[25px]">
                   <div className="flex items-center justify-between gap-10">
                     <span>Size: (FR)</span>
                     <a href="#" className="underline">

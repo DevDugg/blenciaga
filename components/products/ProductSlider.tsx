@@ -14,7 +14,7 @@ interface IProps {
 
 const ProductSlider = ({ images }: IProps) => {
   return (
-    <div className="product-slider hidden border-b-[0.5px] border-BLACK max-lg:block">
+    <div className="product-slider hidden border-b border-BLACK max-lg:block">
       <Swiper
         modules={[Navigation, Pagination]}
         speed={1000}

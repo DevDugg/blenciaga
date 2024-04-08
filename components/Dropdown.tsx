@@ -8,7 +8,7 @@ import { useState } from "react";
 const Dropdown = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <div className="dropdown border-b border-BLACK border-solid flex flex-col">
+    <div className="dropdown border-b border-BLACK flex flex-col">
       <button
         type="button"
         className="flex items-center justify-between gap-6 w-full py-5"

@@ -40,7 +40,7 @@ const Button = ({ title, onClick, black, fixedOnMobile, width, disabled }: IProp
           <motion.button
             disabled={disabled}
             type="button"
-            className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
+            className="text-xs border border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
             style={black ? { background: colors.BLACK, width } : { width }}
             transition={transition}
             onClick={onClick}
@@ -61,7 +61,7 @@ const Button = ({ title, onClick, black, fixedOnMobile, width, disabled }: IProp
         <motion.button
           disabled={disabled}
           type="button"
-          className="text-xs border border-solid border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
+          className="text-xs border border-BLACK bg-WHITE uppercase rounded-[4px] py-3 px-4 relative overflow-hidden w-full"
           style={black ? { background: colors.BLACK, width } : { width }}
           transition={transition}
           onClick={onClick}

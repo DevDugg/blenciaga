@@ -43,7 +43,7 @@ const ColorBlock = ({ color }: ColorBlockProps) => {
   return (
     detectedColor && (
       <div
-        className="color-block w-4 h-4 border-solid border border-[#000000] rounded-sm"
+        className="color-block w-4 h-4 border border-[#000000] rounded-sm"
         style={{ background: detectedColor.value }}
       ></div>
     )
