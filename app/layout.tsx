@@ -35,6 +35,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* </GlobalProvider> */}
           {/* </StoreProvider> */}
         </SmoothScroll>
+        {`<!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBZ07X60TD"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-CBZ07X60TD');
+        </script>`}
       </body>
     </html>
   );
