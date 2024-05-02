@@ -3,6 +3,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import CartContextProvider from "@/context/CartContext";
 import type { Metadata } from "next";
+import Script from "next/script";
 import SmoothScroll from "@/components/products/SmoothScroll";
 import localFont from "next/font/local";
 
@@ -35,15 +36,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* </GlobalProvider> */}
           {/* </StoreProvider> */}
         </SmoothScroll>
-        {`<!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-CBZ07X60TD"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-CBZ07X60TD"></Script>
+        <Script id="google-analytics">
+          {`window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
         
-          gtag('config', 'G-CBZ07X60TD');
-        </script>`}
+          gtag('config', 'G-CBZ07X60TD');`}
+        </Script>
       </body>
     </html>
   );
