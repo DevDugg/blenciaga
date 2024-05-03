@@ -9,14 +9,17 @@ const EnterVideo = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [hasEnded, setHasEnded] = useState(false);
 
-  const [hasPlayedOnce, setHasPlayedOnce] = useState(sessionStorage.getItem("hasPlayedOnce") === "true");
+  const [hasPlayedOnce, setHasPlayedOnce] = useState(false);
 
-  const desktopVideo = document.querySelector(".desktop-only") as HTMLVideoElement;
-  const mobileVideo = document.querySelector(".mobile-only") as HTMLVideoElement;
+  useEffect(() => {
+    setHasPlayedOnce(sessionStorage.getItem("hasPlayedOnce") === "true");
+  }, []);
 
   useEffect(() => {
     if (!isClicked || hasPlayedOnce) return;
 
+    const desktopVideo = document.querySelector(".desktop-only") as HTMLVideoElement;
+    const mobileVideo = document.querySelector(".mobile-only") as HTMLVideoElement;
     desktopVideo?.play();
     mobileVideo?.play();
   }, [isClicked]);
@@ -57,7 +60,7 @@ const EnterVideo = () => {
             pointerEvents: isClicked ? "none" : "auto",
           }}
         >
-          <source src="/intro_video.mp4" type="video/mp4" />
+          <source src="https://cdn.shopify.com/videos/c/o/v/a14136cb97c94022a02e963718bbea5f.mp4" type="video/mp4" />
         </video>
         <video
           className="mobile-only hidden object-cover w-full h-full max-md:inline z-50"
