@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import EnterVideo from "@/components/EnterVideo";
 import Image from "next/image";
 import Link from "next/link";
 import NameWhite from "@/components/NameWhite";
@@ -11,6 +12,7 @@ const page = async () => {
 
   return (
     <main className="main">
+      <EnterVideo />
       <h1 className="hidden relative">{profile.name}</h1>
       <Image
         src={"/bg.png"}
