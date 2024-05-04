@@ -140,7 +140,7 @@ const items: IFooterItem[] = [
 
 const FooterTop = () => {
   return (
-    <div className="footer-top border-b border-BLACK">
+    <div className="footer-top border-y border-BLACK">
       <div className="grid grid-cols-6 max-lg:hidden" style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}>
         {items.map((item, i) => (
           <div key={i} className="category-col flex flex-col gap-4 py-4 px-3 border-l border-BLACK min-h-[400px]">

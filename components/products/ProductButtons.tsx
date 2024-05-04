@@ -1,4 +1,5 @@
 "use client";
+export type SelectedOptions = Record<string, string | null>;
 
 import { useContext, useEffect, useMemo, useState } from "react";
 
@@ -7,7 +8,7 @@ import { CartContext } from "@/context/CartContext";
 import Image from "next/image";
 import { ProductOptionContext } from "@/context/ProductOptionContext";
 import { ProductQuery } from "@/types/storefront.generated";
-import arraysContainSameObjects from "@/utils/arrayContainsSameObject";
+import findProductVariant from "@/utils/findProductVariant";
 import { toast } from "react-toastify";
 
 interface IProps {
@@ -21,13 +22,7 @@ const ProductButtons = ({ productVariants }: IProps) => {
   const { cartClass } = cartContext.cartClass;
   const { setCartState } = cartContext.cartState;
 
-  const variant = useMemo(() => {
-    if (!productVariants || !productOptions) return null;
-
-    return productVariants.find((productVariant) =>
-      arraysContainSameObjects(productVariant.selectedOptions, productOptions),
-    );
-  }, [productOptions, productVariants]);
+  const variant = useMemo(() => findProductVariant(productVariants, productOptions), [productOptions, productVariants]);
 
   const updateCart = async () => {
     const updatedCart = await cartClass.addToCart(variant!.id);
@@ -56,6 +51,7 @@ const ProductButtons = ({ productVariants }: IProps) => {
           if (!productOptions.find((option) => option.name === "Size")) {
             return setButtonTitle("Select Size");
           }
+          console.log(variant);
 
           if (!variant) return setButtonTitle("Unavailable");
           updateCart();

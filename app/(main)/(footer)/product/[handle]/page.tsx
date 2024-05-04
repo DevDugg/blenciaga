@@ -81,7 +81,6 @@ const Product = async ({ params, searchParams }: IParams) => {
                     <h1 className="text-center font-bold">{product.product?.title}</h1>
                     <h2 className="text-center pt-1">$ {product.product?.priceRange.minVariantPrice.amount}</h2>
                   </div>
-                  {/* <p className="text-center"></p> */}
                 </div>
                 {variants && neededStyles && (
                   <StyleSelect
